@@ -1,4 +1,4 @@
-# spotify-playlist-annotation
+# spotipyn
  A Spotify web application. Further details will be updated soon.
  
  ## Built on
