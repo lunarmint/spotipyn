@@ -1,0 +1,6 @@
+# All the variables should be queried from .env file.
+database:
+  database: !ENV ${MYSQL_DATABASE}
+  host: !ENV ${MYSQL_HOST}
+  user: !ENV ${MYSQL_USER}
+  password: !ENV ${MYSQL_PASSWORD}
