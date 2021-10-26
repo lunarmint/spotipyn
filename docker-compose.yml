@@ -10,6 +10,8 @@ services:
         - ${CONFIG}:/app/config.yml
         - ${LOGS_FOLDER}:/app/logs/
     environment:
+        - CLIENT_ID=${CLIENT_ID}
+        - CLIENT_SECRET=${CLIENT_SECRET}
         - MYSQL_HOST=db
         - MYSQL_DATABASE=${MYSQL_DATABASE}
         - MYSQL_USER=spotipyn
