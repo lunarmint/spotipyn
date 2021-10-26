@@ -1,4 +1,8 @@
 # All the variables should be queried from .env file.
+log_level: "DEBUG"
+spotify:
+  client_id: !ENV ${CLIENT_ID}
+  client_secret: !ENV ${CLIENT_SECRET}
 database:
   database: !ENV ${MYSQL_DATABASE}
   host: !ENV ${MYSQL_HOST}
