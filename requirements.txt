@@ -4,3 +4,6 @@ SQLAlchemy~=1.4.26                  # https://pypi.org/project/SQLAlchemy/
 mysqlclient==2.0.3                  # https://pypi.org/project/mysqlclient/2.0.3/
 SQLAlchemy-Utils==0.37.8            # https://sqlalchemy-utils.readthedocs.io/
 pyaml_env~=1.1.1                    # https://github.com/mkaranasou/pyaml_env
+Flask~=2.0.2                        # https://flask.palletsprojects.com/en/2.0.x/
+Flask-RESTful~=0.3.8                # https://flask-restful.readthedocs.io/en/latest/
+Flask-Session~=0.4.0                # https://flask-session.readthedocs.io/en/latest/
