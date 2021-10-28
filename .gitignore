@@ -147,3 +147,8 @@ notes.txt
 *.bat
 db/*
 *.lnk
+
+# Spotipyn stuffs
+.spotify_caches
+.flask_session
+/logs
