@@ -3,6 +3,11 @@ log_level: "DEBUG"
 spotify:
   client_id: !ENV ${CLIENT_ID}
   client_secret: !ENV ${CLIENT_SECRET}
+  secret_key: !ENV ${SECRET_KEY}
+  # Must match the redirect uri in your application settings at https://developer.spotify.com/dashboard/applications
+  redirect_uri: "http://127.0.0.1:5000"
+  # https://developer.spotify.com/documentation/general/guides/authorization/scopes/
+  scope: "scope-1 scope-2 scope-3"
 database:
   database: !ENV ${MYSQL_DATABASE}
   host: !ENV ${MYSQL_HOST}
