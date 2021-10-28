@@ -1,5 +1,5 @@
 # Spotipyn
- A Spotify-based web application that enables a new annotation layer.
+A Spotify-based web application that allows users to place annotations, or 'pins', into songs at specified timestamps. These pins are able to be customized with a message and a duration.
 
 ## Getting started
 **Step 1:** Clone the repository from terminal `git clone https://github.com/lunarmint/spotipyn.git`.
