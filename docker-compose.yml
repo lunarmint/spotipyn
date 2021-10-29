@@ -12,6 +12,7 @@ services:
     environment:
         - CLIENT_ID=${CLIENT_ID}
         - CLIENT_SECRET=${CLIENT_SECRET}
+        - SECRET_KEY=${SECRET_KEY}
         - MYSQL_HOST=db
         - MYSQL_DATABASE=${MYSQL_DATABASE}
         - MYSQL_USER=spotipyn
