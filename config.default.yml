@@ -1,5 +1,7 @@
 # All the variables should be queried from .env file.
 log_level: "DEBUG"
+host: !ENV ${HOST}
+port: !ENV ${PORT}
 spotify:
   client_id: !ENV ${CLIENT_ID}
   client_secret: !ENV ${CLIENT_SECRET}
