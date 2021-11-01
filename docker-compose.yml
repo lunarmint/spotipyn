@@ -2,9 +2,9 @@ version: "3.3"
 services:
   web:
     # Build from local.
-    build: .
+    # build: .
     # Build from remote GitHub branch.
-    # image: docker.pkg.github.com/lunarmint/spotipyn/spotipyn:latest
+    image: docker.pkg.github.com/lunarmint/spotipyn/spotipyn:latest
     restart: unless-stopped
     command: gunicorn --bind 0.0.0.0:5000 -w 3 spotipyn:app
     ports:
