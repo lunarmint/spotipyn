@@ -86,4 +86,4 @@ def sign_out():
 
 
 if __name__ == "__main__":
-    app.run(threaded=True)
+    app.run(threaded=True, host=config["host"], port=config["port"])
