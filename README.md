@@ -6,7 +6,7 @@ A Spotify-based web application that allows users to place annotations, or 'pins
 
 **Step 2:** Create a copy of `.env.example` file, rename it to `.env` and fill in all the required variables as specified in the file.
 
-**Step 3:** Create a copy of `config.default.yml` file, renamed it to `config.yml` and fill in all the required variables as specified in the file.
+**Step 3:** Create a copy of `config.default.yml` file, rename it to `config.yml` and fill in all the required variables as specified in the file.
 
 **Step 4:** From the terminal, run `pip install -r requirements.txt`.
 
