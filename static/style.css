@@ -1,0 +1,72 @@
+body {
+    background-color: black;
+    text-align: center;
+    font-family: "Franklin Gothic Medium";
+    font-size: 28px;
+    color: #FFFFFF;
+}
+
+h1 {
+    font-size: 72px;
+    font-weight: bold;
+}
+
+#left {
+    position: relative;
+}
+
+#left img {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#right {
+    position: relative;
+}
+
+#right img {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+#list {
+    margin: 2em auto;
+    text-align: center;
+    padding: 0;
+    list-style: none;
+}
+
+#list li {
+    line-height: 50px;
+    opacity: 0;
+    animation: fadeIn 1s ease-in both;
+}
+
+#list li:nth-child(2) {
+    animation-delay: 1.5s;
+}
+
+#list li:nth-child(3) {
+    animation-delay: 3s;
+}
+
+#list li:nth-child(4) {
+    animation-delay: 4.5s;
+}
+
+#list li:nth-child(5) {
+    animation-delay: 6s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -20%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
