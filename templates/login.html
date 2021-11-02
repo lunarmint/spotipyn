@@ -1,2 +1,27 @@
 <!DOCTYPE html>
-<p><a href="{{ auth_url }}">Login</a></p>
+<html lang="en">
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Spotipyn - Home Page</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}" sizes="32x32"/>
+</head>
+<body>
+<table height="75" border="0" cellspacing="0" cellpadding="0">
+<div id="left">
+    <img src="{{ url_for('static', filename='logo.png') }}" class="logo"/>
+</div>
+<div id="right">
+    <a href="{{ auth_url }}"><img src="{{ url_for('static', filename='button.png') }}" class="button"/></a>
+</div>
+</table>
+<ul id="list">
+	<li><h1>The Spotipyn Project</h1></li>
+	<li>Spotipyn is a web-based application built using Spotipy that allows users to add annotations to songs.</li>
+	<li>These annotations, or 'pins', are able to be freely moved around and can have text attached to them.</li>
+	<li>Our repository is open-source and able to be edited from our <a href=https://github.com/lunarmint/spotipyn>GitHub.</a></li>
+	<li>To start, click the login button at the top right corner to authenticate with your Spotify account!</li>
+</ul>
+
+</body>
+</html>
