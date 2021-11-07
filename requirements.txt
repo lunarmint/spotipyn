@@ -3,7 +3,7 @@ dataset~=1.5.0                      # https://dataset.readthedocs.io/en/latest/
 Flask~=2.0.2                        # https://flask.palletsprojects.com/en/2.0.x/
 Flask-Session~=0.4.0                # https://flask-session.readthedocs.io/en/latest/
 gunicorn~=20.1.0                    # https://docs.gunicorn.org/en/20.1.0/
-mysqlclient==2.0.3                  # https://pypi.org/project/mysqlclient/2.0.3/
+mysqlclient~=2.0.3                  # https://pypi.org/project/mysqlclient/2.0.3/
 pyaml_env~=1.1.1                    # https://github.com/mkaranasou/pyaml_env
 spotipy~=2.19.0                     # https://spotipy.readthedocs.io/en/latest/
 SQLAlchemy~=1.4.26                  # https://pypi.org/project/SQLAlchemy/
