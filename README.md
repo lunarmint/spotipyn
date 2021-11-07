@@ -1,8 +1,11 @@
 # Spotipyn
 A Spotify-based web application that allows users to place annotations, or 'pins', into songs at specified timestamps. These pins are able to be customized with a message and a duration.
 
+## Prerequisites
+1. [Install MariaDB](https://mariadb.org/) (v10.6.4) to create a local database source in your IDE. If you're using PyCharm, see the instructions [here](https://www.jetbrains.com/help/pycharm/mariadb.html).
+
 ## Getting started
-**Step 1:** Clone the repository from terminal `git clone https://github.com/lunarmint/spotipyn.git`.
+**Step 1:** Clone the repository from terminal `git clone https://github.com/lunarmint/spotipyn.git`. If you use GitHub Desktop, clone the repository with it will achieve similar result.
 
 **Step 2:** Create a copy of `.env.example` file, rename it to `.env` and fill in all the required variables as specified in the file.
 
