@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Spotipyn - Login Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}" sizes="32x32"/>
+</head>
+<body>
+<div id="login">
+    {% block login %}
+    {% endblock %}
+</div>
+
+
+<a href="/logout">Sign Out</a>
+
+<div id="player">
+    {% block player %}{% endblock %}
+</div>
+
+</body>
