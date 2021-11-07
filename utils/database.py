@@ -37,11 +37,11 @@ class Database:
         db = self.get()
 
         # Create user_info table and columns to store the user-related variables as a JSON object.
-        if "user_info" not in db:
-            mod_logs = db.create_table("user_info")
-            mod_logs.create_column("user_id", db.types.bigint)
-            mod_logs.create_column("value", db.types.json)
-            log.info("Created missing table: user_info")
+        if "pins" not in db:
+            pins = db.create_table("pins")
+            pins.create_column("user_id", db.types.string)
+            pins.create_column("value", db.types.json)
+            log.info("Created missing table: pins")
 
         # Commit the changes to the database and close the connection.
         db.commit()
