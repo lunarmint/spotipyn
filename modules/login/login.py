@@ -1,14 +1,13 @@
 import logging
 import secrets
 import string
-import time
 import uuid
 
 import spotipy
 from flask import session, request, redirect, render_template, Blueprint, url_for
 
-from utils.config import config
 from utils.auth import session_cache_path
+from utils.config import config
 
 log = logging.getLogger(__name__)
 

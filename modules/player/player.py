@@ -3,10 +3,9 @@ import logging
 import spotipy
 from flask import Blueprint, render_template
 
-from utils.auth import config
-from utils.user_template import create_user
 from utils import database
 from utils.auth import get_auth_manager
+from utils.user_template import create_user
 
 log = logging.getLogger(__name__)
 
