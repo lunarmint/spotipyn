@@ -18,8 +18,8 @@ A Spotify-based web application that allows users to place annotations, or 'pins
 ## Contributing
 Any contributions are more than welcomed. Please follow these steps to get your work merged in:
 
-1. Clone the repository from terminal `git clone https://github.com/lunarmint/spotipyn.git`.
-2. Create a new branch `git checkout -b branch_name` for your work.
+1. Clone the repository.
+2. Create a new branch `git checkout -b branch_name` (or create one with GitHub Desktop from the branch view) for your work.
 3. Make changes in the code.
 4. Open a Pull Request with a comprehensive list of changes.
   
