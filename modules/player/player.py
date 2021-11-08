@@ -50,13 +50,13 @@ def player():
         user = users.insert(dict(user_id=spotify_user["id"], value=user_json))
 
     # Load the JSON object in the "value" field.
-    pins = json.loads(user["value"])
+    # pins = json.loads(user["value"])
 
     # TODO: Do stuffs with the unpacked JSON object.
 
     # Dump the modified JSON into the db and close it.
-    pins_json = json.dumps(pins)
-    users.update(dict(id=user["id"], value=pins_json), ["id"])
+    # pins_json = json.dumps(pins)
+    # users.update(dict(id=user["id"], value=pins_json), ["id"])
     db.commit()
     db.close()
 
