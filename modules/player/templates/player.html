@@ -1,4 +1,67 @@
 {% extends "base.html" %}
 {% block player %}
-<p>{{ spotify.current_user() }}</p>
+
+<button id="resume">Resume</button>
+<button id="pause">Pause</button>
+<button id="previousTrack">Previous Track</button>
+<button id="nextTrack">Next Track</button>
+
+<script src="https://sdk.scdn.co/spotify-player.js"></script>
+<script src="{{ url_for('player_blueprint.static', filename='js/player.js') }}"></script>
+<script>
+    window.onSpotifyWebPlaybackSDKReady = () => {
+    const token = "{{ access_token }}";
+    const player = new Spotify.Player({
+        name: "Spotipyn Player",
+        getOAuthToken: cb => {
+            cb(token);
+        },
+        volume: 0.5
+    });
+
+    // Log the player state and status on initialization to the console.
+    player.addListener("ready", ({device_id}) => {
+        console.log('Ready with Device ID', device_id);
+    });
+
+    player.addListener("not_ready", ({device_id}) => {
+        console.log("Device ID has gone offline", device_id);
+    });
+
+    player.addListener("initialization_error", ({message}) => {
+        console.error(message);
+    });
+
+    player.addListener("authentication_error", ({message}) => {
+        console.error(message);
+    });
+
+    player.addListener("account_error", ({message}) => {
+        console.error(message);
+    });
+
+    // Resume button.
+    document.getElementById("resume").onclick = function () {
+        player.resume();
+    };
+
+    // Pause button.
+    document.getElementById("pause").onclick = function () {
+        player.pause();
+    };
+
+    // Previous track button.
+    document.getElementById("previousTrack").onclick = function () {
+        player.previousTrack();
+    };
+
+    // Next track button.
+    document.getElementById("nextTrack").onclick = function () {
+        player.nextTrack();
+    };
+
+    // Connect to the player object.
+    player.connect();
+}
+</script>
 {% endblock %}
