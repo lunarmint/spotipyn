@@ -1,67 +1,124 @@
 {% extends "base.html" %}
 {% block player %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('player_blueprint.static', filename='css/styles.css') }}">
 
-<button id="resume">Resume</button>
-<button id="pause">Pause</button>
-<button id="previousTrack">Previous Track</button>
-<button id="nextTrack">Next Track</button>
+<div class="footer">
+    <div class="albumCover">
+        <img src="{{ url_for('player_blueprint.static', filename='img/albumcover.png') }}" alt="Album Cover"/>
+    </div>
+
+    <div class="song">
+        <p>No Song Available</p>
+    </div>
+
+    <div class="artist">
+        <p>No Artist Available</p>
+    </div>
+
+    <div class="controller">
+        <img src="{{ url_for('player_blueprint.static', filename='img/shufflebutton.png') }}" id="shuffle" alt="Shuffle"/>
+        <img src="{{ url_for('player_blueprint.static', filename='img/backwardbutton.png') }}" id="previousTrack" alt="Previous Track"/>
+        <img src="{{ url_for('player_blueprint.static', filename='img/playbutton.png') }}" id="play" alt="Play/Pause">
+        <img src="{{ url_for('player_blueprint.static', filename='img/forwardbutton.png') }}" id="nextTrack" alt="Next Track"/>
+        <img src="{{ url_for('player_blueprint.static', filename='img/loopbutton.png') }}" id="loop" alt="Album Cover"/>
+    </div>
+
+    <div class="volume"></div>
+</div>
 
 <script src="https://sdk.scdn.co/spotify-player.js"></script>
 <script src="{{ url_for('player_blueprint.static', filename='js/player.js') }}"></script>
 <script>
     window.onSpotifyWebPlaybackSDKReady = () => {
-    const token = "{{ access_token }}";
-    const player = new Spotify.Player({
-        name: "Spotipyn Player",
-        getOAuthToken: cb => {
-            cb(token);
-        },
-        volume: 0.5
-    });
+        const token = "{{ access_token }}";
+        const player = new Spotify.Player({
+            name: "Spotipyn Player",
+            getOAuthToken: cb => {
+                cb(token);
+            },
+            volume: 0.5
+        });
 
-    // Log the player state and status on initialization to the console.
-    player.addListener("ready", ({device_id}) => {
-        console.log('Ready with Device ID', device_id);
-    });
+        // Log the player state and status on initialization to the console.
+        player.addListener("ready", ({device_id}) => {
+            console.log('Ready with Device ID', device_id);
+        });
 
-    player.addListener("not_ready", ({device_id}) => {
-        console.log("Device ID has gone offline", device_id);
-    });
+        player.addListener("not_ready", ({device_id}) => {
+            console.log("Device ID has gone offline", device_id);
+        });
 
-    player.addListener("initialization_error", ({message}) => {
-        console.error(message);
-    });
+        player.addListener("initialization_error", ({message}) => {
+            console.error(message);
+        });
 
-    player.addListener("authentication_error", ({message}) => {
-        console.error(message);
-    });
+        player.addListener("authentication_error", ({message}) => {
+            console.error(message);
+        });
 
-    player.addListener("account_error", ({message}) => {
-        console.error(message);
-    });
+        player.addListener("account_error", ({message}) => {
+            console.error(message);
+        });
 
-    // Resume button.
-    document.getElementById("resume").onclick = function () {
-        player.resume();
-    };
+        // Play/pause button.
+        console.log(document.getElementsByClassName("controller")[0].children["play"])
+        document.getElementsByClassName("controller")[0].children["play"].onclick = function () {
+            player.togglePlay();
+            updateState();
+            player.getCurrentState().then(state => {
+                if (!state) {
+                    console.error('No song is being detected by the Web Playback SDK');
+                    return;
+                }
+                if (state.paused) {
+                    document.getElementsByClassName("controller")[0].children["play"].src = "{{ url_for('player_blueprint.static', filename='img/pausebutton.png') }}"
+                } else {
+                    document.getElementsByClassName("controller")[0].children["play"].src = "{{ url_for('player_blueprint.static', filename='img/playbutton.png') }}"
+                }
+            });
+        };
 
-    // Pause button.
-    document.getElementById("pause").onclick = function () {
-        player.pause();
-    };
+        // Previous track button.
+        document.getElementsByClassName("controller")[0].children["previousTrack"].onclick = function () {
+            player.previousTrack();
+            updateState();
+        };
 
-    // Previous track button.
-    document.getElementById("previousTrack").onclick = function () {
-        player.previousTrack();
-    };
+        // Next track button.
+        document.getElementsByClassName("controller")[0].children["nextTrack"].onclick = function () {
+            player.nextTrack();
+            updateState();
+        };
 
-    // Next track button.
-    document.getElementById("nextTrack").onclick = function () {
-        player.nextTrack();
-    };
+        async function updateState() {
+            /*
+            Spotify API has a delay in response. Without this, it would result in a return of an outdated WebPlaybackState object, which would lead
+            to the song name not being updated correctly. Basically an API limitation. 500ms is a safe number to guarantee an up-to-date response.
+             */
+            await sleep(500);
+            player.getCurrentState().then(state => {
+                if (!state) {
+                    console.error('No song is being detected by the Web Playback SDK');
+                    return;
+                }
 
-    // Connect to the player object.
-    player.connect();
-}
+                // Update the p tag indicating the song name being played.
+                document.getElementsByClassName("song")[0].firstElementChild.innerText = state.track_window.current_track.name;
+                document.getElementsByClassName("artist")[0].lastElementChild.innerText = state.track_window.current_track.artists[0].name;
+                document.getElementsByClassName("albumCover")[0].firstElementChild.src = state.track_window.current_track.album.images[0].url;
+
+                console.log(state)
+            });
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        player.connect();
+    }
 </script>
 {% endblock %}
