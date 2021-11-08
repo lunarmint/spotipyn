@@ -2,12 +2,12 @@ body {
     background-color: black;
     text-align: center;
     font-family: "Franklin Gothic Medium";
-    font-size: 28px;
+    font-size: 62.5%;
     color: #FFFFFF;
 }
 
 h1 {
-    font-size: 72px;
+    font-size: 5rem;
     font-weight: bold;
 }
 
@@ -39,7 +39,8 @@ h1 {
 }
 
 #list li {
-    line-height: 50px;
+    line-height: 3rem;
+    font-size: 2rem;
     opacity: 0;
     animation: fadeIn 1s ease-in both;
 }
