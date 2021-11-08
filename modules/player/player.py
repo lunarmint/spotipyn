@@ -1,3 +1,4 @@
+import json
 import logging
 
 import spotipy
@@ -20,20 +21,42 @@ player_blueprint = Blueprint(
 
 @player_blueprint.route("/")
 def player():
-    auth_manager = get_auth_manager()
-    spotify = spotipy.Spotify(auth_manager=auth_manager)
-    spotify_user = spotify.current_user()
+    """The Flask backend to render the player object."""
 
+    # Fetch the OAuth2 object.
+    auth_manager = get_auth_manager()
+
+    # Initialize the Spotify object to do stuffs.
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
+
+    # Get the access token value from the token dict in OAuth2 object.
     access_token = auth_manager.get_access_token()["access_token"]
 
-    db = database.Database().get()
-    pins = db["pins"]
-    user = pins.find_one(user_id=spotify_user["id"])
+    # Get the current user info dict.
+    spotify_user = spotify.current_user()
 
+    # Connect to the database.
+    db = database.Database().get()
+
+    # Get the users table.
+    users = db["users"]
+
+    # Find the user from the table with a specified ID.
+    user = users.find_one(user_id=spotify_user["id"])
+
+    # If the user does not exist, initialize their entry in the database.
     if not user:
         user_json = create_user()
-        pins.insert(dict(user_id=spotify_user["id"], value=user_json))
+        user = users.insert(dict(user_id=spotify_user["id"], value=user_json))
 
+    # Load the JSON object in the "value" field.
+    pins = json.loads(user["value"])
+
+    # TODO: Do stuffs with the unpacked JSON object.
+
+    # Dump the modified JSON into the db and close it.
+    pins_json = json.dumps(pins)
+    users.update(dict(id=user["id"], value=pins_json), ["id"])
     db.commit()
     db.close()
 
