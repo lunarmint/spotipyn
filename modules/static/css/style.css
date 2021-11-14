@@ -12,41 +12,45 @@ h1 {
 }
 
 #sidebar {
-  position:absolute;
-  top:0;
-  left:0;
-  width:200px;
-  height:100%;
-  background:#151719;
-  transition:all 300ms linear;
-}
-#sidebar.active {
-  left:-200px;
-}
-#sidebar .toggle-btn {
-  position:absolute;
-  left:220px;
-  top:10px;
-}
-#sidebar .toggle-btn span {
-  display:block;
-  width:30px;
-  height:5px;
-  background:#151719;
-  margin:5px 0;
-  cursor:pointer;
-}
-#sidebar div.list div.item {
-  padding:15px 10px;
-  border-bottom:1px solid #444;
-  color:#fcfcfc;
-  text-transform:uppercase;
-  font-size:12px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background: #151719;
+    transition: all 300ms linear;
 }
 
-#sidebar div.list div.item a{
-  color:#fcfcfc;
-  text-decoration: none;
+#sidebar.active {
+    left: -200px;
+}
+
+#sidebar .toggle-btn {
+    position: absolute;
+    left: 220px;
+    top: 10px;
+}
+
+#sidebar .toggle-btn span {
+    display: block;
+    width: 30px;
+    height: 5px;
+    background: #151719;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+#sidebar div.list div.item {
+    padding: 15px 10px;
+    border-bottom: 1px solid #444;
+    color: #fcfcfc;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+#sidebar div.list div.item a {
+    color: #fcfcfc;
+    text-decoration: none;
 }
 
 #left {
