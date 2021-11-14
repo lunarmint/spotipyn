@@ -13,8 +13,8 @@ h1 {
 
 #sidebar {
   position:absolute;
-  top:0px;
-  left:0px;
+  top:0;
+  left:0;
   width:200px;
   height:100%;
   background:#151719;
@@ -33,7 +33,7 @@ h1 {
   width:30px;
   height:5px;
   background:#151719;
-  margin:5px 0px;
+  margin:5px 0;
   cursor:pointer;
 }
 #sidebar div.list div.item {
@@ -55,8 +55,8 @@ h1 {
 
 #left img {
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
 }
 
 #right {
@@ -65,8 +65,8 @@ h1 {
 
 #right img {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: 0;
+    right: 0;
 }
 
 #list {
