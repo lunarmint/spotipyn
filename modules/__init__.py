@@ -7,6 +7,7 @@ from utils.config import config
 from modules.login.login import login_blueprint
 from modules.logout.logout import logout_blueprint
 from modules.player.player import player_blueprint
+from modules.playlist.playlist import playlist_blueprint
 
 log = logging.getLogger(__name__)
 
@@ -20,5 +21,6 @@ def create_app():
     app.register_blueprint(login_blueprint)
     app.register_blueprint(logout_blueprint)
     app.register_blueprint(player_blueprint)
+    app.register_blueprint(playlist_blueprint)
     Session(app)
     return app

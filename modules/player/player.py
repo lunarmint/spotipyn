@@ -36,18 +36,18 @@ def player():
     spotify_user = spotify.current_user()
 
     # Connect to the database.
-    db = database.Database().get()
+    # db = database.Database().get()
 
     # Get the users table.
-    users = db["users"]
+    # users = db["users"]
 
     # Find the user from the table with a specified ID.
-    user = users.find_one(user_id=spotify_user["id"])
+    # user = users.find_one(user_id=spotify_user["id"])
 
     # If the user does not exist, initialize their entry in the database.
-    if not user:
-        user_json = create_user()
-        user = users.insert(dict(user_id=spotify_user["id"], value=user_json))
+    # if not user:
+    #     user_json = create_user()
+    #     user = users.insert(dict(user_id=spotify_user["id"], value=user_json))
 
     # Load the JSON object in the "value" field.
     # pins = json.loads(user["value"])
@@ -57,7 +57,7 @@ def player():
     # Dump the modified JSON into the db and close it.
     # pins_json = json.dumps(pins)
     # users.update(dict(id=user["id"], value=pins_json), ["id"])
-    db.commit()
-    db.close()
+    # db.commit()
+    # db.close()
 
     return render_template("player.html", spotify=spotify, access_token=access_token)

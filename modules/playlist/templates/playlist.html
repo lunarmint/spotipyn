@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block playlist %}
+
+<link rel="stylesheet" href="{{ url_for('playlist_blueprint.static', filename='css/style.css') }}">
+<script src="{{ url_for('playlist_blueprint.static', filename='js/getUserPl.js') }}"></script>
+
+    <div class="playlistpage">
+
+        <div class="header">
+            <img src="{{ url_for('playlist_blueprint.static', filename='img/logo.png') }}" alt="Spotipyn logo"/>
+
+            <!-- <img src="Sample_User_Icon.png" alt="User" class="user" height="50"/> -->
+
+        </div>
+
+
+        <div class="userplaylists">
+            <p>User Playlist</p>
+        </div>
+
+
+        <div class="playlist">
+            <p>Playlist Name</p>
+        </div>
+
+
+        <div class="pinDisplay">
+            <p>Pin Display</p>
+        </div>
+
+    </div>
+{% endblock %}
