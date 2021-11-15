@@ -32,7 +32,7 @@
     grid-column-end: col3;
     grid-row-start: row1;
     grid-row-end: row2;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: 400;
     place-self: end start;
     text-align: left;
@@ -50,7 +50,7 @@
     grid-column-end: col3;
     grid-row-start: row2;
     grid-row-end: row3;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 100;
     place-self: start start;
     text-align: left;
@@ -75,7 +75,7 @@
 .controller > img {
     object-fit: scale-down;
     max-width: 100%;
-    max-height: 50%;
+    max-height: 45%;
     margin: auto;
 }
 
