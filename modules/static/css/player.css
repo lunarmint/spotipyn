@@ -92,14 +92,6 @@
     width: 100%;
 }
 
-.playback > p {
-
-}
-
-.playback > #playback-bar {
-
-}
-
 .volume {
     grid-column-start: col4;
     grid-column-end: col5;
