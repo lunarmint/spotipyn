@@ -2,7 +2,7 @@ import spotipy
 from flask import Blueprint, render_template
 from utils.auth import get_auth_manager
 
-playlist_blueprint = Blueprint('playlist', __name__,
+playlist_blueprint = Blueprint('playlist_blueprint', __name__,
                                template_folder="templates",
                                static_folder="static",
                                url_prefix="/playlist",
@@ -26,9 +26,3 @@ def playlist():
 
     return render_template("playlist.html", spotify=spotify, access_token=access_token)
 
-
-@playlist_blueprint.route('/getplaylists')
-def getplaylists():
-
-
-    return
