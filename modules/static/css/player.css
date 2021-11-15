@@ -1,0 +1,108 @@
+.player {
+    background: rgba(24, 24, 24);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 15%;
+    display: grid;
+    grid-template-columns: [col1] 12.5% [col2] 12.5% [col3] 50% [col4] 25% [col5];
+    grid-template-rows: [row1] 50% [row2] 50% [row3];
+}
+
+.album-cover {
+    display: flex;
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: row1;
+    grid-row-end: row3;
+    align-self: center;
+    justify-content: center;
+}
+
+.album-cover > img {
+    object-fit: scale-down;
+    max-width: 45%;
+    margin: 0;
+}
+
+.song {
+    display: block;
+    grid-column-start: col2;
+    grid-column-end: col3;
+    grid-row-start: row1;
+    grid-row-end: row2;
+    font-size: 1.6rem;
+    font-weight: 400;
+    place-self: end start;
+    text-align: left;
+    width: 100%;
+}
+
+.song > p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.artist {
+    grid-column-start: col2;
+    grid-column-end: col3;
+    grid-row-start: row2;
+    grid-row-end: row3;
+    font-size: 1.4rem;
+    font-weight: 100;
+    place-self: start start;
+    text-align: left;
+    width: 100%;
+}
+
+.artist > p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.controller {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-column-start: col3;
+    grid-column-end: col4;
+    grid-row-start: row1;
+    grid-row-end: row2;
+}
+
+.controller > img {
+    object-fit: scale-down;
+    max-width: 100%;
+    max-height: 50%;
+    margin: auto;
+}
+
+.playback {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-start: col3;
+    grid-column-end: col4;
+    grid-row-start: row2;
+    grid-row-end: row3;
+    font-size: 1.4rem;
+    place-self: end start;
+    text-align: center;
+    width: 100%;
+}
+
+.playback > p {
+
+}
+
+.playback > #playback-bar {
+
+}
+
+.volume {
+    grid-column-start: col4;
+    grid-column-end: col5;
+    grid-row-start: row2;
+    grid-row-end: row3;
+}

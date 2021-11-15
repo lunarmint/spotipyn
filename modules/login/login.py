@@ -48,5 +48,11 @@ def index():
         auth_url = auth_manager.get_authorize_url()
         return render_template("login.html", auth_url=auth_url)
 
+    # Initialize the Spotify object to do stuffs.
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
+
+    # Get the access token value from the token dict in OAuth2 object.
+    access_token = auth_manager.get_access_token()["access_token"]
+
     # If a token is found (logged in), render the content from index instead.
-    return render_template("redirect.html"), {"Refresh": f"3; url={url_for('player_blueprint.player')}"}
+    return render_template("base.html", spotify=spotify, access_token=access_token)

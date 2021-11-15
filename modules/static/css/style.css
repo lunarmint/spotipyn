@@ -1,7 +1,6 @@
 body {
     background-color: black;
-    text-align: center;
-    font-family: "Franklin Gothic Medium";
+    font-family: "Montserrat", sans-serif;
     font-size: 62.5%;
     color: #FFFFFF;
 }
@@ -15,27 +14,27 @@ h1 {
     position: absolute;
     top: 0;
     left: 0;
-    width: 200px;
-    height: 100%;
-    background: #151719;
+    width: 15%;
+    height: 85%;
+    background: rgba(24, 24, 24);
     transition: all 300ms linear;
 }
 
 #sidebar.active {
-    left: -200px;
+    left: -15%;
 }
 
 #sidebar .toggle-btn {
     position: absolute;
-    left: 220px;
-    top: 10px;
+    left: 110%;
+    top: 2%;
 }
 
 #sidebar .toggle-btn span {
     display: block;
     width: 30px;
     height: 5px;
-    background: #151719;
+    background: #ffffff;
     margin: 5px 0;
     cursor: pointer;
 }
@@ -44,8 +43,7 @@ h1 {
     padding: 15px 10px;
     border-bottom: 1px solid #444;
     color: #fcfcfc;
-    text-transform: uppercase;
-    font-size: 12px;
+    font-size: 1.5rem;
 }
 
 #sidebar div.list div.item a {
