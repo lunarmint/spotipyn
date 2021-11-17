@@ -41,7 +41,7 @@ def index():
     # Redirect the user back to root again after authentication.
     if request.args.get("code"):
         auth_manager.get_access_token(request.args.get("code"), as_dict=False)
-        return redirect("http://127.0.0.1:5000/")
+        return redirect("/")
 
     # If no token is found, render the base.html with the authentication link.
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
