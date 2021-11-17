@@ -74,27 +74,37 @@
 
 .controller > img {
     object-fit: scale-down;
-    max-width: 100%;
+    max-width: 25%;
     max-height: 45%;
 }
 
 .controller > #shuffle {
+    grid-column-start: col1;
+    grid-column-end: col2;
     place-self: center end;
 }
 
 .controller > #fast_backwards {
+    grid-column-start: col2;
+    grid-column-end: col3;
     place-self: center end;
 }
 
 .controller > #play {
+    grid-column-start: col3;
+    grid-column-end: col4;
     place-self: center center;
 }
 
 .controller > #fast_forward {
+    grid-column-start: col4;
+    grid-column-end: col5;
     place-self: center start;
 }
 
 .controller > #loop {
+    grid-column-start: col5;
+    grid-column-end: col6;
     place-self: center start;
 }
 
@@ -109,13 +119,14 @@
 
 .playback > p {
     font-size: 1.4rem;
-    place-self: center center;
+    align-self: center;
     text-align: center;
     line-height: 0;
     width: 100%;
 }
 
 .playback > #playback-bar {
+    align-self: center;
     width: 100%;
 }
 
