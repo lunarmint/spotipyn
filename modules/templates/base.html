@@ -79,7 +79,7 @@
 
     <div class="playback">
         <p id="playback-start">0:00</p>
-        <div id="playback-bar"></div>
+        <progress id="playback-bar" value="0" max="0"></progress>
         <p id="playback-end">0:00</p>
     </div>
 
@@ -98,7 +98,9 @@
                 volume: 0.5
             });
 
-            // Log the player state and status on initialization to the console.
+            /**
+             * Log the player state and status on initialization to the console.
+             */
             player.addListener("ready", ({device_id}) => {
                 console.log('Ready with Device ID', device_id);
             });
@@ -126,6 +128,9 @@
             const shuffle_button = document.getElementById("shuffle");
             const loop_button = document.getElementById("loop");
 
+            /**
+             * Change the shuffle and loop button state to blue/white automatically when its change of state is detected.
+             */
             player.addListener("player_state_changed", ({shuffle}) => {
                 if (shuffle) {
                     shuffle_button.src = "{{ url_for('static', filename='img/player/shuffle_button_toggled.png') }}";
@@ -142,19 +147,27 @@
                 }
             });
 
-            // Change the button to its play/pause version accordingly to the state of the player.
-            play_button.onclick = function () {
+            /**
+             * Swap the state of the play/pause button accordingly to the current song playback state, and trigger/stop the
+             * timer and progress bar when the song is play/paused.
+             * @returns {Promise<void>}
+             */
+            play_button.onclick = async function () {
                 player.togglePlay();
-                updateState();
+                await updateState();
+                let timer = window.setInterval(updatePosition, 1000);
                 player.getCurrentState().then(state => {
                     if (!state) {
                         return;
                     }
 
                     if (state.paused) {
-                        play_button.src = "{{ url_for('static', filename='img/player/pause_button_hover.png') }}";
-                    } else {
                         play_button.src = "{{ url_for('static', filename='img/player/play_button_hover.png') }}";
+                        clearInterval(timer);
+                    } else {
+                        play_button.src = "{{ url_for('static', filename='img/player/pause_button_hover.png') }}";
+                        // Start the playback progress bar when the song is played.
+                        window.setInterval(updatePosition, 1000);
                     }
                 });
             }
@@ -162,7 +175,9 @@
             // Location of the current object as url, turned into a string with trailing slash removed.
             const location = window.location.toString().replace(/\/+$/, "")
 
-            // Display the blue version of the current button on mouse hover.
+            /**
+             * Change the button to blue when the cursor is on the element.
+             */
             play_button.onmouseover = function () {
                 if (play_button.src === location + "{{ url_for('static', filename='img/player/play_button.png') }}") {
                     play_button.src = "{{ url_for('static', filename='img/player/play_button_hover.png') }}";
@@ -171,7 +186,9 @@
                 }
             }
 
-            // Return to the original version of the button on mouse exit.
+            /**
+             * Return the button to white when the cursor leaves the button.
+             */
             play_button.onmouseout = function () {
                 if (play_button.src === location + "{{ url_for('static', filename='img/player/play_button_hover.png') }}") {
                     play_button.src = "{{ url_for('static', filename='img/player/play_button.png') }}";
@@ -180,54 +197,133 @@
                 }
             }
 
-            fast_backwards.onclick = function () {
-                player.previousTrack();
-                updateState();
+            /**
+             * Single click to seek to position 0 of the current track.
+             * @returns {Promise<void>}
+             */
+            fast_backwards.onclick = async function () {
+                player.seek(0);
             }
 
+            /**
+             * Double click to jump to the next track.
+             * @returns {Promise<void>}
+             */
+            fast_backwards.ondblclick = async function () {
+                player.previousTrack();
+                await updateState();
+            }
+
+            /**
+             * Change the button to blue when the cursor is on the element.
+             */
             fast_backwards.onmouseover = function () {
                 fast_backwards.src = "{{ url_for('static', filename='img/player/fast_backwards_button_hover.png') }}";
             }
 
+            /**
+             * Return the button to white when the cursor leaves the button.
+             */
             fast_backwards.onmouseout = function () {
                 fast_backwards.src = "{{ url_for('static', filename='img/player/fast_backwards_button.png') }}";
             }
 
-            fast_forward.onclick = function () {
+            /**
+             * Single click to jump to the next track.
+             * @returns {Promise<void>}
+             */
+            fast_forward.onclick = async function () {
                 player.nextTrack();
-                updateState();
+                await updateState();
             };
 
+            /**
+             * Change the button to blue when the cursor is on the element.
+             */
             fast_forward.onmouseover = function () {
                 fast_forward.src = "{{ url_for('static', filename='img/player/fast_forward_button_hover.png') }}";
             }
 
+            /**
+             * Return the button to white when the cursor leaves the button.
+             */
             fast_forward.onmouseout = function () {
                 fast_forward.src = "{{ url_for('static', filename='img/player/fast_forward_button.png') }}";
             }
 
+            /**
+             * Update the song name, artist name, album cover, and the song duration of a track whenever the user interact with the player.
+             *
+             * Note: Spotify API has a delay in response. Without this, it would result in a return of an outdated WebPlaybackState object,
+             * which would lead to the song name not being updated correctly and a plethora of other related problems. Basically an API limitation.
+             * 250ms is a safe number to guarantee an up-to-date response.
+             *
+             * @returns {Promise<void>}
+             */
             async function updateState() {
-                /*
-                Spotify API has a delay in response. Without this, it would result in a return of an outdated WebPlaybackState object, which would lead
-                to the song name not being updated correctly. Basically an API limitation. 500ms is a safe number to guarantee an up-to-date response.
-                 */
-                await sleep(500);
+                await sleep(250);
                 player.getCurrentState().then(state => {
                     if (!state) {
                         return;
                     }
 
-                    // Update the p tag indicating the song name being played.
                     document.getElementById("song-name").innerText = state.track_window.current_track.name;
                     document.getElementById("artist-name").innerText = state.track_window.current_track.artists[0].name;
                     document.getElementById("album-cover").src = state.track_window.current_track.album.images[0].url;
+
+                    const duration_ms = state.track_window.current_track.duration_ms;
+                    const time = function () {
+                        const minutes = Math.floor(duration_ms / 60000);
+                        const seconds = ((duration_ms % 60000) / 1000).toFixed(0);
+                        // If second equals to 60, +1 to minute instead.
+                        if (seconds === "60") {
+                            return (minutes + 1) + ":00";
+                        } else {
+                            // If the second is single digit, add a 0 before the value.
+                            return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+                        }
+                    }
+                    document.getElementById("playback-bar").max = duration_ms;
+                    document.getElementById("playback-end").innerText = time();
+                    document.getElementById("playback-bar").value = state.position;
                 });
             }
 
+            /**
+             * Get the position of the current playing track in ms and update the progress bar and the timer on the left accordingly.
+             */
+            function updatePosition() {
+                player.getCurrentState().then(state => {
+                    if (!state) {
+                        return;
+                    }
+
+                    const position = state.position;
+                    const time = function () {
+                        const minutes = Math.floor(position / 60000);
+                        const seconds = ((position % 60000) / 1000).toFixed(0);
+                        if (seconds === "60") {
+                            return (minutes + 1) + ":00";
+                        } else {
+                            return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+                        }
+                    }
+
+                    document.getElementById("playback-bar").value = position;
+                    document.getElementById("playback-start").innerText = time();
+                });
+            }
+
+            /**
+             * Set a delay for the code asynchronously similarly to Python's time.sleep().
+             * @param ms - The time in miliseconds.
+             * @returns {Promise<unknown>}
+             */
             function sleep(ms) {
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
 
+            // Connect the player with the SDK.
             player.connect();
         }
     </script>

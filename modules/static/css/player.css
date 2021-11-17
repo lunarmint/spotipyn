@@ -81,14 +81,22 @@
 
 .playback {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: [col1] 12.5% [col2] 75% [col3] 12.5% [col4];
     grid-column-start: col3;
     grid-column-end: col4;
     grid-row-start: row2;
     grid-row-end: row3;
+}
+
+.playback > p {
     font-size: 1.4rem;
-    place-self: end start;
+    place-self: center center;
     text-align: center;
+    line-height: 0;
+    width: 100%;
+}
+
+.playback > #playback-bar {
     width: 100%;
 }
 
