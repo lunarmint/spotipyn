@@ -42,6 +42,9 @@ def create_pin(message, duration, time_stamp):
 
     pins.insert(dict(user_id=spotify_user["id"], value=updated_json))
 
+    db.commit()
+    db.close()
+
 
 def edit_pin(time_stamp, new_message, new_duration):
     auth_manager = get_auth_manager()
@@ -66,6 +69,9 @@ def edit_pin(time_stamp, new_message, new_duration):
     updated_json = json.dumps(value)
 
     pins.insert(dict(user_id=spotify_user["id"], value=updated_json))
+
+    db.commit()
+    db.close()
 
 
 def delete_pin(time_stamp):
@@ -97,3 +103,6 @@ def delete_pin(time_stamp):
         updated_json = json.dumps(value)
 
     pins.insert(dict(user_id=spotify_user["id"], value=updated_json))
+
+    db.commit()
+    db.close()
