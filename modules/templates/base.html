@@ -147,8 +147,10 @@
 
                 if (repeat_mode === 0) {
                     loop_button.src = "{{ url_for('static', filename='img/player/loop_button.png') }}";
+                } else if (repeat_mode === 1) {
+                    loop_button.src = "{{ url_for('static', filename='img/player/loop_button_toggled_1.png') }}";
                 } else {
-                    loop_button.src = "{{ url_for('static', filename='img/player/loop_button_toggled.png') }}";
+                    loop_button.src = "{{ url_for('static', filename='img/player/loop_button_toggled_2.png') }}";
                 }
 
                 player.getVolume().then(volume => {
@@ -269,14 +271,14 @@
              * Change the button to blue when the cursor is on the element.
              */
             volume_button.onmouseover = function () {
-                volume_button.src = "{{ url_for('static', filename='img/player/play_button_hover.png') }}";
+                volume_button.src = "{{ url_for('static', filename='img/player/unmute_button_hover.png') }}";
             }
 
             /**
              * Return the button to white when the cursor leaves the button.
              */
             volume_button.onmouseout = function () {
-                volume_button.src = "{{ url_for('static', filename='img/player/play_button.png') }}";
+                volume_button.src = "{{ url_for('static', filename='img/player/unmute_button.png') }}";
             }
 
             /**
