@@ -65,7 +65,7 @@
 
 .controller {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: [col1] 20% [col2] 20% [col3] 20% [col4] 20% [col5] 20% [col6];
     grid-column-start: col3;
     grid-column-end: col4;
     grid-row-start: row1;
@@ -76,7 +76,26 @@
     object-fit: scale-down;
     max-width: 100%;
     max-height: 45%;
-    margin: auto;
+}
+
+.controller > #shuffle {
+    place-self: center end;
+}
+
+.controller > #fast_backwards {
+    place-self: center end;
+}
+
+.controller > #play {
+    place-self: center center;
+}
+
+.controller > #fast_forward {
+    place-self: center start;
+}
+
+.controller > #loop {
+    place-self: center start;
 }
 
 .playback {
