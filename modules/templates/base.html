@@ -83,7 +83,10 @@
         <p id="playback-end">0:00</p>
     </div>
 
-    <div class="volume"></div>
+    <div class="volume">
+        <img src="{{ url_for('static', filename='img/player/play_button.png') }}" id="volume" alt="Volume"/>
+        <label for="volume-bar"></label><input type="range" id="volume-bar" name="volume-bar" min="0" max="1" value="0" step="0.05">
+    </div>
 
     <!-- The bread and butter of the player. -->
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
@@ -95,7 +98,7 @@
                 getOAuthToken: cb => {
                     cb(token);
                 },
-                volume: 0.5
+                volume: 0.75
             });
 
             /**
@@ -127,17 +130,15 @@
             const fast_forward = document.getElementById("fast_forward");
             const shuffle_button = document.getElementById("shuffle");
             const loop_button = document.getElementById("loop");
+            const volume_button = document.getElementById("volume");
+            const volume_bar = document.getElementById("volume-bar");
 
             /**
              * Change the shuffle and loop button state to blue/white automatically when its change of state is detected.
              *
              * Also attempt to update the song name, artist, album art, and timer during the first 5% progress on the new song.
              */
-            player.addListener("player_state_changed", ({
-                shuffle,
-                repeat_mode,
-                position,
-            }) => {
+            player.addListener("player_state_changed", ({shuffle, repeat_mode, position}) => {
                 if (shuffle) {
                     shuffle_button.src = "{{ url_for('static', filename='img/player/shuffle_button_toggled.png') }}";
                 } else {
@@ -149,6 +150,10 @@
                 } else {
                     loop_button.src = "{{ url_for('static', filename='img/player/loop_button_toggled.png') }}";
                 }
+
+                player.getVolume().then(volume => {
+                    volume_bar.value = volume;
+                });
 
                 const max = document.getElementById("playback-bar").max;
                 if (position / max < 0.05) {
@@ -259,6 +264,51 @@
             fast_forward.onmouseout = function () {
                 fast_forward.src = "{{ url_for('static', filename='img/player/fast_forward_button.png') }}";
             }
+
+            /**
+             * Change the button to blue when the cursor is on the element.
+             */
+            volume_button.onmouseover = function () {
+                volume_button.src = "{{ url_for('static', filename='img/player/play_button_hover.png') }}";
+            }
+
+            /**
+             * Return the button to white when the cursor leaves the button.
+             */
+            volume_button.onmouseout = function () {
+                volume_button.src = "{{ url_for('static', filename='img/player/play_button.png') }}";
+            }
+
+            /**
+             * Update the volume of the player when a change in input value is detected, and change the volume icon to mute if = 0,
+             * as well as apply an alternative color when the slider is being clicked on.
+             */
+            volume_bar.addEventListener("input", function () {
+                let volume = volume_bar.value;
+                player.setVolume(volume);
+
+                if (volume === "0") {
+                    volume_button.src = "{{ url_for('static', filename='img/player/mute_button_hover.png') }}";
+
+                    volume_bar.onmousedown = function () {
+                        volume_button.src = "{{ url_for('static', filename='img/player/mute_button_hover.png') }}";
+                    }
+
+                    volume_bar.onmouseup = function () {
+                        volume_button.src = "{{ url_for('static', filename='img/player/mute_button.png') }}";
+                    }
+                } else {
+                    volume_button.src = "{{ url_for('static', filename='img/player/unmute_button_hover.png') }}";
+
+                    volume_bar.onmousedown = function () {
+                        volume_button.src = "{{ url_for('static', filename='img/player/unmute_button_hover.png') }}";
+                    }
+
+                    volume_bar.onmouseup = function () {
+                        volume_button.src = "{{ url_for('static', filename='img/player/unmute_button.png') }}";
+                    }
+                }
+            });
 
             /**
              * Update the song name, artist name, album cover, and the song duration of a track whenever the user interact with the player.

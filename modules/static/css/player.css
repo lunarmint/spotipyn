@@ -1,13 +1,13 @@
 .player {
     background: rgba(24, 24, 24);
     position: fixed;
+    display: grid;
+    grid-template-columns: [col1] 12.5% [col2] 12.5% [col3] 50% [col4] 25% [col5];
+    grid-template-rows: [row1] 50% [row2] 50% [row3];
     bottom: 0;
     left: 0;
     width: 100%;
     height: 15%;
-    display: grid;
-    grid-template-columns: [col1] 12.5% [col2] 12.5% [col3] 50% [col4] 25% [col5];
-    grid-template-rows: [row1] 50% [row2] 50% [row3];
 }
 
 .album-cover {
@@ -65,7 +65,7 @@
 
 .controller {
     display: grid;
-    grid-template-columns: [col1] 20% [col2] 20% [col3] 20% [col4] 20% [col5] 20% [col6];
+    grid-template-columns: [controller-col1] 20% [controller-col2] 20% [controller-col3] 20% [controller-col4] 20% [controller-col5] 20% [controller-col6];
     grid-column-start: col3;
     grid-column-end: col4;
     grid-row-start: row1;
@@ -79,38 +79,38 @@
 }
 
 .controller > #shuffle {
-    grid-column-start: col1;
-    grid-column-end: col2;
+    grid-column-start: controller-col1;
+    grid-column-end: controller-col2;
     place-self: center end;
 }
 
 .controller > #fast_backwards {
-    grid-column-start: col2;
-    grid-column-end: col3;
+    grid-column-start: controller-col2;
+    grid-column-end: controller-col3;
     place-self: center end;
 }
 
 .controller > #play {
-    grid-column-start: col3;
-    grid-column-end: col4;
+    grid-column-start: controller-col3;
+    grid-column-end: controller-col4;
     place-self: center center;
 }
 
 .controller > #fast_forward {
-    grid-column-start: col4;
-    grid-column-end: col5;
+    grid-column-start: controller-col4;
+    grid-column-end: controller-col5;
     place-self: center start;
 }
 
 .controller > #loop {
-    grid-column-start: col5;
-    grid-column-end: col6;
+    grid-column-start: controller-col5;
+    grid-column-end: controller-col6;
     place-self: center start;
 }
 
 .playback {
     display: grid;
-    grid-template-columns: [col1] 12.5% [col2] 75% [col3] 12.5% [col4];
+    grid-template-columns: [playback-col1] 12.5% [playback-col2] 75% [playback-col3] 12.5% [playback-col4];
     grid-column-start: col3;
     grid-column-end: col4;
     grid-row-start: row2;
@@ -125,14 +125,51 @@
     width: 100%;
 }
 
+.playback > #playback-start {
+    grid-column-start: playback-col1;
+    grid-column-end: playback-col2;
+}
+
 .playback > #playback-bar {
+    grid-column-start: playback-col2;
+    grid-column-end: playback-col3;
     align-self: center;
     width: 100%;
 }
 
+.playback > #playback-end {
+    grid-column-start: playback-col3;
+    grid-column-end: playback-col4;
+}
+
 .volume {
+    display: grid;
+    grid-template-columns: [volume-col1] 50% [volume-col2] 50% [volume-col3];
     grid-column-start: col4;
     grid-column-end: col5;
-    grid-row-start: row2;
+    grid-row-start: row1;
     grid-row-end: row3;
+}
+
+.volume > img {
+    object-fit: scale-down;
+    max-width: 25%;
+    max-height: 25%;
+}
+
+.volume > #volume {
+    grid-column-start: volume-col1;
+    grid-column-end: volume-col2;
+    place-self: center end;
+}
+
+.volume > #volume-bar {
+    grid-column-start: volume-col2;
+    grid-column-end: volume-col3;
+    place-self: center center;
+    width: 75%;
+}
+
+.volume > label {
+    display: none;
 }
