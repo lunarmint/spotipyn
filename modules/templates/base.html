@@ -130,20 +130,29 @@
 
             /**
              * Change the shuffle and loop button state to blue/white automatically when its change of state is detected.
+             *
+             * Also attempt to update the song name, artist, album art, and timer during the first 5% progress on the new song.
              */
-            player.addListener("player_state_changed", ({shuffle}) => {
+            player.addListener("player_state_changed", ({
+                shuffle,
+                repeat_mode,
+                position,
+            }) => {
                 if (shuffle) {
                     shuffle_button.src = "{{ url_for('static', filename='img/player/shuffle_button_toggled.png') }}";
                 } else {
                     shuffle_button.src = "{{ url_for('static', filename='img/player/shuffle_button.png') }}";
                 }
-            });
 
-            player.addListener("player_state_changed", ({repeat_mode}) => {
                 if (repeat_mode === 0) {
                     loop_button.src = "{{ url_for('static', filename='img/player/loop_button.png') }}";
                 } else {
                     loop_button.src = "{{ url_for('static', filename='img/player/loop_button_toggled.png') }}";
+                }
+
+                const max = document.getElementById("playback-bar").max;
+                if (position / max < 0.05) {
+                    updateState();
                 }
             });
 
