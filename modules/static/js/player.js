@@ -1,6 +1,6 @@
 window.onSpotifyWebPlaybackSDKReady = () => {
     const player = new Spotify.Player({
-        name: "Spotipyn Player",
+        name: "Spotipyn",
         getOAuthToken: cb => {
             cb(token);
         },
@@ -240,19 +240,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             document.getElementById("album-cover").src = state.track_window.current_track.album.images[0].url;
 
             const duration_ms = state.track_window.current_track.duration_ms;
-            const time = function () {
-                const minutes = Math.floor(duration_ms / 60000);
-                const seconds = ((duration_ms % 60000) / 1000).toFixed(0);
-                // If second equals to 60, +1 to minute instead.
-                if (seconds === "60") {
-                    return (minutes + 1) + ":00";
-                } else {
-                    // If the second is single digit, add a 0 before the value.
-                    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-                }
-            }
             document.getElementById("playback-bar").max = duration_ms;
-            document.getElementById("playback-end").innerText = time();
+            document.getElementById("playback-end").innerText = getTimer(duration_ms);
             document.getElementById("playback-bar").value = state.position;
         });
     }
@@ -267,30 +256,39 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             }
 
             const position = state.position;
-            const time = function () {
-                const minutes = Math.floor(position / 60000);
-                const seconds = ((position % 60000) / 1000).toFixed(0);
-                if (seconds === "60") {
-                    return (minutes + 1) + ":00";
-                } else {
-                    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-                }
-            }
-
+            document.getElementById("playback-start").innerText = getTimer(position);
             document.getElementById("playback-bar").value = position;
-            document.getElementById("playback-start").innerText = time();
-        });
-    }
 
-    /**
-     * Set a delay for the code asynchronously similarly to Python's time.sleep().
-     * @param ms - The time in milliseconds.
-     * @returns {Promise<unknown>}
-     */
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+        });
     }
 
     // Connect the player with the SDK.
     player.connect();
+}
+
+// Utility functions.
+/**
+ * Set a delay for the code asynchronously similarly to Python's time.sleep().
+ * @param ms - The time in milliseconds.
+ * @returns {Promise<unknown>}
+ */
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * Receive a duration in milliseconds and return a timer string in the mm:ss format.
+ * @param ms - The duration in milliseconds.
+ * @returns {string} - The formatted timer.
+ */
+function getTimer(ms) {
+    const minutes = Math.floor(ms / 60000);
+    const seconds = ((ms % 60000) / 1000).toFixed(0);
+    // If second equals to 60, +1 to minute instead.
+    if (seconds === "60") {
+        return (minutes + 1) + ":00";
+    } else {
+        // If the second is single digit, add a 0 before the value.
+        return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+    }
 }
