@@ -40,7 +40,7 @@
         <div class="item"><a href="/" target="_blank">Home</a></div>
         <div class="item"><a href="/playlists" target="_blank">Playlists</a></div>
         <div class="item"><a href="/albums" target="_blank">Albums</a></div>
-        <div class="item"><a href="/pins" target="_blank">Pins</a></div>
+        <div class="item"><a href="/pin" target="_blank">Pins</a></div>
     </div>
 </div>
 
@@ -53,8 +53,12 @@
     {% endblock %}
 </div>
 
-
 <a href="/logout" class="btn btn-primary btn-lg" style="font-size: 2rem; position: absolute; top: 5%; right: 5%">Sign Out</a>
+
+<div id="pin">
+    {% block pin %}
+    {% endblock %}
+</div>
 
 <div class="player">
     <div class="album-cover">

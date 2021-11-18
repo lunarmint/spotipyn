@@ -1,7 +1,26 @@
 import json
 import spotipy
+from flask import Blueprint, render_template
+
 from utils import database
 from utils.auth import get_auth_manager
+
+
+pin_blueprint = Blueprint("pin_blueprint", __name__, template_folder="templates", static_folder="static")
+
+
+@pin_blueprint.route("/pin")
+def pins():
+    # Fetch the OAuth2 object.
+    auth_manager = get_auth_manager()
+
+    # Initialize the Spotify object to do stuffs.
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
+
+    # Get the access token value from the token dict in OAuth2 object.
+    access_token = auth_manager.get_access_token()["access_token"]
+
+    return render_template("pin.html", spotify=spotify, access_token=access_token)
 
 
 def create_pin(message, duration, time_stamp):
