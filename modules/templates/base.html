@@ -70,11 +70,11 @@
     </div>
 
     <div class="controller">
-        <img src="{{ url_for('static', filename='img/player/shuffle_button.png') }}" id="shuffle" alt="Shuffle"/>
-        <img src="{{ url_for('static', filename='img/player/fast_backwards_button.png') }}" id="fast_backwards" alt="Previous Track"/>
-        <img src="{{ url_for('static', filename='img/player/play_button.png') }}" id="play" alt="Play/Pause">
-        <img src="{{ url_for('static', filename='img/player/fast_forward_button.png') }}" id="fast_forward" alt="Next Track"/>
-        <img src="{{ url_for('static', filename='img/player/loop_button.png') }}" id="loop" alt="Album Cover"/>
+        <img src="{{ url_for('static', filename='img/player/shuffle_button.png') }}" id="shuffle" alt=""/>
+        <img src="{{ url_for('static', filename='img/player/fast_backwards_button.png') }}" id="fast_backwards" alt=""/>
+        <img src="{{ url_for('static', filename='img/player/play_button.png') }}" id="play" alt="">
+        <img src="{{ url_for('static', filename='img/player/fast_forward_button.png') }}" id="fast_forward" alt=""/>
+        <img src="{{ url_for('static', filename='img/player/loop_button.png') }}" id="loop" alt=""/>
     </div>
 
     <div class="playback">
@@ -84,7 +84,7 @@
     </div>
 
     <div class="volume">
-        <img src="{{ url_for('static', filename='img/player/unmute_button.png') }}" id="volume" alt="Volume"/>
+        <img src="{{ url_for('static', filename='img/player/unmute_button.png') }}" id="volume" alt=""/>
         <label for="volume-bar"></label><input type="range" id="volume-bar" name="volume-bar" min="0" max="1" value="0" step="0.05">
     </div>
 
