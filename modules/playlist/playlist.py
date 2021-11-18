@@ -8,7 +8,7 @@ playlist_blueprint = Blueprint('playlist_blueprint', __name__,
                                url_prefix="/playlist",
                                )
 
-@playlist_blueprint.route('/') # only for login page???
+@playlist_blueprint.route('/')
 def playlist():
     # Fetch the OAuth2 object.
     auth_manager = get_auth_manager()

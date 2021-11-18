@@ -1,32 +1,56 @@
 {% extends "base.html" %}
 {% block playlist %}
-
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<!------ Include the above in HEAD tag ---------->
 <link rel="stylesheet" href="{{ url_for('playlist_blueprint.static', filename='css/style.css') }}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+
+
+    <script>window.spotifyaccesstoken="{{access_token }}"</script>
 <script src="{{ url_for('playlist_blueprint.static', filename='js/getUserPl.js') }}"></script>
-
     <div class="playlistpage">
-
-        <div class="header">
-            <img src="{{ url_for('playlist_blueprint.static', filename='img/logo.png') }}" alt="Spotipyn logo"/>
-
-            <!-- <img src="Sample_User_Icon.png" alt="User" class="user" height="50"/> -->
+           <div class="header">
+            <img src="{{ url_for('playlist_blueprint.static', filename='img/logo.png') }}" alt="Spotipyn logo" height="50"/>
 
         </div>
 
 
         <div class="userplaylists">
             <p>User Playlist</p>
+		    <ui class="playlist_menu">
+		    </ui>
         </div>
+   <div class="playlist">
+       <div class="playlistAjax"></div>
+       <div class="playlist_tracks">
+           <table class="table">
+               <tr>
+                   <th>#</th>
+                     <th>Title</th>
+                     <th>Album</th>
+                   <th>Date Added</th>
+                       <th>Time</th>
+               </tr>
+               <tbody class="trackData">
 
+               </tbody>
+           </table>
+       </div>
 
-        <div class="playlist">
-            <p>Playlist Name</p>
-        </div>
+	</div>
 
 
         <div class="pinDisplay">
             <p>Pin Display</p>
         </div>
+
+    <div id = "name">
+
+    </div>
 
     </div>
 {% endblock %}

@@ -1,21 +1,18 @@
 .playlistpage{
     display: grid;
-    height: 85vh;
-    /*grid-template-columns: repeat(12, 1fr);*/
+    height: 100vh;
     grid-template-rows: auto auto 1fr auto;
     font-family: 'Montserrat', sans-serif;
-    gap: 12px;
 
 }
 
 .header{
-    border: 2px solid green;
+    border: 2px;
     font-size: 1.6rem;
-    text-align: center;
+    text-align: left;
     background-color: #000000;
-    color:  white;
+    color:  #000000;
     grid-column: 1 / span 12;
-
 }
 
 .logo{
@@ -23,55 +20,43 @@
 }
 
 .userplaylists{
-    border: 2px solid green;
-    border-radius: 4px;
+    border: 2px;
     grid-column: 1 / span 2;
     grid-row: 2 / 4;
     background-color: #000000;
     text-align: center;
-    font-size: 1.6rem;
+    font-size: 1rem;
     color: white;
 }
 
 .playlist{
-    border: 2px solid green;
-    border-radius: 4px;
-    grid-column: 3 / span 8;
+    border: 2px;
+    border-radius: 2px;
+    grid-column: 3 / span 7;
     grid-row: 2 / 4;
-    background-color: #000000;
+    background-color: lightgray;
     text-align: center;
     font-size: 1.6rem;
-    color: white;
+    color: #000000;
 
 }
 
 .pinDisplay{
-    border: 2px solid green;
-    border-radius: 4px;
-    grid-column: 11 / span 2;
+    border: 2px;
+    /*border-radius: 4px;*/
+    grid-column: 10 / span 3;
     grid-row: 2 / 4;
     right: 0;
     background-color: #000000;
     text-align: center;
-    font-size: 1.6rem;
-    color: white;
+    font-size: 1rem;
+    color: #000000;
 }
 
-
-
-
-/*.middleboxed{*/
-/*    border: 2px solid white;*/
-/*    width: 300px;*/
-/*    font-size: 10px;*/
-/*    position: relative;*/
-/*    background-color: #000000*/
-/*}*/
-
-/*.rightboxed{*/
-/*    border: 2px solid white;*/
-/*    width: 300px;*/
-/*    font-size: 10px;*/
-/*    position: relative;*/
-/*    background-color: #000000*/
-/*}*/
+.col-sm-4.item_title span {
+    color: #000;
+    font-size: 42px;
+    margin-top: 137px !important;
+    position: absolute;
+    margin-left: -157px;
+}
