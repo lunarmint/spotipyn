@@ -1,17 +1,25 @@
 window.onSpotifyWebPlaybackSDKReady = () => {
     const player = new Spotify.Player({
         name: "Spotipyn",
-        getOAuthToken: cb => {
-            cb(token);
+        getOAuthToken: callback => {
+            callback(token);
         },
-        volume: 0.75
+        volume: 0.5
     });
 
     /**
-     * Log the player state and status on initialization to the console.
+     * Log the player state and status.
      */
     player.addListener("ready", ({device_id}) => {
         console.log('Ready with Device ID', device_id);
+
+        // Update the volume bar's value on successful player initialization.
+        player.getVolume().then(volume => {
+            if (!volume) {
+                return;
+            }
+            volume_bar.value = volume;
+        });
     });
 
     player.addListener("not_ready", ({device_id}) => {
@@ -30,6 +38,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         console.error(message);
     });
 
+    player.addListener("autoplay_failed", () => {
+        console.log("Autoplay is not allowed by the browser autoplay rules");
+    });
+
     // Get the buttons.
     const play_button = document.getElementById("play");
     const fast_backwards = document.getElementById("fast_backwards");
@@ -40,18 +52,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     const volume_bar = document.getElementById("volume-bar");
 
     /**
-     * Change the shuffle and loop button state to blue/white automatically when its change of state is detected.
-     *
-     * Also attempt to update the song name, artist, album art, and timer during the first 5% progress on the new song.
+     * Update various elements on the player whenever a change in the player state is detected.
      */
-    player.addListener("player_state_changed", ({shuffle, repeat_mode, position}) => {
-        if (shuffle) {
-            // shuffle_button.src = "{{ url_for('static', filename='img/player/shuffle_button_toggled.png') }}";
-            shuffle_button.src = "/static/img/player/shuffle_button_toggled.png"
-        } else {
-            shuffle_button.src = "static/img/player/shuffle_button.png";
-        }
-
+    player.addListener("player_state_changed", ({repeat_mode, shuffle, track_window: {current_track}}) => {
+        // If repeat mode is being toggled on/off elsewhere, automatically update the element to reflect the change.
         if (repeat_mode === 0) {
             loop_button.src = "static/img/player/loop_button.png";
         } else if (repeat_mode === 1) {
@@ -60,43 +64,51 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             loop_button.src = "static/img/player/loop_button_toggled_2.png";
         }
 
-        player.getVolume().then(volume => {
-            volume_bar.value = volume;
-        });
-
-        const max = document.getElementById("playback-bar").max;
-        if (position / max < 0.05) {
-            updateState();
+        // If shuffle is being toggled on/off elsewhere, automatically update the element to reflect the change.
+        if (shuffle) {
+            shuffle_button.src = "/static/img/player/shuffle_button_toggled.png"
+        } else {
+            shuffle_button.src = "static/img/player/shuffle_button.png";
         }
+
+        document.getElementById("song-name").innerText = current_track.name;
+        document.getElementById("album-cover").src = current_track.album.images[0].url;
+        document.getElementById("artist-name").innerText = current_track.artists[0].name;
+
+        const duration_ms = current_track.duration_ms;
+        document.getElementById("playback-bar").max = duration_ms;
+        document.getElementById("playback-end").innerText = getTime(duration_ms);
     });
 
     /**
-     * Swap the state of the play/pause button accordingly to the current song playback state, and trigger/stop the
-     * timer and progress bar when the song is play/paused.
-     * @returns {Promise<void>}
+     * Play/pause the song on button click.
+     *
+     * Also initialize an interval that fires a function every second to update the song progress bar and timer when the song is being played,
+     * and clear the interval when it's paused to reduce the amount of API calls to avoid being rate limited.
      */
+    let interval_id;
     play_button.onclick = async function () {
-        player.togglePlay();
-        await updateState();
-        let timer = window.setInterval(updatePosition, 1000);
+        // Get the state before playing/pausing and update the elements first.
         player.getCurrentState().then(state => {
             if (!state) {
                 return;
             }
 
             if (state.paused) {
-                play_button.src = "static/img/player/play_button_hover.png";
-                clearInterval(timer);
-            } else {
                 play_button.src = "static/img/player/pause_button_hover.png";
-                // Start the playback progress bar when the song is played.
-                window.setInterval(updatePosition, 1000);
+                interval_id = window.setInterval(updatePosition, 1000);
+            } else {
+                play_button.src = "static/img/player/play_button_hover.png";
+                clearInterval(interval_id);
             }
         });
+
+        // Play/pause the music again.
+        player.togglePlay();
     }
 
     // Location of the current object as url.
-    const location = window.location.toString()
+    const location = window.location.toString();
 
     /**
      * Change the button to blue when the cursor is on the element.
@@ -134,7 +146,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
      */
     fast_backwards.ondblclick = async function () {
         player.previousTrack();
-        await updateState();
     }
 
     /**
@@ -157,7 +168,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
      */
     fast_forward.onclick = async function () {
         player.nextTrack();
-        await updateState();
     };
 
     /**
@@ -193,7 +203,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
      * as well as apply an alternative color when the slider is being clicked on.
      */
     volume_bar.addEventListener("input", function () {
-        let volume = volume_bar.value;
+        const volume = volume_bar.value;
         player.setVolume(volume);
 
         if (volume === "0") {
@@ -220,33 +230,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     });
 
     /**
-     * Update the song name, artist name, album cover, and the song duration of a track whenever the user interact with the player.
-     *
-     * Note: Spotify API has a delay in response. Without this, it would result in a return of an outdated WebPlaybackState object,
-     * which would lead to the song name not being updated correctly and a plethora of other related problems. Basically an API limitation.
-     * 250ms is a safe number to guarantee an up-to-date response.
-     *
-     * @returns {Promise<void>}
-     */
-    async function updateState() {
-        await sleep(250);
-        player.getCurrentState().then(state => {
-            if (!state) {
-                return;
-            }
-
-            document.getElementById("song-name").innerText = state.track_window.current_track.name;
-            document.getElementById("artist-name").innerText = state.track_window.current_track.artists[0].name;
-            document.getElementById("album-cover").src = state.track_window.current_track.album.images[0].url;
-
-            const duration_ms = state.track_window.current_track.duration_ms;
-            document.getElementById("playback-bar").max = duration_ms;
-            document.getElementById("playback-end").innerText = getTimer(duration_ms);
-            document.getElementById("playback-bar").value = state.position;
-        });
-    }
-
-    /**
      * Get the position of the current playing track in ms and update the progress bar and the timer on the left accordingly.
      */
     function updatePosition() {
@@ -256,7 +239,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             }
 
             const position = state.position;
-            document.getElementById("playback-start").innerText = getTimer(position);
+            console.log(position);
+            document.getElementById("playback-start").innerText = getTime(position);
             document.getElementById("playback-bar").value = position;
 
         });
@@ -268,20 +252,11 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
 // Utility functions.
 /**
- * Set a delay for the code asynchronously similarly to Python's time.sleep().
- * @param ms - The time in milliseconds.
- * @returns {Promise<unknown>}
- */
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-/**
  * Receive a duration in milliseconds and return a timer string in the mm:ss format.
  * @param ms - The duration in milliseconds.
  * @returns {string} - The formatted timer.
  */
-function getTimer(ms) {
+function getTime(ms) {
     const minutes = Math.floor(ms / 60000);
     const seconds = ((ms % 60000) / 1000).toFixed(0);
     // If second equals to 60, +1 to minute instead.
