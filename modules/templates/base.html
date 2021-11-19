@@ -36,6 +36,8 @@
 <!-- Access token to be passed into other modules. -->
 <script type="text/javascript">
     const token = "{{ access_token }}";
+    const spotify = new SpotifyWebApi();
+    spotify.setAccessToken(token);
 </script>
 
 <div id="sidebar">
@@ -45,10 +47,10 @@
         <span></span>
     </div>
     <div class="list">
-        <div class="item"><a href="/" target="_blank">Home</a></div>
-        <div class="item"><a href="/playlists" target="_blank">Playlists</a></div>
-        <div class="item"><a href="/albums" target="_blank">Albums</a></div>
-        <div class="item"><a href="/pins" target="_blank">Pins</a></div>
+        <div class="item"><a href="/" target="_self">Home</a></div>
+        <div class="item"><a href="/playlist" target="_self">Playlists</a></div>
+        <div class="item"><a href="/albums" target="_self">Albums</a></div>
+        <div class="item"><a href="/pins" target="_self">Pins</a></div>
     </div>
 </div>
 
@@ -63,6 +65,10 @@
 
 
 <a href="/logout" class="btn btn-primary btn-lg" style="font-size: 2rem; position: absolute; top: 5%; right: 5%">Sign Out</a>
+
+<div id="playlist">
+    {% block playlist %}{% endblock %}
+</div>
 
 <!-- The bread and butter of the player. -->
 <div class="player">
@@ -101,5 +107,4 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/player.js') }}"></script>
 
 </div>
-
 </body>

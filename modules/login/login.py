@@ -4,7 +4,7 @@ import string
 import uuid
 
 import spotipy
-from flask import session, request, redirect, render_template, Blueprint, url_for
+from flask import session, request, redirect, render_template, Blueprint
 
 from utils.auth import session_cache_path
 from utils.config import config
@@ -48,11 +48,8 @@ def index():
         auth_url = auth_manager.get_authorize_url()
         return render_template("login.html", auth_url=auth_url)
 
-    # Initialize the Spotify object to do stuffs.
-    spotify = spotipy.Spotify(auth_manager=auth_manager)
-
     # Get the access token value from the token dict in OAuth2 object.
     access_token = auth_manager.get_access_token()["access_token"]
 
     # If a token is found (logged in), render the content from index instead.
-    return render_template("base.html", spotify=spotify, access_token=access_token)
+    return render_template("base.html", access_token=access_token)

@@ -44,6 +44,7 @@ h1 {
     border-bottom: 1px solid #444;
     color: #fcfcfc;
     font-size: 1.5rem;
+    text-align: center;
 }
 
 #sidebar div.list div.item a {
