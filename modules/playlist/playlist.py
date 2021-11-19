@@ -1,4 +1,3 @@
-import spotipy
 from flask import Blueprint, render_template
 
 from utils.auth import get_auth_manager
