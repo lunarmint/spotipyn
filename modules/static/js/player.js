@@ -68,23 +68,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     /**
      * Update various elements on the player whenever a change in the player state is detected.
      */
-    player.addListener("player_state_changed", ({repeat_mode, shuffle, track_window: {current_track}}) => {
-        // If repeat mode is being toggled on/off elsewhere, automatically update the element to reflect the change.
-        if (repeat_mode === 0) {
-            loop_button.src = location + "static/img/player/loop_button.png";
-        } else if (repeat_mode === 1) {
-            loop_button.src = location + "static/img/player/loop_button_toggled_1.png";
-        } else {
-            loop_button.src = location + "static/img/player/loop_button_toggled_2.png";
-        }
-
+    player.addListener("player_state_changed", ({track_window: {current_track}}) => {
         // If shuffle is being toggled on/off elsewhere, automatically update the element to reflect the change.
-        if (shuffle) {
-            shuffle_button.src = location + "/static/img/player/shuffle_button_toggled.png"
-        } else {
-            shuffle_button.src = location + "static/img/player/shuffle_button.png";
-        }
-
         document.getElementById("song-name").innerText = current_track.name;
         document.getElementById("album-cover").src = current_track.album.images[0].url;
         document.getElementById("artist-name").innerText = current_track.artists[0].name;
@@ -193,6 +178,52 @@ window.onSpotifyWebPlaybackSDKReady = () => {
      */
     fast_forward.onmouseout = function () {
         fast_forward.src = location + "static/img/player/fast_forward_button.png";
+    }
+
+    /**
+     * Change the state of shuffle mode to on/off.
+     */
+    shuffle_button.onclick = function () {
+        player.getCurrentState().then(state => {
+            if (!state) {
+                return;
+            }
+
+            if (state.shuffle) {
+                spotify.setShuffle(false, null, function () {
+                    shuffle_button.src = location + "static/img/player/shuffle_button.png";
+                });
+            } else {
+                spotify.setShuffle(true, null, function () {
+                    shuffle_button.src = location + "static/img/player/shuffle_button_toggled.png";
+                });
+            }
+        });
+    }
+
+    /**
+     * Change the state of the repeat mode to 0, 1, 2 (off, context, track).
+     */
+    loop_button.onclick = function () {
+        player.getCurrentState().then(state => {
+            if (!state) {
+                return;
+            }
+
+            if (state.repeat_mode === 0) {
+                spotify.setRepeat("context", null, function () {
+                    loop_button.src = location + "static/img/player/loop_button_toggled_1.png";
+                });
+            } else if (state.repeat_mode === 1) {
+                spotify.setRepeat("track", null, function () {
+                    loop_button.src = location + "static/img/player/loop_button_toggled_2.png";
+                });
+            } else if (state.repeat_mode === 2) {
+                spotify.setRepeat("off", null, function () {
+                    loop_button.src = location + "static/img/player/loop_button.png";
+                });
+            }
+        });
     }
 
     /**
