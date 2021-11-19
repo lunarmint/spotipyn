@@ -36,6 +36,8 @@
 <!-- Access token to be passed into other modules. -->
 <script type="text/javascript">
     const token = "{{ access_token }}";
+    const spotify = new SpotifyWebApi();
+    spotify.setAccessToken(token);
 </script>
 
 <div id="sidebar">

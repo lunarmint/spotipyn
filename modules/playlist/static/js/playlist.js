@@ -1,6 +1,3 @@
-let spotify = new SpotifyWebApi();
-spotify.setAccessToken(token);
-
 spotify.getUserPlaylists(function (err, data) {
     console.log(err);
 
@@ -36,7 +33,7 @@ function makeSideMenu(res) {
 
 function makeRightPlaylist(res) {
 
-    var tpl = '<div class"playlistContainer">';
+    let tpl = '<div class"playlistContainer">';
 
     // parse the array for the playlist info
     for (let i = 0; i < res.items.length; i++) {
@@ -45,7 +42,7 @@ function makeRightPlaylist(res) {
         let playlistId = item.id
         let playlistName = item.name
 
-        var className = 'main_playlist_item_' + i;
+        let className = 'main_playlist_item_' + i;
         tpl += '<div class="row main_playlist_item ' + className + '" id="playlistid_' + playlistId + '">';
         tpl += '<div class="col-sm-4">';
         tpl += '<img src="' + img[0].url + '" width="200" height="200"  alt="">';
@@ -72,7 +69,7 @@ function renderTrackData(res) {
         let playlistId = '';
         let songName = track.name;
         let artists = [];
-        for (artist in track.artists) {
+        for (const artist in track.artists) {
             artists.push(artist.name);
         }
 
