@@ -13,6 +13,17 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.addListener("ready", ({device_id}) => {
         console.log('Ready with Device ID', device_id);
 
+        // Get the list of the current devices. If one of them is named "Spotipyn", transfer the playback to that device.
+        spotify.getMyDevices(function (err, data) {
+            let device_id = [];
+            for (let i = 0; i < data.devices.length; ++i) {
+                if (data.devices[i].name === "Spotipyn") {
+                    device_id.push(data.devices[i].id);
+                }
+            }
+            spotify.transferMyPlayback(device_id, null, null);
+        });
+
         // Update the volume bar's value on successful player initialization.
         player.getVolume().then(volume => {
             if (!volume) {
