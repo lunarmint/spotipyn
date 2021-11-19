@@ -16,7 +16,6 @@ def create_app():
     app.config["SECRET_KEY"] = config["spotify"]["secret_key"]
     app.config["SESSION_TYPE"] = "filesystem"
     app.config["SESSION_FILE_DIR"] = "./.flask_session/"
-    # app.register_blueprint(login_blueprint, **{"url_defaults": {"/": None}})
     app.register_blueprint(login_blueprint)
     app.register_blueprint(logout_blueprint)
     app.register_blueprint(playlist_blueprint)
