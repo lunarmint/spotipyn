@@ -3,7 +3,6 @@ spotify.setAccessToken(token);
 
 spotify.getUserPlaylists(function (err, data) {
     console.log(err);
-    console.log(data);
 
     makeSideMenu(data);
     makeRightPlaylist(data);
@@ -73,7 +72,6 @@ function renderTrackData(res) {
         const item = trackItems[i];
         const track = item.track;
         let date_added = item.added_at;
-
         let img = '';
         let playlistId = '';
         let userId = '';
@@ -89,8 +87,8 @@ function renderTrackData(res) {
         let albumName = track.album.name;
         let duration = track.duration_ms;
         let small_img = track.album.images[2];
-
         let className = 'track_item_' + i;
+        
         tpl += '<tr class="trackItem ' + className + '" id="trackid_' + playlistId + '">';
         tpl += '<td>' + j + '</td>';
         tpl += '<td class="">';
@@ -103,18 +101,13 @@ function renderTrackData(res) {
         tpl += '<td class="">';
         tpl += '<span class="date_added">' + date_added + '</span>';
         tpl += '</td>';
-
         tpl += '<td class="">';
         tpl += '<span class="track_time">' + duration + '</span>';
         tpl += '</td>';
-
         tpl += '</tr>';
-
         j++;
     }
-
     $('.trackData').html(tpl);
-
 }
 
 //First songs album cover for each playlist
