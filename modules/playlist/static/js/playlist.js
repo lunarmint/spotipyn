@@ -26,9 +26,7 @@ function makeSideMenu(res) {
     // Parse the array for the playlist info.
     for (let i = 0; i < res.items.length; i++) {
         const item = res.items[i];
-        let img = item.images
         let playlistId = item.id
-        let userId = item.owner.id
         let playlistName = item.name
         menuItem += '<li class="playlist_item" data-id="' + playlistId + '"> <strong>' + playlistName + '</strong></li>';
     }
@@ -45,7 +43,6 @@ function makeRightPlaylist(res) {
         const item = res.items[i];
         let img = item.images
         let playlistId = item.id
-        let userId = item.owner.id
         let playlistName = item.name
 
         var className = 'main_playlist_item_' + i;
@@ -72,12 +69,8 @@ function renderTrackData(res) {
         const item = trackItems[i];
         const track = item.track;
         let date_added = item.added_at;
-        let img = '';
         let playlistId = '';
-        let userId = '';
-        let playlistName = '';
         let songName = track.name;
-        let trackId = track.id;
         let artists = [];
         for (artist in track.artists) {
             artists.push(artist.name);
@@ -88,7 +81,7 @@ function renderTrackData(res) {
         let duration = track.duration_ms;
         let small_img = track.album.images[2];
         let className = 'track_item_' + i;
-        
+
         tpl += '<tr class="trackItem ' + className + '" id="trackid_' + playlistId + '">';
         tpl += '<td>' + j + '</td>';
         tpl += '<td class="">';
