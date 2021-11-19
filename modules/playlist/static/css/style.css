@@ -1,4 +1,4 @@
-.playlistpage{
+.playlistpage {
     display: grid;
     height: 100vh;
     grid-template-rows: auto auto auto auto;
@@ -6,20 +6,20 @@
 
 }
 
-.header{
+.header {
     border: 2px;
     font-size: 1.6rem;
     text-align: left;
     background-color: #000000;
-    color:  #000000;
+    color: #000000;
     grid-column: 1 / span 12;
 }
 
-.logo{
+.logo {
 
 }
 
-.userplaylists{
+.userplaylists {
     border: 2px;
     grid-column: 1 / span 2;
     grid-row: 2 / 4;
@@ -29,7 +29,7 @@
     color: white;
 }
 
-.playlist{
+.playlist {
     border: 2px;
     border-radius: 2px;
     grid-column: 3 / span 7;
@@ -41,7 +41,7 @@
 
 }
 
-.pinDisplay{
+.pinDisplay {
     border: 2px;
     /*border-radius: 4px;*/
     grid-column: 10 / span 3;
