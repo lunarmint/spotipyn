@@ -92,7 +92,7 @@ function renderTrackData(res) {
 
         let className = 'track_item_' + i;
         tpl += '<tr class="trackItem ' + className + '" id="trackid_' + playlistId + '">';
-        tpl += `<td>+j+</td>`;
+        tpl += '<td>' + j + '</td>';
         tpl += '<td class="">';
         tpl += '<div class="left_side"><img src="' + small_img.url + '" width="' + small_img.width + '" height="' + small_img.height + '"  alt=""></div>';
         tpl += '<div class="right_side"><span class="title">' + songName + '</span><span class="artist_name">' + artistName + '</span></div>';
