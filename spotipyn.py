@@ -8,4 +8,5 @@ import __init__
 spotipyn = create_app()
 
 if __name__ == "__main__":
+    spotipyn.debug = True
     spotipyn.run(threaded=True, host=config["host"], port=config["port"])

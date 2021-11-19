@@ -100,7 +100,24 @@ h1 {
 #list li:nth-child(5) {
     animation-delay: 6s;
 }
-
+.pin-content{
+    margin:0 auto;
+    background-color: dimgrey;
+    font-size: 12pt;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    height: fit-content;
+    width: fit-content;
+}
+.form-group{
+    color: black;
+    text-align: right;
+}
+.submit{
+    text-align: center;
+    color: black;
+}
 @keyframes fadeIn {
     from {
         opacity: 0;

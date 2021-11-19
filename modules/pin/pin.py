@@ -1,6 +1,9 @@
 import json
 import spotipy
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, flash, redirect, url_for
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 from utils import database
 from utils.auth import get_auth_manager
@@ -9,7 +12,7 @@ from utils.auth import get_auth_manager
 pin_blueprint = Blueprint("pin_blueprint", __name__, template_folder="templates", static_folder="static")
 
 
-@pin_blueprint.route("/pin")
+@pin_blueprint.route("/pin", methods=['GET', 'POST'])
 def pins():
     # Fetch the OAuth2 object.
     auth_manager = get_auth_manager()
@@ -20,7 +23,19 @@ def pins():
     # Get the access token value from the token dict in OAuth2 object.
     access_token = auth_manager.get_access_token()["access_token"]
 
-    return render_template("pin.html", spotify=spotify, access_token=access_token)
+    form = PinForm()
+
+    if form.validate_on_submit():
+        flash(f'Pin Created', 'Redirecting to home')
+        return redirect('/')
+    return render_template("pin.html", spotify=spotify, access_token=access_token, form=form)
+
+
+class PinForm(FlaskForm):
+    message = StringField('Message', validators=[DataRequired()])
+    timestamp = StringField('Time Stamp', validators=[DataRequired()])
+    duration = StringField('Duration', validators=[DataRequired()])
+    submit = SubmitField('Pin')
 
 
 def create_pin(message, duration, time_stamp):
