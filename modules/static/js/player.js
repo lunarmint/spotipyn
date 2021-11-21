@@ -323,15 +323,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
 // Utility functions.
 /**
- * Set a delay for the code asynchronously similarly to Python's time.sleep().
- * @param ms - The time in milliseconds.
- * @returns {Promise<unknown>}
- */
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-/**
  * Receive a duration in milliseconds and return a timer string in the mm:ss format.
  * @param ms - The duration in milliseconds.
  * @returns {string} - The formatted timer.
