@@ -310,10 +310,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             }
 
             const position = state.position;
-            console.log(position);
             document.getElementById("playback-start").innerText = getTime(position);
             document.getElementById("playback-bar").value = position;
-
         });
     }
 
