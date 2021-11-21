@@ -16,9 +16,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         // Get the list of the current devices. If one of them is named "Spotipyn", transfer the playback to that device.
         spotify.getMyDevices(function (err, data) {
             let device_id = [];
-            for (let i = 0; i < data.devices.length; ++i) {
-                if (data.devices[i].name === "Spotipyn") {
-                    device_id.push(data.devices[i].id);
+            const devices = data.devices;
+            for (let i = 0; i < devices.length; ++i) {
+                if (devices[i].name === "Spotipyn") {
+                    device_id.push(devices[i].id);
                 }
             }
             spotify.transferMyPlayback(device_id, null, null);
@@ -68,7 +69,35 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     /**
      * Update various elements on the player whenever a change in the player state is detected.
      */
-    player.addListener("player_state_changed", ({track_window: {current_track}}) => {
+    player.addListener("player_state_changed", ({paused, repeat_mode, shuffle, track_window: {current_track}}) => {
+        if (paused) {
+            // Without this, when the button is clicked and if the mouse is still on it, it would display the white version of the button.
+            if (play_button.src === location + "static/img/player/pause_button.png") {
+                play_button.src = location + "static/img/player/play_button.png";
+            }
+        } else {
+            if (play_button.src === location + "static/img/player/play_button.png") {
+                play_button.src = location + "static/img/player/pause_button.png";
+            }
+        }
+
+        // If repeat mode is being toggled on/off elsewhere, automatically update the element to reflect the change.
+        // Secondary checks are used to prevent conflict with the onclick function that would make the button go crazy.
+        if (repeat_mode === 0 && loop_button.src === location + "static/img/player/loop_button_toggled_2.png") {
+            loop_button.src = location + "static/img/player/loop_button.png";
+        } else if (repeat_mode === 1 && loop_button.src === location + "static/img/player/loop_button.png") {
+            loop_button.src = location + "static/img/player/loop_button_toggled_1.png";
+        } else if (repeat_mode === 2 && loop_button.src === location + "static/img/player/loop_button_toggled_1.png") {
+            loop_button.src = location + "static/img/player/loop_button_toggled_2.png";
+        }
+
+        // If shuffle is being toggled on/off elsewhere, automatically update the element to reflect the change.
+        if (shuffle) {
+            shuffle_button.src = location + "/static/img/player/shuffle_button_toggled.png"
+        } else {
+            shuffle_button.src = location + "static/img/player/shuffle_button.png";
+        }
+
         // If shuffle is being toggled on/off elsewhere, automatically update the element to reflect the change.
         document.getElementById("song-name").innerText = current_track.name;
         document.getElementById("album-cover").src = current_track.album.images[0].url;
@@ -293,6 +322,15 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 }
 
 // Utility functions.
+/**
+ * Set a delay for the code asynchronously similarly to Python's time.sleep().
+ * @param ms - The time in milliseconds.
+ * @returns {Promise<unknown>}
+ */
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 /**
  * Receive a duration in milliseconds and return a timer string in the mm:ss format.
  * @param ms - The duration in milliseconds.
