@@ -101,6 +101,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         // If shuffle is being toggled on/off elsewhere, automatically update the element to reflect the change.
         document.getElementById("album-cover").src = current_track.album.images[0].url;
 
+        // Get the song and artist name and hyperlink it to Spotify.
         document.getElementById("song-name").innerText = current_track.name;
         document.getElementById("song-name").href = `https://open.spotify.com/album/${current_track.album.uri.split(":")[2]}`
         document.getElementById("artist-name").innerText = current_track.artists[0].name;
