@@ -7,7 +7,7 @@
     <!-- Fonts. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
 
     <!-- bootstrap.css -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
@@ -77,19 +77,19 @@
     </div>
 
     <div class="song">
-        <p id="song-name"></p>
+        <a id="song-name"></a>
     </div>
 
     <div class="artist">
-        <p id="artist-name"></p>
+        <a id="artist-name"></a>
     </div>
 
     <div class="controller">
-        <img src="{{ url_for('static', filename='img/player/shuffle_button.png') }}" id="shuffle" alt=""/>
-        <img src="{{ url_for('static', filename='img/player/fast_backwards_button.png') }}" id="fast_backwards" alt=""/>
-        <img src="{{ url_for('static', filename='img/player/play_button.png') }}" id="play" alt="">
-        <img src="{{ url_for('static', filename='img/player/fast_forward_button.png') }}" id="fast_forward" alt=""/>
-        <img src="{{ url_for('static', filename='img/player/loop_button.png') }}" id="loop" alt=""/>
+        <img src="{{ url_for('static', filename='img/player/shuffle.png') }}" id="shuffle" alt=""/>
+        <img src="{{ url_for('static', filename='img/player/fast-backwards.png') }}" id="fast-backwards" alt=""/>
+        <img src="{{ url_for('static', filename='img/player/play.png') }}" id="play" alt="">
+        <img src="{{ url_for('static', filename='img/player/fast-forward.png') }}" id="fast-forward" alt=""/>
+        <img src="{{ url_for('static', filename='img/player/repeat.png') }}" id="repeat" alt=""/>
     </div>
 
     <div class="playback">
@@ -99,7 +99,7 @@
     </div>
 
     <div class="volume">
-        <img src="{{ url_for('static', filename='img/player/unmute_button.png') }}" id="volume" alt=""/>
+        <img src="{{ url_for('static', filename='img/player/volume-full.png') }}" id="volume" alt=""/>
         <label for="volume-bar"></label><input type="range" id="volume-bar" name="volume-bar" min="0" max="1" value="0" step="0.05">
     </div>
 

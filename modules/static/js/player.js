@@ -56,10 +56,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
     // Get the buttons.
     const play_button = document.getElementById("play");
-    const fast_backwards = document.getElementById("fast_backwards");
-    const fast_forward = document.getElementById("fast_forward");
+    const fast_backwards = document.getElementById("fast-backwards");
+    const fast_forward = document.getElementById("fast-forward");
     const shuffle_button = document.getElementById("shuffle");
-    const loop_button = document.getElementById("loop");
+    const repeat_button = document.getElementById("repeat");
     const volume_button = document.getElementById("volume");
     const volume_bar = document.getElementById("volume-bar");
 
@@ -72,36 +72,39 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.addListener("player_state_changed", ({paused, repeat_mode, shuffle, track_window: {current_track}}) => {
         if (paused) {
             // Without this, when the button is clicked and if the mouse is still on it, it would display the white version of the button.
-            if (play_button.src === location + "static/img/player/pause_button.png") {
-                play_button.src = location + "static/img/player/play_button.png";
+            if (play_button.src === location + "static/img/player/pause.png") {
+                play_button.src = location + "static/img/player/play.png";
             }
         } else {
-            if (play_button.src === location + "static/img/player/play_button.png") {
-                play_button.src = location + "static/img/player/pause_button.png";
+            if (play_button.src === location + "static/img/player/play.png") {
+                play_button.src = location + "static/img/player/pause.png";
             }
         }
 
         // If repeat mode is being toggled on/off elsewhere, automatically update the element to reflect the change.
         // Secondary checks are used to prevent conflict with the onclick function that would make the button go crazy.
-        if (repeat_mode === 0 && loop_button.src === location + "static/img/player/loop_button_toggled_2.png") {
-            loop_button.src = location + "static/img/player/loop_button.png";
-        } else if (repeat_mode === 1 && loop_button.src === location + "static/img/player/loop_button.png") {
-            loop_button.src = location + "static/img/player/loop_button_toggled_1.png";
-        } else if (repeat_mode === 2 && loop_button.src === location + "static/img/player/loop_button_toggled_1.png") {
-            loop_button.src = location + "static/img/player/loop_button_toggled_2.png";
+        if (repeat_mode === 0 && repeat_button.src === location + "static/img/player/repeat-2.png") {
+            repeat_button.src = location + "static/img/player/repeat.png";
+        } else if (repeat_mode === 1 && repeat_button.src === location + "static/img/player/repeat.png") {
+            repeat_button.src = location + "static/img/player/repeat-1.png";
+        } else if (repeat_mode === 2 && repeat_button.src === location + "static/img/player/repeat-1.png") {
+            repeat_button.src = location + "static/img/player/repeat-2.png";
         }
 
         // If shuffle is being toggled on/off elsewhere, automatically update the element to reflect the change.
         if (shuffle) {
-            shuffle_button.src = location + "/static/img/player/shuffle_button_toggled.png"
+            shuffle_button.src = location + "static/img/player/shuffle-on.png"
         } else {
-            shuffle_button.src = location + "static/img/player/shuffle_button.png";
+            shuffle_button.src = location + "static/img/player/shuffle.png";
         }
 
         // If shuffle is being toggled on/off elsewhere, automatically update the element to reflect the change.
-        document.getElementById("song-name").innerText = current_track.name;
         document.getElementById("album-cover").src = current_track.album.images[0].url;
+
+        document.getElementById("song-name").innerText = current_track.name;
+        document.getElementById("song-name").href = `https://open.spotify.com/album/${current_track.album.uri.split(":")[2]}`
         document.getElementById("artist-name").innerText = current_track.artists[0].name;
+        document.getElementById("artist-name").href = `https://open.spotify.com/album/${current_track.artists[0].uri.split(":")[2]}`;
 
         const duration_ms = current_track.duration_ms;
         document.getElementById("playback-bar").max = duration_ms;
@@ -123,10 +126,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             }
 
             if (state.paused) {
-                play_button.src = location + "static/img/player/pause_button_hover.png";
+                play_button.src = location + "static/img/player/pause-hover.png";
                 interval_id = window.setInterval(updatePosition, 1000);
             } else {
-                play_button.src = location + "static/img/player/play_button_hover.png";
+                play_button.src = location + "static/img/player/play-hover.png";
                 clearInterval(interval_id);
             }
         });
@@ -139,10 +142,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
      * Change the button to blue when the cursor is on the element.
      */
     play_button.onmouseover = function () {
-        if (play_button.src === location + "static/img/player/play_button.png") {
-            play_button.src = location + "static/img/player/play_button_hover.png";
-        } else if (play_button.src === location + "static/img/player/pause_button.png") {
-            play_button.src = location + "static/img/player/pause_button_hover.png";
+        if (play_button.src === location + "static/img/player/play.png") {
+            play_button.src = location + "static/img/player/play-hover.png";
+        } else if (play_button.src === location + "static/img/player/pause.png") {
+            play_button.src = location + "static/img/player/pause-hover.png";
         }
     }
 
@@ -150,10 +153,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
      * Return the button to white when the cursor leaves the button.
      */
     play_button.onmouseout = function () {
-        if (play_button.src === location + "static/img/player/play_button_hover.png") {
-            play_button.src = location + "static/img/player/play_button.png";
-        } else if (play_button.src === location + "static/img/player/pause_button_hover.png") {
-            play_button.src = location + "static/img/player/pause_button.png";
+        if (play_button.src === location + "static/img/player/play-hover.png") {
+            play_button.src = location + "static/img/player/play.png";
+        } else if (play_button.src === location + "static/img/player/pause-hover.png") {
+            play_button.src = location + "static/img/player/pause.png";
         }
     }
 
@@ -177,14 +180,14 @@ window.onSpotifyWebPlaybackSDKReady = () => {
      * Change the button to blue when the cursor is on the element.
      */
     fast_backwards.onmouseover = function () {
-        fast_backwards.src = location + "static/img/player/fast_backwards_button_hover.png";
+        fast_backwards.src = location + "static/img/player/fast-backwards-hover.png";
     }
 
     /**
      * Return the button to white when the cursor leaves the button.
      */
     fast_backwards.onmouseout = function () {
-        fast_backwards.src = location + "static/img/player/fast_backwards_button.png";
+        fast_backwards.src = location + "static/img/player/fast-backwards.png";
     }
 
     /**
@@ -199,14 +202,14 @@ window.onSpotifyWebPlaybackSDKReady = () => {
      * Change the button to blue when the cursor is on the element.
      */
     fast_forward.onmouseover = function () {
-        fast_forward.src = location + "static/img/player/fast_forward_button_hover.png";
+        fast_forward.src = location + "static/img/player/fast-forward-hover.png";
     }
 
     /**
      * Return the button to white when the cursor leaves the button.
      */
     fast_forward.onmouseout = function () {
-        fast_forward.src = location + "static/img/player/fast_forward_button.png";
+        fast_forward.src = location + "static/img/player/fast-forward.png";
     }
 
     /**
@@ -220,36 +223,11 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
             if (state.shuffle) {
                 spotify.setShuffle(false, null, function () {
-                    shuffle_button.src = location + "static/img/player/shuffle_button.png";
+                    shuffle_button.src = location + "static/img/player/shuffle.png";
                 });
             } else {
                 spotify.setShuffle(true, null, function () {
-                    shuffle_button.src = location + "static/img/player/shuffle_button_toggled.png";
-                });
-            }
-        });
-    }
-
-    /**
-     * Change the state of the repeat mode to 0, 1, 2 (off, context, track).
-     */
-    loop_button.onclick = function () {
-        player.getCurrentState().then(state => {
-            if (!state) {
-                return;
-            }
-
-            if (state.repeat_mode === 0) {
-                spotify.setRepeat("context", null, function () {
-                    loop_button.src = location + "static/img/player/loop_button_toggled_1.png";
-                });
-            } else if (state.repeat_mode === 1) {
-                spotify.setRepeat("track", null, function () {
-                    loop_button.src = location + "static/img/player/loop_button_toggled_2.png";
-                });
-            } else if (state.repeat_mode === 2) {
-                spotify.setRepeat("off", null, function () {
-                    loop_button.src = location + "static/img/player/loop_button.png";
+                    shuffle_button.src = location + "static/img/player/shuffle-on.png";
                 });
             }
         });
@@ -258,15 +236,102 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     /**
      * Change the button to blue when the cursor is on the element.
      */
+    shuffle_button.onmouseover = function () {
+        if (shuffle_button.src === location + "static/img/player/shuffle.png") {
+            shuffle_button.src = location + "static/img/player/shuffle-hover.png";
+        } else if (shuffle_button.src === location + "static/img/player/shuffle-on.png") {
+            shuffle_button.src = location + "static/img/player/shuffle-on-hover.png";
+        }
+    }
+
+    /**
+     * Return the button to white when the cursor leaves the button.
+     */
+    shuffle_button.onmouseout = function () {
+        if (shuffle_button.src === location + "static/img/player/shuffle-hover.png") {
+            shuffle_button.src = location + "static/img/player/shuffle.png";
+        } else if (shuffle_button.src === location + "static/img/player/shuffle-on-hover.png") {
+            shuffle_button.src = location + "static/img/player/shuffle-on.png";
+        }
+    }
+
+    /**
+     * Change the state of the repeat mode to 0, 1, 2 (off, context, track).
+     */
+    repeat_button.onclick = function () {
+        player.getCurrentState().then(state => {
+            if (!state) {
+                return;
+            }
+
+            if (state.repeat_mode === 0) {
+                spotify.setRepeat("context", null, function () {
+                    repeat_button.src = location + "static/img/player/repeat-1.png";
+                });
+            } else if (state.repeat_mode === 1) {
+                spotify.setRepeat("track", null, function () {
+                    repeat_button.src = location + "static/img/player/repeat-2.png";
+                });
+            } else if (state.repeat_mode === 2) {
+                spotify.setRepeat("off", null, function () {
+                    repeat_button.src = location + "static/img/player/repeat.png";
+                });
+            }
+        });
+    }
+
+    /**
+     * Change the button to blue when the cursor is on the element.
+     */
+    repeat_button.onmouseover = function () {
+        if (repeat_button.src === location + "static/img/player/repeat.png") {
+            repeat_button.src = location + "static/img/player/repeat-hover.png";
+        } else if (repeat_button.src === location + "static/img/player/repeat-1.png") {
+            repeat_button.src = location + "static/img/player/repeat-1-hover.png";
+        } else if (repeat_button.src === location + "static/img/player/repeat-2.png") {
+            repeat_button.src = location + "static/img/player/repeat-2-hover.png";
+        }
+    }
+
+    /**
+     * Return the button to white when the cursor leaves the button.
+     */
+    repeat_button.onmouseout = function () {
+        if (repeat_button.src === location + "static/img/player/repeat-hover.png") {
+            repeat_button.src = location + "static/img/player/repeat.png";
+        } else if (repeat_button.src === location + "static/img/player/repeat-1-hover.png") {
+            repeat_button.src = location + "static/img/player/repeat-1.png";
+        } else if (repeat_button.src === location + "static/img/player/repeat-2-hover.png") {
+            repeat_button.src = location + "static/img/player/repeat-2.png";
+        }
+    }
+
+    /**
+     * Change the button to blue when the cursor is on the element.
+     */
     volume_button.onmouseover = function () {
-        volume_button.src = location + "static/img/player/unmute_button_hover.png";
+        const volume = parseFloat(volume_bar.value);
+        if (volume >= 0.5) {
+            volume_button.src = location + "static/img/player/volume-full-hover.png";
+        } else if (volume > 0 && volume < 0.5) {
+            volume_button.src = location + "static/img/player/volume-low-hover.png";
+        } else {
+            volume_button.src = location + "static/img/player/volume-mute-hover.png";
+        }
     }
 
     /**
      * Return the button to white when the cursor leaves the button.
      */
     volume_button.onmouseout = function () {
-        volume_button.src = location + "static/img/player/unmute_button.png";
+        const volume = parseFloat(volume_bar.value);
+        if (volume >= 0.5) {
+            volume_button.src = location + "static/img/player/volume-full.png";
+        } else if (volume > 0 && volume < 0.5) {
+            volume_button.src = location + "static/img/player/volume-low.png";
+        } else {
+            volume_button.src = location + "static/img/player/volume-mute.png";
+        }
     }
 
     /**
@@ -274,28 +339,38 @@ window.onSpotifyWebPlaybackSDKReady = () => {
      * as well as apply an alternative color when the slider is being clicked on.
      */
     volume_bar.addEventListener("input", function () {
-        const volume = volume_bar.value;
+        const volume = parseFloat(volume_bar.value);
         player.setVolume(volume);
 
-        if (volume === "0") {
-            volume_button.src = location + "static/img/player/mute_button_hover.png";
+        if (volume >= 0.5) {
+            volume_button.src = location + "static/img/player/volume-full-hover.png";
 
             volume_bar.onmousedown = function () {
-                volume_button.src = location + "static/img/player/mute_button_hover.png";
+                volume_button.src = location + "static/img/player/volume-full-hover.png";
             }
 
             volume_bar.onmouseup = function () {
-                volume_button.src = location + "static/img/player/mute_button.png";
+                volume_button.src = location + "static/img/player/volume-full.png";
+            }
+        } else if (volume > 0 && volume < 0.5) {
+            volume_button.src = location + "static/img/player/volume-low-hover.png";
+
+            volume_bar.onmousedown = function () {
+                volume_button.src = location + "static/img/player/volume-low-hover.png";
+            }
+
+            volume_bar.onmouseup = function () {
+                volume_button.src = location + "static/img/player/volume-low.png";
             }
         } else {
-            volume_button.src = location + "static/img/player/unmute_button_hover.png";
+            volume_button.src = location + "static/img/player/volume-mute-hover.png";
 
             volume_bar.onmousedown = function () {
-                volume_button.src = location + "static/img/player/unmute_button_hover.png";
+                volume_button.src = location + "static/img/player/volume-mute-hover.png";
             }
 
             volume_bar.onmouseup = function () {
-                volume_button.src = location + "static/img/player/unmute_button.png";
+                volume_button.src = location + "static/img/player/volume-mute.png";
             }
         }
     });
