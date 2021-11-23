@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block playlist %}
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{{ url_for('playlist_blueprint.static', filename='css/style.css') }}">
+    <script src="{{ url_for('playlist_blueprint.static', filename='js/playlist.js') }}"></script>
+    <div class="playlistpage">
+        <div class="userplaylists">
+            <p>User Playlist</p>
+            <ul class="playlist_menu">
+            </ul>
+        </div>
+        <div class="playlist">
+            <div class="playlistAjax"></div>
+            <div class="playlist_tracks">
+                <table class="table">
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Album</th>
+                        <th>Date Added</th>
+                        <th>Time</th>
+                    </tr>
+                    <tbody class="trackData">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="pinDisplay">
+            <p>Pin Display</p>
+        </div>
+
+        <div id="name"></div>
+
+    </div>
+{% endblock %}

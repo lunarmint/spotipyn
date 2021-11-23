@@ -7,21 +7,23 @@
     <!-- Fonts. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
 
     <!-- bootstrap.css -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
-          integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
-            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+    <!-- The Spotify Playback API. -->
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+
+    <!-- The Spotify Web API JS wrapper. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spotify-web-api-js/1.5.2/spotify-web-api.min.js" integrity="sha512-BctYl8DMX/Oz6Y5xdcvA00Irxz78pMLfyutiXl3h4fUT6cNllPKYnm4HhG4p/wJgNAtOs//3EsYO+qkaThXEGA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}">
-
 
     <!-- Scripts. -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/togglesidebar.js') }}"></script>
@@ -31,6 +33,13 @@
 </head>
 <body>
 
+<!-- Access token to be passed into other modules. -->
+<script type="text/javascript">
+    const token = "{{ access_token }}";
+    const spotify = new SpotifyWebApi();
+    spotify.setAccessToken(token);
+</script>
+
 <div id="sidebar">
     <div class="toggle-btn" onclick="toggleSidebar(this)">
         <span></span>
@@ -38,10 +47,10 @@
         <span></span>
     </div>
     <div class="list">
-        <div class="item"><a href="/" target="_blank">Home</a></div>
-        <div class="item"><a href="/playlists" target="_blank">Playlists</a></div>
-        <div class="item"><a href="/albums" target="_blank">Albums</a></div>
-        <div class="item"><a href="/pin" target="_blank">Pins</a></div>
+        <div class="item"><a href="/" target="_self">Home</a></div>
+        <div class="item"><a href="/playlist" target="_self">Playlists</a></div>
+        <div class="item"><a href="/albums" target="_self">Albums</a></div>
+        <div class="item"><a href="/pins" target="_self">Pins</a></div>
     </div>
 </div>
 
@@ -54,188 +63,49 @@
     {% endblock %}
 </div>
 
+
 <a href="/logout" class="btn btn-primary btn-lg" style="font-size: 2rem; position: absolute; top: 5%; right: 5%">Sign Out</a>
 
-<div id="pin">
-    {% block pin %}
-    {% endblock %}
+<div id="playlist">
+    {% block playlist %}{% endblock %}
 </div>
 
+<!-- The bread and butter of the player. -->
 <div class="player">
     <div class="album-cover">
-        <img src="" id="album-cover"/>
+        <img src="" id="album-cover" alt=""/>
     </div>
 
     <div class="song">
-        <p id="song-name"></p>
+        <a id="song-name"></a>
     </div>
 
     <div class="artist">
-        <p id="artist-name"></p>
+        <a id="artist-name"></a>
     </div>
 
     <div class="controller">
-        <img src="{{ url_for('static', filename='img/player/shuffle_button.png') }}" id="shuffle" alt="Shuffle"/>
-        <img src="{{ url_for('static', filename='img/player/fast_backwards_button.png') }}" id="fast_backwards" alt="Previous Track"/>
-        <img src="{{ url_for('static', filename='img/player/play_button.png') }}" id="play" alt="Play/Pause">
-        <img src="{{ url_for('static', filename='img/player/fast_forward_button.png') }}" id="fast_forward" alt="Next Track"/>
-        <img src="{{ url_for('static', filename='img/player/loop_button.png') }}" id="loop" alt="Album Cover"/>
+        <img src="{{ url_for('static', filename='img/player/pin.png') }}" id="pin" alt=""/>
+        <img src="{{ url_for('static', filename='img/player/shuffle.png') }}" id="shuffle" alt=""/>
+        <img src="{{ url_for('static', filename='img/player/fast-backwards.png') }}" id="fast-backwards" alt=""/>
+        <img src="{{ url_for('static', filename='img/player/play.png') }}" id="play" alt="">
+        <img src="{{ url_for('static', filename='img/player/fast-forward.png') }}" id="fast-forward" alt=""/>
+        <img src="{{ url_for('static', filename='img/player/repeat.png') }}" id="repeat" alt=""/>
     </div>
 
     <div class="playback">
         <p id="playback-start">0:00</p>
-        <div id="playback-bar"></div>
+        <progress id="playback-bar" value="0" max="0"></progress>
         <p id="playback-end">0:00</p>
     </div>
 
-    <div class="volume"></div>
+    <div class="volume">
+        <img src="{{ url_for('static', filename='img/player/volume-full.png') }}" id="volume" alt=""/>
+        <label for="volume-bar"></label><input type="range" id="volume-bar" name="volume-bar" min="0" max="1" value="0" step="0.05">
+    </div>
 
-    <!-- The bread and butter of the player. -->
-    <script src="https://sdk.scdn.co/spotify-player.js"></script>
-    <script>
-        window.onSpotifyWebPlaybackSDKReady = () => {
-            const token = "{{ access_token }}";
-            const player = new Spotify.Player({
-                name: "Spotipyn Player",
-                getOAuthToken: cb => {
-                    cb(token);
-                },
-                volume: 0.5
-            });
+    <!-- The player's .js script. -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/player.js') }}"></script>
 
-            // Log the player state and status on initialization to the console.
-            player.addListener("ready", ({device_id}) => {
-                console.log('Ready with Device ID', device_id);
-            });
-
-            player.addListener("not_ready", ({device_id}) => {
-                console.log("Device ID has gone offline", device_id);
-            });
-
-            player.addListener("initialization_error", ({message}) => {
-                console.error(message);
-            });
-
-            player.addListener("authentication_error", ({message}) => {
-                console.error(message);
-            });
-
-            player.addListener("account_error", ({message}) => {
-                console.error(message);
-            });
-
-            // Get the buttons.
-            const play_button = document.getElementById("play");
-            const fast_backwards = document.getElementById("fast_backwards");
-            const fast_forward = document.getElementById("fast_forward");
-            const shuffle_button = document.getElementById("shuffle");
-            const loop_button = document.getElementById("loop");
-
-            player.addListener("player_state_changed", ({shuffle}) => {
-                if (shuffle) {
-                    shuffle_button.src = "{{ url_for('static', filename='img/player/shuffle_button_toggled.png') }}";
-                } else {
-                    shuffle_button.src = "{{ url_for('static', filename='img/player/shuffle_button.png') }}";
-                }
-            });
-
-            player.addListener("player_state_changed", ({repeat_mode}) => {
-                if (repeat_mode === 0) {
-                    loop_button.src = "{{ url_for('static', filename='img/player/loop_button.png') }}";
-                } else {
-                    loop_button.src = "{{ url_for('static', filename='img/player/loop_button_toggled.png') }}";
-                }
-            });
-
-            // Change the button to its play/pause version accordingly to the state of the player.
-            play_button.onclick = function () {
-                player.togglePlay();
-                updateState();
-                player.getCurrentState().then(state => {
-                    if (!state) {
-                        return;
-                    }
-
-                    if (state.paused) {
-                        play_button.src = "{{ url_for('static', filename='img/player/pause_button_hover.png') }}";
-                    } else {
-                        play_button.src = "{{ url_for('static', filename='img/player/play_button_hover.png') }}";
-                    }
-                });
-            }
-
-            // Location of the current object as url, turned into a string with trailing slash removed.
-            const location = window.location.toString().replace(/\/+$/, "")
-
-            // Display the blue version of the current button on mouse hover.
-            play_button.onmouseover = function () {
-                if (play_button.src === location + "{{ url_for('static', filename='img/player/play_button.png') }}") {
-                    play_button.src = "{{ url_for('static', filename='img/player/play_button_hover.png') }}";
-                } else if (play_button.src === location + "{{ url_for('static', filename='img/player/pause_button.png') }}") {
-                    play_button.src = "{{ url_for('static', filename='img/player/pause_button_hover.png') }}";
-                }
-            }
-
-            // Return to the original version of the button on mouse exit.
-            play_button.onmouseout = function () {
-                if (play_button.src === location + "{{ url_for('static', filename='img/player/play_button_hover.png') }}") {
-                    play_button.src = "{{ url_for('static', filename='img/player/play_button.png') }}";
-                } else if (play_button.src === location + "{{ url_for('static', filename='img/player/pause_button_hover.png') }}") {
-                    play_button.src = "{{ url_for('static', filename='img/player/pause_button.png') }}";
-                }
-            }
-
-            fast_backwards.onclick = function () {
-                player.previousTrack();
-                updateState();
-            }
-
-            fast_backwards.onmouseover = function () {
-                fast_backwards.src = "{{ url_for('static', filename='img/player/fast_backwards_button_hover.png') }}";
-            }
-
-            fast_backwards.onmouseout = function () {
-                fast_backwards.src = "{{ url_for('static', filename='img/player/fast_backwards_button.png') }}";
-            }
-
-            fast_forward.onclick = function () {
-                player.nextTrack();
-                updateState();
-            };
-
-            fast_forward.onmouseover = function () {
-                fast_forward.src = "{{ url_for('static', filename='img/player/fast_forward_button_hover.png') }}";
-            }
-
-            fast_forward.onmouseout = function () {
-                fast_forward.src = "{{ url_for('static', filename='img/player/fast_forward_button.png') }}";
-            }
-
-            async function updateState() {
-                /*
-                Spotify API has a delay in response. Without this, it would result in a return of an outdated WebPlaybackState object, which would lead
-                to the song name not being updated correctly. Basically an API limitation. 500ms is a safe number to guarantee an up-to-date response.
-                 */
-                await sleep(500);
-                player.getCurrentState().then(state => {
-                    if (!state) {
-                        return;
-                    }
-
-                    // Update the p tag indicating the song name being played.
-                    document.getElementById("song-name").innerText = state.track_window.current_track.name;
-                    document.getElementById("artist-name").innerText = state.track_window.current_track.artists[0].name;
-                    document.getElementById("album-cover").src = state.track_window.current_track.album.images[0].url;
-                });
-            }
-
-            function sleep(ms) {
-                return new Promise(resolve => setTimeout(resolve, ms));
-            }
-
-            player.connect();
-        }
-    </script>
 </div>
-
 </body>
