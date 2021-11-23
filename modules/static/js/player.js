@@ -60,6 +60,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     const fast_forward = document.getElementById("fast-forward");
     const shuffle_button = document.getElementById("shuffle");
     const repeat_button = document.getElementById("repeat");
+    const pin_button = document.getElementById("pin");
     const volume_button = document.getElementById("volume");
     const volume_bar = document.getElementById("volume-bar");
 
@@ -128,9 +129,21 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
             if (state.paused) {
                 play_button.src = location + "static/img/player/pause-hover.png";
-                interval_id = window.setInterval(updatePosition, 1000);
+                // Get the position of the current playing track in ms and update the progress bar and the timer on the left every second.
+                interval_id = window.setInterval(function () {
+                    player.getCurrentState().then(state => {
+                        if (!state) {
+                            return;
+                        }
+
+                        const position = state.position;
+                        document.getElementById("playback-start").innerText = getTime(position);
+                        document.getElementById("playback-bar").value = position;
+                    });
+                }, 1000);
             } else {
                 play_button.src = location + "static/img/player/play-hover.png";
+                // Remove the interval while paused to reduce the total amount of API requests.
                 clearInterval(interval_id);
             }
         });
@@ -140,7 +153,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     }
 
     /**
-     * Change the button to blue when the cursor is on the element.
+     * Highlight the play/pause button when the cursor is on the element and return to grey when it leaves.
      */
     play_button.onmouseover = function () {
         if (play_button.src === location + "static/img/player/play.png") {
@@ -150,9 +163,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
     }
 
-    /**
-     * Return the button to white when the cursor leaves the button.
-     */
     play_button.onmouseout = function () {
         if (play_button.src === location + "static/img/player/play-hover.png") {
             play_button.src = location + "static/img/player/play.png";
@@ -178,15 +188,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     }
 
     /**
-     * Change the button to blue when the cursor is on the element.
+     * Highlight the fast backwards button when the cursor is on the element and return to grey when it leaves.
      */
     fast_backwards.onmouseover = function () {
         fast_backwards.src = location + "static/img/player/fast-backwards-hover.png";
     }
 
-    /**
-     * Return the button to white when the cursor leaves the button.
-     */
     fast_backwards.onmouseout = function () {
         fast_backwards.src = location + "static/img/player/fast-backwards.png";
     }
@@ -200,15 +207,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     };
 
     /**
-     * Change the button to blue when the cursor is on the element.
+     * Highlight the fast forward button when the cursor is on the element and return to grey when it leaves.
      */
     fast_forward.onmouseover = function () {
         fast_forward.src = location + "static/img/player/fast-forward-hover.png";
     }
 
-    /**
-     * Return the button to white when the cursor leaves the button.
-     */
     fast_forward.onmouseout = function () {
         fast_forward.src = location + "static/img/player/fast-forward.png";
     }
@@ -235,7 +239,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     }
 
     /**
-     * Change the button to blue when the cursor is on the element.
+     * Highlight the fast forward button when the cursor is on the element and return to grey when it leaves.
      */
     shuffle_button.onmouseover = function () {
         if (shuffle_button.src === location + "static/img/player/shuffle.png") {
@@ -245,9 +249,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
     }
 
-    /**
-     * Return the button to white when the cursor leaves the button.
-     */
     shuffle_button.onmouseout = function () {
         if (shuffle_button.src === location + "static/img/player/shuffle-hover.png") {
             shuffle_button.src = location + "static/img/player/shuffle.png";
@@ -282,7 +283,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     }
 
     /**
-     * Change the button to blue when the cursor is on the element.
+     * Highlight the repeat button when the cursor is on the element and return to grey when it leaves.
      */
     repeat_button.onmouseover = function () {
         if (repeat_button.src === location + "static/img/player/repeat.png") {
@@ -294,9 +295,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
     }
 
-    /**
-     * Return the button to white when the cursor leaves the button.
-     */
     repeat_button.onmouseout = function () {
         if (repeat_button.src === location + "static/img/player/repeat-hover.png") {
             repeat_button.src = location + "static/img/player/repeat.png";
@@ -308,7 +306,18 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     }
 
     /**
-     * Change the button to blue when the cursor is on the element.
+     * Highlight the pin button when the cursor is on the element and return to grey when it leaves.
+     */
+    pin_button.onmouseover = function () {
+        pin_button.src = location + "static/img/player/pin-hover.png";
+    }
+
+    pin_button.onmouseout = function () {
+        pin_button.src = location + "static/img/player/pin.png";
+    }
+
+    /**
+     * Highlight the volume button when the cursor is on the element and return to grey when it leaves.
      */
     volume_button.onmouseover = function () {
         const volume = parseFloat(volume_bar.value);
@@ -321,9 +330,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
     }
 
-    /**
-     * Return the button to white when the cursor leaves the button.
-     */
     volume_button.onmouseout = function () {
         const volume = parseFloat(volume_bar.value);
         if (volume >= 0.5) {
@@ -355,11 +361,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             }
         } else if (volume > 0 && volume < 0.5) {
             volume_button.src = location + "static/img/player/volume-low-hover.png";
-
+            
             volume_bar.onmousedown = function () {
                 volume_button.src = location + "static/img/player/volume-low-hover.png";
             }
-
             volume_bar.onmouseup = function () {
                 volume_button.src = location + "static/img/player/volume-low.png";
             }
@@ -375,21 +380,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             }
         }
     });
-
-    /**
-     * Get the position of the current playing track in ms and update the progress bar and the timer on the left accordingly.
-     */
-    function updatePosition() {
-        player.getCurrentState().then(state => {
-            if (!state) {
-                return;
-            }
-
-            const position = state.position;
-            document.getElementById("playback-start").innerText = getTime(position);
-            document.getElementById("playback-bar").value = position;
-        });
-    }
 
     // Connect the player with the SDK.
     player.connect();
