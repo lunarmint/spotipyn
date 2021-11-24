@@ -12,8 +12,8 @@ from utils.auth import get_auth_manager
 pin_blueprint = Blueprint("pin_blueprint", __name__, template_folder="templates", static_folder="static")
 
 
-@pin_blueprint.route("/pin", methods=['GET', 'POST'])
-def pins():
+@pin_blueprint.route("/pins", methods=['GET', 'POST'])
+def createpins():
     # Fetch the OAuth2 object.
     auth_manager = get_auth_manager()
 
@@ -27,8 +27,30 @@ def pins():
 
     if form.validate_on_submit():
         flash(f'Pin Created', 'Redirecting to home')
-        return redirect('/')
-    return render_template("pin.html", spotify=spotify, access_token=access_token, form=form)
+        return redirect('/pins')
+    return render_template("pin.html", legend='Create Pin', spotify=spotify, access_token=access_token, form=form)
+
+
+@pin_blueprint.route("/edit", methods=['GET', 'POST'])
+def editpins():
+    # Fetch the OAuth2 object.
+    auth_manager = get_auth_manager()
+
+    # Initialize the Spotify object to do stuffs.
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
+
+    # Get the access token value from the token dict in OAuth2 object.
+    access_token = auth_manager.get_access_token()["access_token"]
+
+    form = PinForm()
+    form.message.data = 'hello'
+    form.timestamp.data = '1:20'
+    form.duration.data = '0:30'
+
+    if form.validate_on_submit():
+        flash(f'Pin Created', 'Redirecting to home')
+        return redirect('/pins')
+    return render_template("edit.html", legend='Edit Pin', time=form.timestamp.data, spotify=spotify, access_token=access_token, form=form)
 
 
 class PinForm(FlaskForm):
@@ -49,7 +71,7 @@ def create_pin(message, duration, time_stamp):
         "pin_duration": duration,
     }
     # open connection
-    db = database.Database.get()
+    db = database.Database().get()
 
     # find table
     pins = db["pins"]
@@ -86,7 +108,7 @@ def edit_pin(time_stamp, new_message, new_duration):
     spotify_user = spotify.current_user()
 
     # open connection
-    db = database.Database.get()
+    db = database.Database().get()
 
     # find table
     pins = db["pins"]
@@ -114,7 +136,7 @@ def delete_pin(time_stamp):
     spotify_user = spotify.current_user()
 
     # open connection
-    db = database.Database.get()
+    db = database.Database().get()
 
     # find table
     pins = db["pins"]
