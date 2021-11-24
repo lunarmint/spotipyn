@@ -31,7 +31,7 @@ def createpins():
     return render_template("pin.html", legend='Create Pin', spotify=spotify, access_token=access_token, form=form)
 
 
-@pin_blueprint.route("/edit", methods=['GET', 'POST'])
+@pin_blueprint.route("/pins/edit", methods=['GET', 'POST'])
 def editpins():
     # Fetch the OAuth2 object.
     auth_manager = get_auth_manager()

@@ -39,7 +39,7 @@ class Database:
         # Create user_info table and columns to store the user-related variables as a JSON object.
         if "users" not in db:
             pins = db.create_table("users")
-            pins.create_column("user_id", db.types.string)
+            pins.create_column("user_id", db.types.string(100))
             pins.create_column("value", db.types.json)
             log.info("Created missing table: pins")
 
