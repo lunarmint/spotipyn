@@ -6,9 +6,10 @@ from utils.auth import get_auth_manager
 # TODO: Create the sample template here when the pin functionality is added.
 auth_manager = get_auth_manager()
 spotify = spotipy.Spotify(auth_manager=auth_manager)
+spotify_user = spotify.current_user()
 
 user_template = {
-    "username": spotify.current_user(),
+    "username": spotify_user,
 }
 
 

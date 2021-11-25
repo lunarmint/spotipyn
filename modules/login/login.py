@@ -6,6 +6,7 @@ import uuid
 import spotipy
 from flask import session, request, redirect, render_template, Blueprint
 
+from utils import database
 from utils.auth import session_cache_path
 from utils.config import config
 
@@ -17,6 +18,7 @@ login_blueprint = Blueprint("login_blueprint", __name__, template_folder="templa
 @login_blueprint.route("/")
 def index():
     """The entry point, serving different contents depending on the user's log in status."""
+    database.Database().setup()
 
     # Assign a UUID to the new user.
     if not session.get("uuid"):

@@ -8,7 +8,6 @@ from wtforms.validators import DataRequired
 from utils import database
 from utils.auth import get_auth_manager
 
-
 pin_blueprint = Blueprint("pin_blueprint", __name__, template_folder="templates", static_folder="static")
 
 
@@ -22,6 +21,18 @@ def createpins():
 
     # Get the access token value from the token dict in OAuth2 object.
     access_token = auth_manager.get_access_token()["access_token"]
+
+    db = database.Database().get()
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
+    spotify_user = spotify.current_user()
+    pins = db["users"]
+    user = pins.find_one(user_id=spotify_user["id"])
+    if not user:
+        user_template = {
+            "username": spotify_user,
+        }
+        user_json = json.dumps(user_template)
+        pins.insert(dict(user_id=spotify_user["id"], value=user_json))
 
     form = PinForm()
 
@@ -64,9 +75,10 @@ def create_pin(message, duration, time_stamp):
     auth_manager = get_auth_manager()
     spotify = spotipy.Spotify(auth_manager=auth_manager)
     track = spotify.current_user_playing_track()
-    spotify_user = spotify.current_user(),
+    spotify_user = spotify.current_user()
 
     pin = {
+        "pin_timestamp": time_stamp,
         "pin_message": message,
         "pin_duration": duration,
     }
@@ -74,7 +86,7 @@ def create_pin(message, duration, time_stamp):
     db = database.Database().get()
 
     # find table
-    pins = db["pins"]
+    pins = db["users"]
 
     # find user
     user = pins.find_one(user_id=spotify_user["id"])
@@ -111,7 +123,7 @@ def edit_pin(time_stamp, new_message, new_duration):
     db = database.Database().get()
 
     # find table
-    pins = db["pins"]
+    pins = db["users"]
 
     # find user
     user = pins.find_one(user_id=spotify_user["id"])
@@ -139,7 +151,7 @@ def delete_pin(time_stamp):
     db = database.Database().get()
 
     # find table
-    pins = db["pins"]
+    pins = db["users"]
 
     # find user
     user = pins.find_one(user_id=spotify_user["id"])
