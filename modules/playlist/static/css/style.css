@@ -1,51 +1,54 @@
-.playlistpage{
+.playlistpage {
     display: grid;
     height: 100vh;
     grid-template-rows: auto auto auto auto;
     font-family: 'Montserrat', sans-serif;
-
 }
 
-.header{
+.userplaylists {
     border: 2px;
-    font-size: 1.6rem;
-    text-align: left;
-    background-color: #000000;
-    color:  #000000;
-    grid-column: 1 / span 12;
-}
-
-.logo{
-
-}
-
-.userplaylists{
-    border: 2px;
-    grid-column: 1 / span 4;
+    grid-column: 3/ span 1;
     grid-row: 2 / 5;
     background-color: #000000;
-    position: sticky;
     text-align: center;
     font-size: 1.2rem;
     color: white;
+    height: 75%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 261px;
 }
 
-.playlist{
+ul.playlist_menu{
+    list-style-type: none;
+    width: 100%;
+    padding-left: 3px;
+    padding-right: 1px;
+    text-align: left;
+}
+
+.playlist {
     border: 2px;
     border-radius: 4px;
-    grid-column: 5 / span 4;
+    grid-column: 4 / span 1;
     grid-row: 2 / 5;
     background-color: gray;
-    text-align: center;
-    font-size: 1.6rem;
+    text-align: justify;
+    font-size: 1rem;
     color: #000000;
-
+    margin-right: 208px;
+    margin-left: -5px;
+    padding: 0 10px;
+    height: 91%;
+    overflow: auto;
+    float: left;
+    position: relative;
 }
 
-.pinDisplay{
+.pinDisplay {
     border: 2px;
-    /*border-radius: 4px;*/
-    grid-column: 9 / span 4;
+    grid-column: 6 / span 2;
     grid-row: 2 / 5;
     right: 0;
     background-color: #000000;
@@ -58,18 +61,15 @@
     color: #000;
     font-size: 42px;
     margin-top: 137px !important;
-    position: absolute;
-    margin-left: -100px;
+    position: relative;
 }
-a.playlist_item {
-    color: #fff;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+
+.playlist::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.0);
+    border-radius: 10px;
 }
-a.playlist_item:hover {
-    color: #3ee77a;
-}
-a.active_menu{
-   color: #3ee77a;
+
+.playlist::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.0);
 }
