@@ -54,7 +54,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         console.log("Autoplay is not allowed by the browser autoplay rules");
     });
 
-    // Get the buttons.
+    // Get the buttons and initialize the progress bar.
     const play_button = document.getElementById("play");
     const fast_backwards = document.getElementById("fast-backwards");
     const fast_forward = document.getElementById("fast-forward");
@@ -63,6 +63,13 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     const pin_button = document.getElementById("pin");
     const volume_button = document.getElementById("volume");
     const volume_bar = document.getElementById("volume-bar");
+    const progress_bar = new ProgressBar.Line("#playback-bar", {
+        color: "#b3b3b3",
+        trailColor: "#535353",
+        svgStyle: {
+            strokeLinecap: "round",
+        },
+    });
 
     // Location of the current object as url.
     const location = `${window.location.protocol}//${window.location.host}/`;
@@ -70,6 +77,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     /**
      * Update various elements on the player whenever a change in the player state is detected.
      */
+    let duration_ms;
     player.addListener("player_state_changed", ({paused, repeat_mode, shuffle, track_window: {current_track}}) => {
         if (paused) {
             // Without this, when the button is clicked and if the mouse is still on it, it would display the white version of the button.
@@ -108,9 +116,17 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         document.getElementById("artist-name").innerText = current_track.artists[0].name;
         document.getElementById("artist-name").href = `https://open.spotify.com/album/${current_track.artists[0].uri.split(":")[2]}`;
 
-        const duration_ms = current_track.duration_ms;
-        document.getElementById("playback-bar").max = duration_ms;
+        duration_ms = current_track.duration_ms;
         document.getElementById("playback-end").innerText = getTime(duration_ms);
+    });
+
+    // Seek the player to the clicked location on the progress bar.
+    document.getElementById("playback-bar").addEventListener("click", function (e) {
+        // Get the clicked x value relative to the element by subtracting the clicked x value of the screen by the bar's left offset.
+        const x = e.pageX - this.offsetLeft;
+        const progress_percentage = x / this.offsetWidth;
+        progress_bar.set(progress_percentage);
+        player.seek(progress_percentage * duration_ms);
     });
 
     /**
@@ -138,12 +154,13 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
                         const position = state.position;
                         document.getElementById("playback-start").innerText = getTime(position);
-                        document.getElementById("playback-bar").value = position;
+                        progress_bar.set(position / duration_ms);
                     });
                 }, 1000);
             } else {
                 play_button.src = location + "static/img/player/play-hover.png";
                 // Remove the interval while paused to reduce the total amount of API requests.
+                progress_bar.stop();
                 clearInterval(interval_id);
             }
         });
@@ -361,10 +378,11 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             }
         } else if (volume > 0 && volume < 0.5) {
             volume_button.src = location + "static/img/player/volume-low-hover.png";
-            
+
             volume_bar.onmousedown = function () {
                 volume_button.src = location + "static/img/player/volume-low-hover.png";
             }
+
             volume_bar.onmouseup = function () {
                 volume_button.src = location + "static/img/player/volume-low.png";
             }
