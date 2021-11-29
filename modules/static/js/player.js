@@ -63,7 +63,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     const pin_button = document.getElementById("pin");
     const volume_button = document.getElementById("volume");
     const volume_bar = document.getElementById("volume-bar");
-    const progress_bar = new ProgressBar.Line("#playback-bar", {
+    const progress_bar = document.getElementById("playback-bar");
+    const progress = new ProgressBar.Line("#playback-bar", {
         color: "#b3b3b3",
         trailColor: "#535353",
         svgStyle: {
@@ -120,15 +121,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         document.getElementById("playback-end").innerText = getTime(duration_ms);
     });
 
-    // Seek the player to the clicked location on the progress bar.
-    document.getElementById("playback-bar").addEventListener("click", function (e) {
-        // Get the clicked x value relative to the element by subtracting the clicked x value of the screen by the bar's left offset.
-        const x = e.pageX - this.offsetLeft;
-        const progress_percentage = x / this.offsetWidth;
-        progress_bar.set(progress_percentage);
-        player.seek(progress_percentage * duration_ms);
-    });
-
     /**
      * Play/pause the song on button click.
      *
@@ -154,13 +146,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
                         const position = state.position;
                         document.getElementById("playback-start").innerText = getTime(position);
-                        progress_bar.set(position / duration_ms);
+                        progress.set(position / duration_ms);
                     });
                 }, 1000);
             } else {
                 play_button.src = location + "static/img/player/play-hover.png";
                 // Remove the interval while paused to reduce the total amount of API requests.
-                progress_bar.stop();
                 clearInterval(interval_id);
             }
         });
@@ -331,6 +322,15 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
     pin_button.onmouseout = function () {
         pin_button.src = location + "static/img/player/pin.png";
+    }
+
+    // Seek the player to the clicked location on the progress bar.
+    progress_bar.onclick = function (e) {
+        // Get the clicked x value relative to the element by subtracting the clicked x value of the screen by the bar's left offset.
+        const x = e.pageX - this.offsetLeft;
+        const progress_percentage = x / this.offsetWidth;
+        progress.set(progress_percentage);
+        player.seek(progress_percentage * duration_ms);
     }
 
     /**
