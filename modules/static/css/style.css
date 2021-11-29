@@ -1,11 +1,10 @@
 body {
     background-color: black;
     font-family: "Montserrat", sans-serif;
-    font-size: 62.5%;
 }
 
 h1 {
-    font-size: 5rem;
+    font-size: 3rem;
     font-weight: bold;
 }
 
@@ -42,7 +41,7 @@ h1 {
     padding: 15px 10px;
     border-bottom: 1px solid #444;
     color: #fcfcfc;
-    font-size: 1.5rem;
+    font-size: 1rem;
     text-align: center;
 }
 
@@ -79,7 +78,7 @@ h1 {
 }
 
 #list li {
-    line-height: 3rem;
+    line-height: 2rem;
     font-size: 2rem;
     opacity: 0;
     animation: fadeIn 1s ease-in both;

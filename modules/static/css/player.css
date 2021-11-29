@@ -32,7 +32,7 @@
     grid-column-end: col3;
     grid-row-start: row1;
     grid-row-end: row2;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 400;
     place-self: end start;
     text-align: left;
@@ -52,7 +52,7 @@
     grid-column-end: col3;
     grid-row-start: row2;
     grid-row-end: row3;
-    font-size: 1.3rem;
+    font-size: 0.8rem;
     font-weight: 200;
     place-self: start start;
     text-align: left;
@@ -136,10 +136,10 @@
 }
 
 .playback > p {
-    font-size: 1.4rem;
+    margin: 0;
     align-self: center;
     text-align: center;
-    line-height: 0;
+    font-size: 1rem;
     width: 100%;
 }
 
@@ -160,6 +160,8 @@
 }
 
 svg {
+    display: block;
+    margin: auto;
     border-radius: 1vh;
 }
 
