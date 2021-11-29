@@ -40,10 +40,10 @@
 }
 
 .song > a {
+    display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    user-select: none;
     color: white;
 }
 
@@ -60,10 +60,10 @@
 }
 
 .artist > a {
+    display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    user-select: none;
     color: #b3b3b3;
 }
 
@@ -84,42 +84,42 @@
     object-fit: scale-down;
 }
 
-.controller > #pin {
+#pin {
     grid-column-start: 1;
     grid-column-end: 2;
     place-self: center end;
     max-width: 25%;
 }
 
-.controller > #shuffle {
+#shuffle {
     grid-column-start: 2;
     grid-column-end: 3;
     place-self: center end;
     max-width: 25%;
 }
 
-.controller > #fast-backwards {
+#fast-backwards {
     grid-column-start: 3;
     grid-column-end: 4;
     place-self: center end;
     max-width: 25%;
 }
 
-.controller > #play {
+#play {
     grid-column-start: 4;
     grid-column-end: 5;
     place-self: center center;
     max-width: 40%;
 }
 
-.controller > #fast-forward {
+#fast-forward {
     grid-column-start: 5;
     grid-column-end: 6;
     place-self: center start;
     max-width: 25%;
 }
 
-.controller > #repeat {
+#repeat {
     grid-column-start: 6;
     grid-column-end: 7;
     place-self: center start;
@@ -143,7 +143,7 @@
     width: 100%;
 }
 
-.playback > #playback-start {
+#playback-start {
     grid-column-start: playback-col1;
     grid-column-end: playback-col2;
     cursor: default;
@@ -151,14 +151,19 @@
     color: white;
 }
 
-.playback > #playback-bar {
+#playback-bar {
     grid-column-start: playback-col2;
     grid-column-end: playback-col3;
     align-self: center;
     width: 100%;
+    height: 10%;
 }
 
-.playback > #playback-end {
+svg {
+    border-radius: 1vh;
+}
+
+#playback-end {
     grid-column-start: playback-col3;
     grid-column-end: playback-col4;
     cursor: default;
@@ -168,7 +173,7 @@
 
 .volume {
     display: grid;
-    grid-template-columns: [volume-col1] 50% [volume-col2] 50% [volume-col3];
+    grid-template-columns: repeat(2, 1fr);
     grid-column-start: col4;
     grid-column-end: col5;
     grid-row-start: row1;
@@ -181,15 +186,15 @@
     max-height: 25%;
 }
 
-.volume > #volume {
-    grid-column-start: volume-col1;
-    grid-column-end: volume-col2;
+#volume {
+    grid-column-start: 1;
+    grid-column-end: 2;
     place-self: center end;
 }
 
-.volume > #volume-bar {
-    grid-column-start: volume-col2;
-    grid-column-end: volume-col3;
+#volume-bar {
+    grid-column-start: 2;
+    grid-column-end: 3;
     place-self: center center;
     width: 75%;
 }

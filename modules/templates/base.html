@@ -15,6 +15,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 
+    <!-- progressbar.js -->
+    <script src="https://cdn.jsdelivr.net/npm/progressbar.js@1.1.0/dist/progressbar.min.js"></script>
+
     <!-- The Spotify Playback API. -->
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
 
@@ -63,15 +66,14 @@
     {% endblock %}
 </div>
 
-
 <a href="/logout" class="btn btn-primary btn-lg" style="font-size: 2rem; position: absolute; top: 5%; right: 5%">Sign Out</a>
 
 <div id="playlist">
     {% block playlist %}{% endblock %}
 </div>
+  
 <div id="pin">
-    {% block pin %}
-    {% endblock %}
+    {% block pin %}{% endblock %}
 </div>
 
 <!-- The bread and butter of the player. -->
@@ -99,7 +101,7 @@
 
     <div class="playback">
         <p id="playback-start">0:00</p>
-        <progress id="playback-bar" value="0" max="0"></progress>
+        <div id="playback-bar"></div>
         <p id="playback-end">0:00</p>
     </div>
 
