@@ -1,0 +1,25 @@
+.pin-content{
+    background-color: dimgrey;
+    font-size: 14pt;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    height: fit-content;
+    width: fit-content;
+    position: absolute;
+    top: 25%;
+    left: 40%;
+    margin-top: -50px;
+    margin-left: -50px;
+}
+.border-bottom{
+    color: black;
+}
+.form-group{
+    color: black;
+    text-align: left;
+}
+.submit{
+    text-align: center;
+    color: black;
+}

@@ -1,26 +1,30 @@
 {% extends "base.html" %}
 {% block pin %}
-<head>
-   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <title>Spotipyn - Pin</title>
-   <link rel="stylesheet" href="{{ url_for('static', filename='css/pin.css') }}">
-</head>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pin.css') }}">
+
 <div class="pin-content">
     <form method="post" action="">
       {{form.hidden_tag()}}
         <fieldset class="form-group">
-             <legend class="border-bottom mb-4">{{legend}}</legend>
+             <legend class="border-bottom mb-4">Pinning: {{legend}}</legend>
+            <div class = "time-stamp">
+            <div class ="form-group">
+                {{form.timestamp_min.label}}
+                {{form.timestamp_min}}
+                {{form.timestamp_sec.label}}
+                {{form.timestamp_sec}}
+            </div>
+            </div>
             <div class ="form-group">
                 {{form.message.label}}
                 {{form.message}}
             </div>
-            <div class ="form-group">
-                {{form.timestamp.label}}
-                {{form.timestamp}}
-            </div>
              <div class ="form-group">
-                {{form.duration.label}}
-                {{form.duration}}
+                 {{form.duration.label}}
+                 {{form.duration}}
             </div>
         </fieldset>
         <div class ="submit">
