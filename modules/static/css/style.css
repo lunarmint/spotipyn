@@ -2,7 +2,6 @@ body {
     background-color: black;
     font-family: "Montserrat", sans-serif;
     font-size: 62.5%;
-    color: #FFFFFF;
 }
 
 h1 {
@@ -44,6 +43,7 @@ h1 {
     border-bottom: 1px solid #444;
     color: #fcfcfc;
     font-size: 1.5rem;
+    text-align: center;
 }
 
 #sidebar div.list div.item a {
@@ -100,6 +100,7 @@ h1 {
 #list li:nth-child(5) {
     animation-delay: 6s;
 }
+
 @keyframes fadeIn {
     from {
         opacity: 0;
