@@ -1,5 +1,105 @@
+/* Dark theme for the pin modal. */
+#modal {
+    color: #d3d3d3;
+}
+
+.modal-content {
+    background-color: #181818;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-header {
+    border-bottom: 1px solid #343a40;
+}
+
+.modal-footer {
+    border-top: 1px solid #343a40;
+}
+
+.form-control {
+    color: #dee2e6;
+    background-color: #000;
+    border: 1px solid #6c757d;
+}
+
+.form-control::-ms-expand {
+    background-color: transparent;
+    border: 0;
+}
+
+.form-control:-moz-focusring {
+    color: transparent;
+}
+
+.form-control:focus {
+    color: #dee2e6;
+    background-color: #191d21;
+    border-color: #b3d7ff;
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #6c757d;
+    opacity: 1;
+}
+
+.form-control::-moz-placeholder {
+    color: #6c757d;
+    opacity: 1;
+}
+
+.form-control::-ms-input-placeholder {
+    color: #6c757d;
+    opacity: 1;
+}
+
+.form-control::placeholder {
+    color: #6c757d;
+    opacity: 1;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #343a40;
+    opacity: 1;
+}
+
+.input-group-text {
+    color: #dee2e6;
+    background-color: #343a40;
+    border: 1px solid #6c757d;
+}
+
+.form-select {
+    color: #dee2e6;
+    background: #000 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") right 0.75rem center/8px 10px no-repeat;
+    border: 1px solid #6c757d;
+}
+
+.form-select:focus {
+    border-color: #80bdff;
+}
+
+.form-select:focus::-ms-value {
+    color: #dee2e6;
+    background-color: #000;
+}
+
+.form-select:disabled {
+    color: #ced4da;
+    background-color: #343a40;
+}
+
+.form-select::-ms-expand {
+    display: none;
+}
+
+.form-select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #dee2e6;
+}
+
+/* Styles for the player. */
 .player {
-    background: rgba(24, 24, 24);
+    background: #181818;
     position: fixed;
     display: grid;
     grid-template-columns: [col1] 12.5% [col2] 12.5% [col3] 50% [col4] 25% [col5];
@@ -44,7 +144,12 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: white;
+    text-decoration: none;
+    color: #d3d3d3;
+}
+
+.song > a:hover {
+    text-decoration: underline;
 }
 
 .artist {
@@ -53,7 +158,7 @@
     grid-row-start: row2;
     grid-row-end: row3;
     font-size: 0.8rem;
-    font-weight: 200;
+    font-weight: 400;
     place-self: start start;
     text-align: left;
     width: 100%;
@@ -65,10 +170,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
     color: #b3b3b3;
+    text-decoration: none;
 }
 
 .artist > a:hover {
-    color: white;
+    color: #d3d3d3;
+    text-decoration: underline;
 }
 
 .controller {
@@ -148,7 +255,6 @@
     grid-column-end: playback-col2;
     cursor: default;
     user-select: none;
-    color: white;
 }
 
 #playback-bar {
@@ -170,7 +276,6 @@ svg {
     grid-column-end: playback-col4;
     cursor: default;
     user-select: none;
-    color: white;
 }
 
 .volume {

@@ -64,6 +64,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     const volume_button = document.getElementById("volume");
     const volume_bar = document.getElementById("volume-bar");
     const progress_bar = document.getElementById("playback-bar");
+    const form = document.getElementById("form");
     const progress = new ProgressBar.Line("#playback-bar", {
         color: "#b3b3b3",
         trailColor: "#535353",
@@ -324,10 +325,14 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         pin_button.src = location + "static/img/player/pin.png";
     }
 
+    pin_button.onclick = function () {
+        $("#modal").modal("show");
+    }
+
     // Seek the player to the clicked location on the progress bar.
-    progress_bar.onclick = function (e) {
+    progress_bar.onclick = function (event) {
         // Get the clicked x value relative to the element by subtracting the clicked x value of the screen by the bar's left offset.
-        const x = e.pageX - this.offsetLeft;
+        const x = event.pageX - this.offsetLeft;
         const progress_percentage = x / this.offsetWidth;
         progress.set(progress_percentage);
         player.seek(progress_percentage * duration_ms);
@@ -398,6 +403,21 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             }
         }
     });
+
+    /**
+     * Get the form data values as an Object prototype.
+     * @param event
+     */
+    form.onsubmit = function (event) {
+        event.preventDefault();
+        const inputs = Array.from(document.querySelectorAll("#form input")).reduce((acc, input) => ({...acc, [input.id]: input.value}), {});
+        const mode = Array.from(document.querySelectorAll("#form select")).reduce((acc, input) => ({...acc, [input.id]: input.value}), {});
+        const response = {
+            ...inputs,
+            ...mode,
+        }
+        console.log(response);
+    }
 
     // Connect the player with the SDK.
     player.connect();
