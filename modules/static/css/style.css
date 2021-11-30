@@ -1,12 +1,23 @@
 body {
     background-color: black;
+    text-align: center;
     font-family: "Montserrat", sans-serif;
-    color: #d3d3d3;
+    font-size: 62.5%;
+    color: #FFFFFF;
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 5rem;
     font-weight: bold;
+}
+
+#pins {
+	font-size: 2rem;
+    font-weight: bold;
+    width: 100%;
+    height: 100%;
+    background: rgba(24, 24, 24);
+    transition: all 300ms linear;
 }
 
 #sidebar {
@@ -42,8 +53,7 @@ h1 {
     padding: 15px 10px;
     border-bottom: 1px solid #444;
     color: #fcfcfc;
-    font-size: 1rem;
-    text-align: center;
+    font-size: 1.5rem;
 }
 
 #sidebar div.list div.item a {
@@ -79,7 +89,7 @@ h1 {
 }
 
 #list li {
-    line-height: 2rem;
+    line-height: 3rem;
     font-size: 2rem;
     opacity: 0;
     animation: fadeIn 1s ease-in both;
@@ -111,3 +121,4 @@ h1 {
         transform: translate3d(0, 0, 0);
     }
 }
+
