@@ -1,5 +1,105 @@
+/* Dark theme for the pin modal. */
+#modal {
+    color: #d3d3d3;
+}
+
+.modal-content {
+    background-color: #181818;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-header {
+    border-bottom: 1px solid #343a40;
+}
+
+.modal-footer {
+    border-top: 1px solid #343a40;
+}
+
+.form-control {
+    color: #dee2e6;
+    background-color: #000;
+    border: 1px solid #6c757d;
+}
+
+.form-control::-ms-expand {
+    background-color: transparent;
+    border: 0;
+}
+
+.form-control:-moz-focusring {
+    color: transparent;
+}
+
+.form-control:focus {
+    color: #dee2e6;
+    background-color: #191d21;
+    border-color: #b3d7ff;
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #6c757d;
+    opacity: 1;
+}
+
+.form-control::-moz-placeholder {
+    color: #6c757d;
+    opacity: 1;
+}
+
+.form-control::-ms-input-placeholder {
+    color: #6c757d;
+    opacity: 1;
+}
+
+.form-control::placeholder {
+    color: #6c757d;
+    opacity: 1;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #343a40;
+    opacity: 1;
+}
+
+.input-group-text {
+    color: #dee2e6;
+    background-color: #343a40;
+    border: 1px solid #6c757d;
+}
+
+.form-select {
+    color: #dee2e6;
+    background: #000 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") right 0.75rem center/8px 10px no-repeat;
+    border: 1px solid #6c757d;
+}
+
+.form-select:focus {
+    border-color: #80bdff;
+}
+
+.form-select:focus::-ms-value {
+    color: #dee2e6;
+    background-color: #000;
+}
+
+.form-select:disabled {
+    color: #ced4da;
+    background-color: #343a40;
+}
+
+.form-select::-ms-expand {
+    display: none;
+}
+
+.form-select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #dee2e6;
+}
+
+/* Styles for the player. */
 .player {
-    background: rgba(24, 24, 24);
+    background: #181818;
     position: fixed;
     display: grid;
     grid-template-columns: [col1] 12.5% [col2] 12.5% [col3] 50% [col4] 25% [col5];
@@ -32,7 +132,7 @@
     grid-column-end: col3;
     grid-row-start: row1;
     grid-row-end: row2;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 400;
     place-self: end start;
     text-align: left;
@@ -40,11 +140,16 @@
 }
 
 .song > a {
+    display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    user-select: none;
-    color: white;
+    text-decoration: none;
+    color: #d3d3d3;
+}
+
+.song > a:hover {
+    text-decoration: underline;
 }
 
 .artist {
@@ -52,23 +157,25 @@
     grid-column-end: col3;
     grid-row-start: row2;
     grid-row-end: row3;
-    font-size: 1.3rem;
-    font-weight: 200;
+    font-size: 0.8rem;
+    font-weight: 400;
     place-self: start start;
     text-align: left;
     width: 100%;
 }
 
 .artist > a {
+    display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    user-select: none;
     color: #b3b3b3;
+    text-decoration: none;
 }
 
 .artist > a:hover {
-    color: white;
+    color: #d3d3d3;
+    text-decoration: underline;
 }
 
 .controller {
@@ -84,42 +191,42 @@
     object-fit: scale-down;
 }
 
-.controller > #pin {
+#pin {
     grid-column-start: 1;
     grid-column-end: 2;
     place-self: center end;
     max-width: 25%;
 }
 
-.controller > #shuffle {
+#shuffle {
     grid-column-start: 2;
     grid-column-end: 3;
     place-self: center end;
     max-width: 25%;
 }
 
-.controller > #fast-backwards {
+#fast-backwards {
     grid-column-start: 3;
     grid-column-end: 4;
     place-self: center end;
     max-width: 25%;
 }
 
-.controller > #play {
+#play {
     grid-column-start: 4;
     grid-column-end: 5;
     place-self: center center;
     max-width: 40%;
 }
 
-.controller > #fast-forward {
+#fast-forward {
     grid-column-start: 5;
     grid-column-end: 6;
     place-self: center start;
     max-width: 25%;
 }
 
-.controller > #repeat {
+#repeat {
     grid-column-start: 6;
     grid-column-end: 7;
     place-self: center start;
@@ -136,39 +243,44 @@
 }
 
 .playback > p {
-    font-size: 1.4rem;
+    margin: 0;
     align-self: center;
     text-align: center;
-    line-height: 0;
+    font-size: 1rem;
     width: 100%;
 }
 
-.playback > #playback-start {
+#playback-start {
     grid-column-start: playback-col1;
     grid-column-end: playback-col2;
     cursor: default;
     user-select: none;
-    color: white;
 }
 
-.playback > #playback-bar {
+#playback-bar {
     grid-column-start: playback-col2;
     grid-column-end: playback-col3;
     align-self: center;
     width: 100%;
+    height: 10%;
 }
 
-.playback > #playback-end {
+svg {
+    display: block;
+    margin: auto;
+    border-radius: 1vh;
+}
+
+#playback-end {
     grid-column-start: playback-col3;
     grid-column-end: playback-col4;
     cursor: default;
     user-select: none;
-    color: white;
 }
 
 .volume {
     display: grid;
-    grid-template-columns: [volume-col1] 50% [volume-col2] 50% [volume-col3];
+    grid-template-columns: repeat(2, 1fr);
     grid-column-start: col4;
     grid-column-end: col5;
     grid-row-start: row1;
@@ -181,15 +293,15 @@
     max-height: 25%;
 }
 
-.volume > #volume {
-    grid-column-start: volume-col1;
-    grid-column-end: volume-col2;
+#volume {
+    grid-column-start: 1;
+    grid-column-end: 2;
     place-self: center end;
 }
 
-.volume > #volume-bar {
-    grid-column-start: volume-col2;
-    grid-column-end: volume-col3;
+#volume-bar {
+    grid-column-start: 2;
+    grid-column-end: 3;
     place-self: center center;
     width: 75%;
 }

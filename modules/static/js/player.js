@@ -54,7 +54,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         console.log("Autoplay is not allowed by the browser autoplay rules");
     });
 
-    // Get the buttons.
+    // Get the buttons and initialize the progress bar.
     const play_button = document.getElementById("play");
     const fast_backwards = document.getElementById("fast-backwards");
     const fast_forward = document.getElementById("fast-forward");
@@ -63,6 +63,15 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     const pin_button = document.getElementById("pin");
     const volume_button = document.getElementById("volume");
     const volume_bar = document.getElementById("volume-bar");
+    const progress_bar = document.getElementById("playback-bar");
+    const form = document.getElementById("form");
+    const progress = new ProgressBar.Line("#playback-bar", {
+        color: "#b3b3b3",
+        trailColor: "#535353",
+        svgStyle: {
+            strokeLinecap: "round",
+        },
+    });
 
     // Location of the current object as url.
     const location = `${window.location.protocol}//${window.location.host}/`;
@@ -70,6 +79,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     /**
      * Update various elements on the player whenever a change in the player state is detected.
      */
+    let duration_ms;
+    let current_track_id;
     player.addListener("player_state_changed", ({paused, repeat_mode, shuffle, track_window: {current_track}}) => {
         if (paused) {
             // Without this, when the button is clicked and if the mouse is still on it, it would display the white version of the button.
@@ -103,14 +114,15 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         document.getElementById("album-cover").src = current_track.album.images[0].url;
 
         // Get the song and artist name and hyperlink it to Spotify.
+        duration_ms = current_track.duration_ms;
         document.getElementById("song-name").innerText = current_track.name;
         document.getElementById("song-name").href = `https://open.spotify.com/album/${current_track.album.uri.split(":")[2]}`
         document.getElementById("artist-name").innerText = current_track.artists[0].name;
         document.getElementById("artist-name").href = `https://open.spotify.com/album/${current_track.artists[0].uri.split(":")[2]}`;
-
-        const duration_ms = current_track.duration_ms;
-        document.getElementById("playback-bar").max = duration_ms;
         document.getElementById("playback-end").innerText = getTime(duration_ms);
+
+        // Update the current song ID being played.
+        current_track_id = current_track.uri.split(":")[2]
     });
 
     /**
@@ -138,7 +150,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
                         const position = state.position;
                         document.getElementById("playback-start").innerText = getTime(position);
-                        document.getElementById("playback-bar").value = position;
+                        progress.set(position / duration_ms);
                     });
                 }, 1000);
             } else {
@@ -316,6 +328,19 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         pin_button.src = location + "static/img/player/pin.png";
     }
 
+    pin_button.onclick = function () {
+        $("#modal").modal("show");
+    }
+
+    // Seek the player to the clicked location on the progress bar.
+    progress_bar.onclick = function (event) {
+        // Get the clicked x value relative to the element by subtracting the clicked x value of the screen by the bar's left offset.
+        const x = event.pageX - this.offsetLeft;
+        const progress_percentage = x / this.offsetWidth;
+        progress.set(progress_percentage);
+        player.seek(progress_percentage * duration_ms);
+    }
+
     /**
      * Highlight the volume button when the cursor is on the element and return to grey when it leaves.
      */
@@ -361,10 +386,11 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             }
         } else if (volume > 0 && volume < 0.5) {
             volume_button.src = location + "static/img/player/volume-low-hover.png";
-            
+
             volume_bar.onmousedown = function () {
                 volume_button.src = location + "static/img/player/volume-low-hover.png";
             }
+
             volume_bar.onmouseup = function () {
                 volume_button.src = location + "static/img/player/volume-low.png";
             }
@@ -380,6 +406,51 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             }
         }
     });
+
+    /**
+     * Get the form data values as an Object prototype, and then send it back to the Python backend.
+     * @param event
+     */
+    form.onsubmit = function (event) {
+        event.preventDefault();
+        const inputs = Array.from(document.querySelectorAll("#form input")).reduce((acc, input) => ({...acc, [input.id]: input.value}), {});
+        const mode = Array.from(document.querySelectorAll("#form select")).reduce((acc, input) => ({...acc, [input.id]: input.value}), {});
+        const response = {
+            ...inputs,
+            ...mode,
+        }
+
+        response["song"] = current_track_id;
+        const request = new XMLHttpRequest();
+        request.open("POST", `/database/${JSON.stringify(response)}`);
+        request.onload = () => {
+            const message = request.responseText;
+            console.log(message);
+        }
+        request.send();
+    }
+
+    /**
+     * Function that will get the data of the track ready to be displayed.
+     */
+    let pins;
+    function display_pins(pin) {
+        spotify.getTrack(pin["song"], null, function (err, data) {
+            console.log(data);
+        });
+    }
+
+    /**
+     * Loop through the database once every 3 seconds and fire the alerts as well as update the pin display.
+     */
+    window.setInterval(function () {
+        $.get("/loop", function (data) {
+            pins = JSON.parse(data);
+            for (let i = 0; i < Object.keys(pins).length; ++i) {
+                display_pins(pins[i]);
+            }
+        });
+    }, 3000);
 
     // Connect the player with the SDK.
     player.connect();
