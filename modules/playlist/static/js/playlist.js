@@ -65,7 +65,6 @@ function msConversion(millis) {
     sec -= hrs * 3600;
     let min = Math.floor(sec / 60);
     sec -= min * 60;
-
     sec = '' + sec;
     sec = ('00' + sec).substring(sec.length);
 
@@ -86,7 +85,6 @@ function renderTrackData(res) {
     for (let i = 0; i < trackItems.length; i++) {
         const item = trackItems[i];
         const track = item.track;
-        let date_added = item.added_at;
         let playlistId = '';
         let songName = track.name;
         let artists = [];

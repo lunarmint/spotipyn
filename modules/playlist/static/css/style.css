@@ -13,7 +13,7 @@
     text-align: center;
     font-size: 1.2rem;
     color: white;
-    height: 75%;
+    height: 85%;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -32,11 +32,11 @@ ul.playlist_menu{
     border: 2px;
     border-radius: 4px;
     grid-column: 4 / span 1;
-    grid-row: 2 / 5;
-    background-color: gray;
+    grid-row: 1 / 5;
+    background-color: #444444;
     text-align: justify;
     font-size: 1rem;
-    color: #000000;
+    color: white;
     margin-right: 208px;
     margin-left: -5px;
     padding: 0 10px;
@@ -58,18 +58,22 @@ ul.playlist_menu{
 }
 
 .col-sm-4.item_title span {
-    color: #000;
+    color: white;
     font-size: 42px;
     margin-top: 137px !important;
     position: relative;
 }
 
+.playlist::-webkit-scrollbar{
+    width: 10px;
+}
+
 .playlist::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.0);
+    background-color: black;
     border-radius: 10px;
 }
 
 .playlist::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.0);
+    background-color: white;
 }
