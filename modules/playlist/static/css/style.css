@@ -1,7 +1,7 @@
 .playlistpage {
     display: grid;
     height: 100vh;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -37,13 +37,13 @@ ul.playlist_menu{
     text-align: justify;
     font-size: 1rem;
     color: white;
-    margin-right: 208px;
-    margin-left: -5px;
+    margin-right: 150px;
     padding: 0 10px;
     height: 91%;
     overflow: auto;
     float: left;
     position: relative;
+    width: 700px;
 }
 
 .pinDisplay {

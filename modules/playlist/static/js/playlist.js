@@ -121,7 +121,7 @@ function renderTrackData(res) {
     $('.trackData').html(tpl);
 }
 
-//First songs album cover for each playlist
+//First album cover(s) for each playlist
 function displayFirstItem() {
     $('.main_playlist_item').hide();
     $(".main_playlist_item_0").show();
