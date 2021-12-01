@@ -451,6 +451,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                 const time = pin["end_time"];
                 const message = pin["message"];
 
+                const formatted_time = new Date(time * 1000).toLocaleString();
+
                 // If the current UNIX time is equal or larger than the pin's end time, fire an alert.
                 if (Date.now() / 1000 >= parseInt(time)) {
                     if (Notification.permission === "granted") {
@@ -473,23 +475,23 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
                     td += `<td class="table-song">`
                     td += `<img src="${art}" alt="">`
-                    td += `<span>${song_name}</span>`
+                    td += `<p>${song_name}</p>`
                     td += `</td>`
 
                     td += `<td class="table-artist">`
-                    td += `<span>${artist}</span>`
+                    td += `<p>${artist}</p>`
                     td += `</td>`
 
                     td += `<td class="table-album">`
-                    td += `<span>${album}</span>`
+                    td += `<p>${album}</p>`
                     td += `</td>`
 
                     td += `<td class="table-time">`
-                    td += `<span>${time}</span>`
+                    td += `<p>${formatted_time}</p>`
                     td += `</td>`
 
                     td += `<td class="table-message">`
-                    td += `<span>${message}</span>`
+                    td += `<p>${message}</p>`
                     td += `</td>`
 
                     td += `</tr>`
