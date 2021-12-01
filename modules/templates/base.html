@@ -30,6 +30,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pins.css') }}">
 
     <!-- Scripts. -->
     <script src="{{ url_for('static', filename='js/togglesidebar.js') }}"></script>
@@ -67,6 +68,20 @@
 <a href="/logout" class="btn btn-primary btn-lg" style="font-size: 2rem; position: absolute; top: 5%; right: 5%">Sign Out</a>
 
 <div id="playlist">{% block playlist %}{% endblock %}</div>
+
+<div class="table table-responsive" id="pins">
+    <table id="pin-table">
+        <tr>
+            <th class="table-number">#</th>
+            <th class="table-song">Song Name</th>
+            <th class="table-artist">Artist</th>
+            <th class="table-album">Album</th>
+            <th class="table-time">Time</th>
+            <th class="table-message">Message</th>
+        </tr>
+        <tbody id="table-items"></tbody>
+    </table>
+</div>
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

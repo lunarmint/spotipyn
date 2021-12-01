@@ -1,0 +1,44 @@
+#pins {
+    position: fixed;
+    display: grid;
+    left: 50vh;
+    top: 5%;
+    width: 55%;
+    background: #181818;
+    color: #d3d3d3;
+}
+
+tr {
+    grid-template-columns: [col1] 10% [col2] 18% [col3] 18% [col4] 18% [col5] 18% [col6] 18% [col7];
+    text-align: center;
+}
+
+.table-number {
+    grid-column-start: col1;
+    grid-column-end: col2;
+}
+
+.table-song {
+    grid-column-start: col2;
+    grid-column-end: col3;
+}
+
+.table-artist {
+    grid-column-start: col3;
+    grid-column-end: col4;
+}
+
+.table-album {
+    grid-column-start: col4;
+    grid-column-end: col5;
+}
+
+.table-time {
+    grid-column-start: col5;
+    grid-column-end: col6;
+}
+
+.table-message {
+    grid-column-start: col6;
+    grid-column-end: col7;
+}
