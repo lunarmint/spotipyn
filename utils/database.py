@@ -42,6 +42,7 @@ class Database:
             pins.create_column("user_id", db.types.text)
             pins.create_column("timestamp", db.types.bigint)
             pins.create_column("value", db.types.json)
+            pins.create_column("end_time", db.types.bigint)
             pins.create_column("sent", db.types.boolean, default=False)
             log.info("Created missing table: pins")
 

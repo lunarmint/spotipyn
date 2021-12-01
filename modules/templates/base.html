@@ -87,30 +87,30 @@
 
                 <div class="modal-body">
                     <div class="input-group mb-3">
-                        <label class="input-group-text" for="timestamp-mode">Mode</label>
-                        <select class="form-select" id="timestamp-mode">
+                        <label class="input-group-text" for="mode">Mode</label>
+                        <select class="form-select" id="mode">
                             <option selected disabled value="">Choose...</option>
                             <option value="absolute">Absolute (UTC)</option>
                             <option value="relative">Relative To Song</option>
                         </select>
                     </div>
 
-                    <label for="timestamp-minutes" class="form-label">Timestamp:</label>
+                    <label for="minutes" class="form-label">Timestamp:</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="timestamp-minutes" placeholder="Minutes (e.g. 59)" aria-label="Minutes">
+                        <input type="text" class="form-control" id="minutes" placeholder="Minutes (e.g. 59)" aria-label="Minutes">
                         <span class="input-group-text">:</span>
-                        <input type="text" class="form-control" id="timestamp-seconds" placeholder="Seconds (e.g. 01)" aria-label="Seconds">
+                        <input type="text" class="form-control" id="seconds" placeholder="Seconds (e.g. 01)" aria-label="Seconds">
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="message-text" class="col-form-label">Message:</label>
-                        <input type="text" class="form-control" id="message-text" placeholder="Take the chicken out of the oven!">
+                        <label for="message" class="col-form-label">Message:</label>
+                        <input type="text" class="form-control" id="message" placeholder="Take the chicken out of the oven!">
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="submit">Save Pin</button>
+                    <button type="submit" class="btn btn-primary" id="submit" data-bs-dismiss="modal">Save Pin</button>
                 </div>
             </form>
         </div>

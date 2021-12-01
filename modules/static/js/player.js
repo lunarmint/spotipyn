@@ -80,6 +80,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
      * Update various elements on the player whenever a change in the player state is detected.
      */
     let duration_ms;
+    let current_track_id;
     player.addListener("player_state_changed", ({paused, repeat_mode, shuffle, track_window: {current_track}}) => {
         if (paused) {
             // Without this, when the button is clicked and if the mouse is still on it, it would display the white version of the button.
@@ -113,13 +114,15 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         document.getElementById("album-cover").src = current_track.album.images[0].url;
 
         // Get the song and artist name and hyperlink it to Spotify.
+        duration_ms = current_track.duration_ms;
         document.getElementById("song-name").innerText = current_track.name;
         document.getElementById("song-name").href = `https://open.spotify.com/album/${current_track.album.uri.split(":")[2]}`
         document.getElementById("artist-name").innerText = current_track.artists[0].name;
         document.getElementById("artist-name").href = `https://open.spotify.com/album/${current_track.artists[0].uri.split(":")[2]}`;
-
-        duration_ms = current_track.duration_ms;
         document.getElementById("playback-end").innerText = getTime(duration_ms);
+
+        // Update the current song ID being played.
+        current_track_id = current_track.uri.split(":")[2]
     });
 
     /**
@@ -405,7 +408,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     });
 
     /**
-     * Get the form data values as an Object prototype.
+     * Get the form data values as an Object prototype, and then send it back to the Python backend.
      * @param event
      */
     form.onsubmit = function (event) {
@@ -416,8 +419,39 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             ...inputs,
             ...mode,
         }
-        console.log(response);
+
+        response["song"] = current_track_id;
+        const request = new XMLHttpRequest();
+        request.open("POST", `/database/${JSON.stringify(response)}`);
+        request.onload = () => {
+            const message = request.responseText;
+            console.log(message);
+        }
+        request.send();
     }
+
+    /**
+     * Function that will get the data of the track ready to be displayed.
+     */
+    let pins;
+    function display_pins() {
+        spotify.getTrack(pins["song"], null, function (err, data) {
+            console.log(data);
+        });
+    }
+
+    /**
+     * Loop through the database once every 3 seconds and fire the alerts as well as update the pin display.
+     */
+    window.setInterval(function () {
+        $.get("/loop", function (data) {
+            pins = JSON.parse(data);
+            if (typeof pins["message"] !== "undefined") {
+                display_pins();
+                alert(pins["message"]);
+            }
+        });
+    }, 3000);
 
     // Connect the player with the SDK.
     player.connect();
