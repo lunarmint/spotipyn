@@ -451,7 +451,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                 const time = pin["end_time"];
                 const message = pin["message"];
 
-                const formatted_time = new Date(time * 1000).toLocaleString();
+                const date = new Date(time * 1000);
+
 
                 // If the current UNIX time is equal or larger than the pin's end time, fire an alert.
                 if (Date.now() / 1000 >= parseInt(time)) {
@@ -487,7 +488,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                     td += `</td>`
 
                     td += `<td class="table-time">`
-                    td += `<p>${formatted_time}</p>`
+                    td += `<p>${date.getMonth()}/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</p>`
                     td += `</td>`
 
                     td += `<td class="table-message">`
