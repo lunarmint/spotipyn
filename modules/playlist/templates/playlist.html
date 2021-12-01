@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 {% block playlist %}
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
-{#for playlist menu    #}
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('playlist_blueprint.static', filename='css/style.css') }}">
     <script src="{{ url_for('playlist_blueprint.static', filename='js/playlist.js') }}"></script>
     <div class="playlistpage">
@@ -12,9 +10,9 @@
             <p>User Playlist</p>
             <ul class="playlist_menu">
             </ul>
-              <div class="pinDisplay">
-            <p>Pin Messages</p>
-        </div>
+            <div class="pinDisplay">
+                <p>Pin Messages</p>
+            </div>
         </div>
         <div class="playlist">
             <div class="playlistAjax"></div>
@@ -32,14 +30,6 @@
                 </table>
             </div>
         </div>
-
-
-        </div>
-
-
-
-        <div id="name"></div>
-
-
     </div>
+    <div id="name"></div>
 {% endblock %}
