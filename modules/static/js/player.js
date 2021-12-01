@@ -434,8 +434,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
      * Function that will get the data of the track ready to be displayed.
      */
     let pins;
-    function display_pins() {
-        spotify.getTrack(pins["song"], null, function (err, data) {
+    function display_pins(pin) {
+        spotify.getTrack(pin["song"], null, function (err, data) {
             console.log(data);
         });
     }
@@ -446,9 +446,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     window.setInterval(function () {
         $.get("/loop", function (data) {
             pins = JSON.parse(data);
-            if (typeof pins["message"] !== "undefined") {
-                display_pins();
-                alert(pins["message"]);
+            for (let i = 0; i < Object.keys(pins).length; ++i) {
+                display_pins(pins[i]);
             }
         });
     }, 3000);

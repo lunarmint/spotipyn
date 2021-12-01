@@ -64,17 +64,21 @@ def check_pins():
     # Get the pins table.
     pins = db["pins"]
 
-    # Find the user from the table with a specified ID.
-    results = pins.find(user_id=spotify_user["id"], end_time={"<": current_time}, sent=False)
+    # Find the unsent pins by user ID.
+    results = pins.find(user_id=spotify_user["id"], sent=False)
 
     # Iterate through the found results, reorganize the values to be used into a new dictionary, and update the database.
     data = {}
-    for result in results:
+    for index, result in enumerate(results):
         value = json.loads(result["value"])
-        data["song"] = value["song"]
-        data["mode"] = value["mode"]
-        data["message"] = value["message"]
-        pins.update(dict(id=result["id"], sent=True), ["id"])
+        data[index] = {
+            "song": value["song"],
+            "mode": value["mode"],
+            "message": value["message"],
+            "end_time": result["end_time"],
+        }
+        if result["end_time"] <= current_time:
+            pins.update(dict(id=result["id"], sent=True), ["id"])
 
     # If no results are found, close the database and return.
     if not results:
