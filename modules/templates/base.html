@@ -53,10 +53,9 @@
         <span></span>
     </div>
     <div class="list">
-        <div class="item"><a href="/" target="_self">Home</a></div>
-        <div class="item"><a href="/playlist" target="_self">Playlists</a></div>
-        <div class="item"><a href="/albums" target="_self">Albums</a></div>
-        <div class="item"><a href="/pins" target="_self">Pins</a></div>
+        <div class="item"><img src="{{ url_for('static', filename='img/homeicon.png') }}" alt=""><a href="/" target="_self">Home</a></div>
+        <div class="item"><img src="{{ url_for('static', filename='img/playlisticon.png') }}" alt=""><a href="/playlist" target="_self">Playlists</a></div>
+        <div class="item"><img src="{{ url_for('static', filename='img/pinicon.png') }}" alt=""><a href="/pins" target="_self">Pins</a></div>
     </div>
 </div>
 
@@ -68,7 +67,6 @@
     {% block login %}
     {% endblock %}
 </div>
-
 
 <a href="/logout" class="btn btn-primary btn-lg" style="font-size: 2rem; position: absolute; top: 5%; right: 5%">Sign Out</a>
 
