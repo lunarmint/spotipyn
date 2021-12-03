@@ -15,7 +15,7 @@
     height: 85%;
     width: 60%;
     top: 0;
-    margin-left: 42%;
+    margin-left: 45%;
 }
 
 ul.playlist_menu{
@@ -39,13 +39,12 @@ a {
     grid-row: 1 / 5;
     background-color: rgba(24, 24, 24);
     text-align: justify;
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: #ffffff;
     margin-right: 8vw;
     height: 91%;
     overflow: scroll;
-    width: 700px;
-    /*z-index: -1;*/
+    width: 600px;
 }
 
 .col-sm-4.item_title span {
