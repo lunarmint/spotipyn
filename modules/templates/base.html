@@ -68,7 +68,7 @@
 
 <div id="playlist">{% block playlist %}{% endblock %}</div>
 
-<div class="table table-responsive" id="pins">
+<div id="pins">
     <table id="pin-table">
         <tr>
             <th class="table-number">#</th>
@@ -83,7 +83,7 @@
 </div>
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <form id="form">
                 <div class="modal-header">
@@ -91,22 +91,18 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="modal-body">
+                <div class="modal-body" id="modal-body">
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="mode">Mode</label>
                         <select class="form-select" id="mode">
-                            <option selected disabled value="">Choose...</option>
-                            <option value="absolute">Absolute (UTC)</option>
-                            <option value="relative">Relative To Song</option>
+                            <option selected>Choose...</option>
+                            <option value="absolute">Absolute</option>
+                            <option value="relative">Relative</option>
                         </select>
                     </div>
 
-                    <label for="minutes" class="form-label">Timestamp:</label>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="minutes" placeholder="Minutes (e.g. 59)" aria-label="Minutes">
-                        <span class="input-group-text">:</span>
-                        <input type="text" class="form-control" id="seconds" placeholder="Seconds (e.g. 01)" aria-label="Seconds">
-                    </div>
+                    <span id="input-label"></span>
+                    <div class="input-group mb-3" id="form-content"></div>
 
                     <div class="form-group mb-3">
                         <label for="message" class="col-form-label">Message:</label>
@@ -116,7 +112,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="submit" data-bs-dismiss="modal">Save Pin</button>
+                    <button type="submit" class="btn btn-primary" id="submit">Save Pin</button>
                 </div>
             </form>
         </div>

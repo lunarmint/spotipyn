@@ -33,7 +33,26 @@ def add_pin(data):
 
     data_json = json.loads(data)
     current_time = int(time.time())
-    end_time = current_time + int(data_json["minutes"]) * 60 + int(data_json["seconds"])
+
+    if data_json["mode"] == "absolute":
+        year = int(data_json["year"]) if int(data_json["year"]) >= 1970 else 1970
+        month = int(data_json["month"])
+        d = int(data_json["day"])
+        match month:
+            case 2:
+                if year % 4 == 0:
+                    day = d if d <= 29 else 29
+                else:
+                    day = d if d <= 28 else 28
+            case 1 | 3 | 5 | 7 | 8 | 10 | 12:
+                day = d if d <= 31 else 31
+            case _:
+                day = d if d <= 30 else 30
+        print(year)
+        date_time = datetime(year, int(data_json["month"]), day, int(data_json["hour"]), int(data_json["minute"]), int(data_json["second"]))
+        end_time = date_time.timestamp()
+    else:
+        end_time = current_time + int(data_json["hour"]) * 3600 + int(data_json["minute"]) * 60 + int(data_json["second"])
 
     # If the user does not exist, initialize their entry in the database.
     pins.insert(dict(user_id=spotify_user["id"], timestamp=current_time, value=data, end_time=end_time, sent=False))
@@ -75,7 +94,6 @@ def check_pins():
         value = json.loads(result["value"])
         data[index] = {
             "song": value["song"],
-            "mode": value["mode"],
             "message": value["message"],
             "end_time": result["end_time"],
         }

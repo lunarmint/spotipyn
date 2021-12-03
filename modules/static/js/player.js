@@ -67,7 +67,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     const volume_button = document.getElementById("volume");
     const volume_bar = document.getElementById("volume-bar");
     const progress_bar = document.getElementById("playback-bar");
-    const form = document.getElementById("form");
     const progress = new ProgressBar.Line("#playback-bar", {
         color: "#b3b3b3",
         trailColor: "#535353",
@@ -75,6 +74,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             strokeLinecap: "round",
         },
     });
+
+    // Form control.
+    const form = document.getElementById("form");
+    let input_label = document.getElementById("input-label");
+    const option = document.getElementById("mode");
+    const submit = document.getElementById("submit");
 
     // Location of the current object as url.
     const location = `${window.location.protocol}//${window.location.host}/`;
@@ -411,6 +416,48 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     });
 
     /**
+     * Dynamically generate the input field depending on the mode selection.
+     */
+    option.onchange = function () {
+        let content = "";
+        input_label.innerHTML = "";
+        if (option.value === "absolute") {
+            document.getElementById("input-label").innerHTML = `<label for="minutes" class="form-label">Time:</label>`;
+            content += `<input type="text" class="form-control" id="year" placeholder="yyyy" pattern="^[0-9]{4}$" title="Year must have 4 digits. Years before 1970 will be converted to 1970" aria-label="Year" required>`
+            content += `<span class="input-group-text">-</span>`
+            content += `<input type="text" class="form-control" id="month" placeholder="mm" pattern="^(0?[1-9]|1[012])$" title="Month must be a number from 1-12" aria-label="Month" required>`
+            content += `<span class="input-group-text">-</span>`
+            content += `<input type="text" class="form-control" id="day" placeholder="dd" pattern="^((0[1-9]|[12][0-9]|3[01])$" title="Day must be a number from 1-31. Nearest valid date will be used if out of bound" aria-label="Day" required>`
+            content += `<span class="input-group-text"></span>`
+            content += `<input type="text" class="form-control" id="hour" placeholder="hh" pattern="\\b(2[0-3]|[0-1]?[0-9])\\b" title="Hour must be a number from 0-23" aria-label="Hour" required>`
+            content += `<span class="input-group-text">:</span>`
+            content += `<input type="text" class="form-control" id="minute" placeholder="mm" pattern="[0-5]?[0-9]" title="Hour must be a number from 0-59" aria-label="Minute" required>`
+            content += `<span class="input-group-text">:</span>`
+            content += `<input type="text" class="form-control" id="second" placeholder="ss" pattern="[0-5]?[0-9]" title="Hour must be a number from 0-59" aria-label="Second" required>`
+        } else if (option.value === "relative") {
+            document.getElementById("input-label").innerHTML = `<label for="minutes" class="form-label">Timestamp:</label>`;
+            content += `<input type="text" class="form-control" id="hour" placeholder="hh" pattern="[0-2]?[0-3]" title="Hour must be a number from 0-23" aria-label="Hour" required>`
+            content += `<span class="input-group-text">:</span>`
+            content += `<input type="text" class="form-control" id="minute" placeholder="mm" pattern="[0-5]?[0-9]" title="Hour must be a number from 0-59" aria-label="Minute" required>`
+            content += `<span class="input-group-text">:</span>`
+            content += `<div id="seconds-validation">`
+            content += `<input type="text" class="form-control" id="second" placeholder="ss" pattern="[0-5]?[0-9]" title="Hour must be a number from 0-59" aria-label="Second" required>`
+        }
+        document.getElementById("form-content").innerHTML = content;
+    }
+
+    /**
+     * Only dismiss the modal if the form is valid, checked when the mouse is hovered on the submit button.
+     */
+    submit.onmousemove = function () {
+        if (form.checkValidity() === true) {
+            document.getElementById("submit").setAttribute("data-bs-dismiss", "modal");
+        } else {
+            document.getElementById("submit").removeAttribute("data-bs-dismiss");
+        }
+    }
+
+    /**
      * Get the form data values as an Object prototype, and then send it back to the Python backend.
      * @param event
      */
@@ -426,10 +473,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         response["song"] = current_track_id;
         const request = new XMLHttpRequest();
         request.open("POST", `/database/${JSON.stringify(response)}`);
-        request.onload = () => {
-            const message = request.responseText;
-            console.log(message);
-        }
         request.send();
     }
 
@@ -442,7 +485,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
             // Flush the table if the Object is empty.
             if (Object.keys(pins).length === 0) {
-                $("#table-items").html("");
+                document.getElementById("table-items").innerHTML = "";
             }
 
             let td = "";
@@ -452,12 +495,28 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                 const message = pin["message"];
 
                 const date = new Date(time * 1000);
+                const year = date.getFullYear();
+                // Javascript count the month from 0.
+                const month = date.getMonth() + 1;
+                const day = date.getDate();
 
+                // Add a 0 before hour, minute, and second if it is smaller than 10.
+                const hour = function () {
+                    return date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+                }
+
+                const minute = function () {
+                    return date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+                }
+
+                const second = function () {
+                    return date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
+                }
 
                 // If the current UNIX time is equal or larger than the pin's end time, fire an alert.
                 if (Date.now() / 1000 >= parseInt(time)) {
                     if (Notification.permission === "granted") {
-                        const notification = new Notification("Spotipyn", {
+                        new Notification("Spotipyn", {
                             body: message,
                             icon: location + "static/img/notification.png"
                         });
@@ -488,7 +547,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                     td += `</td>`
 
                     td += `<td class="table-time">`
-                    td += `<p>${date.getMonth()}/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</p>`
+                    td += `<p>${year}/${month}/${day} ${hour()}:${minute()}:${second()}</p>`
                     td += `</td>`
 
                     td += `<td class="table-message">`
@@ -496,7 +555,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                     td += `</td>`
 
                     td += `</tr>`
-                    $("#table-items").html(td);
+                    document.getElementById("table-items").innerHTML = td;
                 });
             }
         });
@@ -517,9 +576,9 @@ function getTime(ms) {
     const seconds = ((ms % 60000) / 1000).toFixed(0);
     // If second equals to 60, +1 to minute instead.
     if (seconds === "60") {
-        return (minutes + 1) + ":00";
+        return `${minutes + 1}:00`;
     } else {
         // If the second is single digit, add a 0 before the value.
-        return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`
     }
 }
