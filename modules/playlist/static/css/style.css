@@ -6,24 +6,30 @@
 }
 
 .userplaylists {
-    border: 2px;
     grid-column: 2/ span 1;
     grid-row: 1 / 5;
     background-color: #000000;
-    text-align: center;
+    text-align: left;
     font-size: 1.2rem;
     color: white;
     height: 85%;
     width: 60%;
     top: 0;
-    margin-left: 40%;
+    margin-left: 42%;
 }
 
 ul.playlist_menu{
     list-style-type: none;
     grid-column: 2 / span 1;
-    text-align: center;
+    text-align: left;
     padding-left: 3px;
+    color: #ffffff;
+}
+
+/*For user playlist menu link text(s)*/
+a {
+    color: #fff;
+    text-decoration: none;
 }
 
 .playlist {
