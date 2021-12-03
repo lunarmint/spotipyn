@@ -556,7 +556,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                     td += `<td class="table-message">`
                     td += `<p id="table-message">${message}</p>`
                     td += `</td>`
-
                     td += `</tr>`
                     document.getElementById("table-items").innerHTML = td;
                 });
