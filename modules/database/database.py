@@ -48,8 +48,8 @@ def add_pin(data):
                 day = d if d <= 31 else 31
             case _:
                 day = d if d <= 30 else 30
-        print(year)
-        date_time = datetime(year, int(data_json["month"]), day, int(data_json["hour"]), int(data_json["minute"]), int(data_json["second"]))
+        # Band aid fix +5 hours to offset the timezone on the VPS. TODO: Look into this later.
+        date_time = datetime(year, int(data_json["month"]), day, int(data_json["hour"]) + 5, int(data_json["minute"]), int(data_json["second"]))
         end_time = date_time.timestamp()
     else:
         end_time = current_time + int(data_json["hour"]) * 3600 + int(data_json["minute"]) * 60 + int(data_json["second"])
