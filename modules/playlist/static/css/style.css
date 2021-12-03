@@ -15,9 +15,8 @@
     color: white;
     height: 85%;
     width: 60%;
-    /*position: fixed;*/
     top: 0;
-    margin-left: 20%;
+    margin-left: 40%;
 }
 
 ul.playlist_menu{
@@ -35,13 +34,12 @@ ul.playlist_menu{
     background-color: rgba(24, 24, 24);
     text-align: justify;
     font-size: 1rem;
-    color: white;
-    margin-right: 30%;
+    color: #ffffff;
+    margin-right: 8vw;
     height: 91%;
-    overflow: auto;
-    position: relative;
+    overflow: scroll;
     width: 700px;
-    z-index: -1;
+    /*z-index: -1;*/
 }
 
 .col-sm-4.item_title span {
@@ -63,4 +61,8 @@ ul.playlist_menu{
 .playlist::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: white;
+}
+
+.table{
+    color: white;
 }
