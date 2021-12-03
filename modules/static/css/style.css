@@ -9,46 +9,63 @@ h1 {
     font-weight: bold;
 }
 
-#sidebar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 15%;
-    height: 85%;
-    background: rgba(24, 24, 24);
-    transition: all 300ms linear;
+.sidebar {
+height: 100%;
+width: 85vw;
+position: fixed;
+top: 0;
+left: 0;
+background-color: #111;
+padding-top: 60vh;
+z-index: 1;
+overflow-x: hidden;
+transition: 0.5s;
+white-space: nowrap;
 }
 
-#sidebar.active {
-    left: -15%;
+.sidebar a {
+  padding: 8vw 8vw 8vh 32vh;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
 }
 
-#sidebar .toggle-btn {
-    position: absolute;
-    left: 110%;
-    top: 2%;
+.sidebar a:hover {
+  color: #f1f1f1;
 }
 
-#sidebar .toggle-btn span {
-    display: block;
-    width: 30px;
-    height: 5px;
-    background: #ffffff;
-    margin: 5px 0;
-    cursor: pointer;
+main .sidebar{
+  position: absolute;
+  top: 0;
+  right: 25vw;
+  font-size: 36px;
+  margin-left: 50vw;
 }
 
-#sidebar div.list div.item {
-    padding: 15px 10px;
-    border-bottom: 1px solid #444;
-    color: #fcfcfc;
-    font-size: 1rem;
-    text-align: center;
+.material-icons,
+.icon-text {
+  vertical-align: middle;
 }
 
-#sidebar div.list div.item a {
-    color: #fcfcfc;
-    text-decoration: none;
+.material-icons {
+
+  margin-right: 30vw
+}
+
+#main {
+	transition: margin-left .5s;
+	padding: 16vw;
+	margin-left: 85vw;
+}
+
+@media screen and (max-height: 450px) {
+  .sidebar {
+    padding-top: 15vh;
+  }
+  .sidebar a {
+    font-size: 18px;
+  }
 }
 
 #left {

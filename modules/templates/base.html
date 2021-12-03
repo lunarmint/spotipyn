@@ -46,18 +46,12 @@
     const spotify = new SpotifyWebApi();
     spotify.setAccessToken(token);
 </script>
-
-<div id="sidebar">
-    <div class="toggle-btn" onclick="toggleSidebar(this)">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <div class="list">
-        <div class="item"><img src="{{ url_for('static', filename='img/homeicon.png') }}" alt=""><a href="/" target="_self">Home</a></div>
-        <div class="item"><img src="{{ url_for('static', filename='img/playlisticon.png') }}" alt=""><a href="/playlist" target="_self">Playlists</a></div>
-    </div>
+<div id="mySidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
+  <a href="#"><span><img src="{{ url_for('static', filename='img/homeicon.png') }}" alt=""><span class="icon-text"><a href="/" target="_self">Home</a></span></a><br>
+  <a href="#"><img src="{{ url_for('static', filename='img/homeicon.png') }}" alt=""><span class="icon-text"></span><a href="/playlist" target="_self">Playlists</a></a></span>
+  </a><br>
 </div>
+
 
 <div id="login">
     {% block login %}
