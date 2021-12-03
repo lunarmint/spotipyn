@@ -31,7 +31,12 @@ def add_pin(data):
     # Get the pins table.
     pins = db["pins"]
 
+    # Close the connection if the "song" value is not found, due to the user creating the pin before the player could load, or
+    # the account does not have premium and no song is detected.
     data_json = json.loads(data)
+    if not data_json["song"]:
+        return db.close()
+
     current_time = int(time.time())
 
     if data_json["mode"] == "absolute":
