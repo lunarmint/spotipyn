@@ -195,42 +195,42 @@
     grid-column-start: 1;
     grid-column-end: 2;
     place-self: center end;
-    max-width: 25%;
+    max-width: 30%;
 }
 
 #shuffle {
     grid-column-start: 2;
     grid-column-end: 3;
     place-self: center end;
-    max-width: 25%;
+    max-width: 30%;
 }
 
 #fast-backwards {
     grid-column-start: 3;
     grid-column-end: 4;
     place-self: center end;
-    max-width: 25%;
+    max-width: 30%;
 }
 
 #play {
     grid-column-start: 4;
     grid-column-end: 5;
     place-self: center center;
-    max-width: 40%;
+    max-width: 45%;
 }
 
 #fast-forward {
     grid-column-start: 5;
     grid-column-end: 6;
     place-self: center start;
-    max-width: 25%;
+    max-width: 30%;
 }
 
 #repeat {
     grid-column-start: 6;
     grid-column-end: 7;
     place-self: center start;
-    max-width: 25%;
+    max-width: 30%;
 }
 
 .playback {
@@ -289,8 +289,8 @@ svg {
 
 .volume > img {
     object-fit: scale-down;
-    max-width: 25%;
-    max-height: 25%;
+    max-width: 30%;
+    max-height: 30%;
 }
 
 #volume {
