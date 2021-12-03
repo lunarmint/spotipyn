@@ -1,4 +1,5 @@
 spotify.getUserPlaylists(function (err, data) {
+    document.getElementById("pins").style.display = "none";
     makeSideMenu(data);
     makeRightPlaylist(data);
     displayFirstItem();

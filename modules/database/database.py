@@ -38,9 +38,11 @@ def add_pin(data):
     # If the user does not exist, initialize their entry in the database.
     pins.insert(dict(user_id=spotify_user["id"], timestamp=current_time, value=data, end_time=end_time, sent=False))
 
+    # Commit the changes and close the connection.
     db.commit()
     db.close()
 
+    # Return an empty string so that Flask would stop crying about a function not returning anything it wants.
     return ""
 
 

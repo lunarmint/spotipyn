@@ -32,6 +32,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             }
             volume_bar.value = volume;
         });
+
+        // Attempt to request for notification permission.
+        Notification.requestPermission().then();
     });
 
     player.addListener("not_ready", ({device_id}) => {
@@ -431,23 +434,70 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     }
 
     /**
-     * Function that will get the data of the track ready to be displayed.
-     */
-    let pins;
-    function display_pins(pin) {
-        spotify.getTrack(pin["song"], null, function (err, data) {
-            console.log(data);
-        });
-    }
-
-    /**
      * Loop through the database once every 3 seconds and fire the alerts as well as update the pin display.
      */
     window.setInterval(function () {
         $.get("/loop", function (data) {
-            pins = JSON.parse(data);
+            const pins = JSON.parse(data);
+
+            // Flush the table if the Object is empty.
+            if (Object.keys(pins).length === 0) {
+                $("#table-items").html("");
+            }
+
+            let td = "";
             for (let i = 0; i < Object.keys(pins).length; ++i) {
-                display_pins(pins[i]);
+                const pin = pins[i];
+                const time = pin["end_time"];
+                const message = pin["message"];
+
+                const date = new Date(time * 1000);
+
+
+                // If the current UNIX time is equal or larger than the pin's end time, fire an alert.
+                if (Date.now() / 1000 >= parseInt(time)) {
+                    if (Notification.permission === "granted") {
+                        const notification = new Notification("Spotipyn", {
+                            body: message,
+                            icon: location + "static/img/notification.png"
+                        });
+                    }
+                }
+
+                // Get the data of the track ready to be displayed.
+                spotify.getTrack(pin["song"], null, function (err, data) {
+                    let art = data.album.images[2].url;
+                    const song_name = data.name;
+                    const artist = data.artists[0].name;
+                    const album = data.album.name;
+
+                    td += `<tr>`
+                    td += `<td class="table-number">${i + 1}</td>`
+
+                    td += `<td class="table-song">`
+                    td += `<img src="${art}" alt="">`
+                    td += `<p>${song_name}</p>`
+                    td += `</td>`
+
+                    td += `<td class="table-artist">`
+                    td += `<p>${artist}</p>`
+                    td += `</td>`
+
+                    td += `<td class="table-album">`
+                    td += `<p>${album}</p>`
+                    td += `</td>`
+
+                    td += `<td class="table-time">`
+                    td += `<p>${date.getMonth()}/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</p>`
+                    td += `</td>`
+
+                    td += `<td class="table-message">`
+                    td += `<p>${message}</p>`
+                    td += `</td>`
+
+                    td += `</tr>`
+                    $("#table-items").html(td);
+                });
             }
         });
     }, 3000);
