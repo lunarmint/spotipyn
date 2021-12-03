@@ -18,7 +18,7 @@
     margin-left: 42%;
 }
 
-ul.playlist_menu{
+ul.playlist_menu {
     list-style-type: none;
     grid-column: 2 / span 1;
     text-align: left;
@@ -55,7 +55,7 @@ a {
     position: relative;
 }
 
-.playlist::-webkit-scrollbar{
+.playlist::-webkit-scrollbar {
     width: 10px;
 }
 
@@ -69,6 +69,6 @@ a {
     background-color: white;
 }
 
-.table{
+.table {
     color: white;
 }
