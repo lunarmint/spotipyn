@@ -6,55 +6,46 @@
 }
 
 .userplaylists {
-    border: 2px;
-    grid-column: 3/ span 1;
-    grid-row: 2 / 5;
+    grid-column: 2/ span 1;
+    grid-row: 1 / 5;
     background-color: #000000;
-    text-align: center;
+    text-align: left;
     font-size: 1.2rem;
     color: white;
     height: 85%;
-    position: fixed;
-    z-index: 1;
+    width: 60%;
     top: 0;
-    left: 261px;
+    margin-left: 42%;
 }
 
-ul.playlist_menu{
+ul.playlist_menu {
     list-style-type: none;
-    width: 100%;
-    padding-left: 3px;
-    padding-right: 1px;
+    grid-column: 2 / span 1;
     text-align: left;
+    padding-left: 3px;
+    color: #ffffff;
+}
+
+/*For user playlist menu link text(s)*/
+a {
+    color: #fff;
+    text-decoration: none;
 }
 
 .playlist {
     border: 2px;
     border-radius: 4px;
-    grid-column: 4 / span 1;
+    grid-column: 3 / span 1;
     grid-row: 1 / 5;
-    background-color: #444444;
+    background-color: rgba(24, 24, 24);
     text-align: justify;
     font-size: 1rem;
-    color: white;
-    margin-right: 150px;
-    padding: 0 10px;
+    color: #ffffff;
+    margin-right: 8vw;
     height: 91%;
-    overflow: auto;
-    float: left;
-    position: relative;
+    overflow: scroll;
     width: 700px;
-}
-
-.pinDisplay {
-    border: 2px;
-    grid-column: 6 / span 2;
-    grid-row: 2 / 5;
-    right: 0;
-    background-color: #000000;
-    text-align: center;
-    font-size: 1.2rem;
-    color: white;
+    /*z-index: -1;*/
 }
 
 .col-sm-4.item_title span {
@@ -64,7 +55,7 @@ ul.playlist_menu{
     position: relative;
 }
 
-.playlist::-webkit-scrollbar{
+.playlist::-webkit-scrollbar {
     width: 10px;
 }
 
@@ -76,4 +67,8 @@ ul.playlist_menu{
 .playlist::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: white;
+}
+
+.table {
+    color: white;
 }
