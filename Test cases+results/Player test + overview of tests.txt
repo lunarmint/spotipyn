@@ -1,0 +1,38 @@
+Player Test (manual test)
+
+When the shuffle button is pressed, the player sucsessfully randomizes the order of the song.
+When the Previous song button is pressed once, the player sucessfully goes back to the beginning of the song.
+When the Pevious song button is double clicked, the player sucessfully goes back to the previous song.
+When the Pause button is pressed, the player sucessfully pauses the song.
+When the Play button is pressed, the player sucessfully plays the song. 
+When the loop button is pressed, the song repeats itself after its finished making this test sucessful.
+When you adjust the time slider, the time of the song sucessfully updates and sucessfully changes to that time in the song.
+When you adjust the volume with the slider the volume sucsessfully changes. 
+The player sucsessfully shows the correct song and correct artist.
+
+Overview of other tests
+
+Login test
+
+The user is sucessfully able to log in with spotify to use spotipyn.
+
+Sign out test
+
+The user is secessfully able to sign out of spotify.
+
+Playlist test
+
+The user is sucessfully able to navigate to the "Playlists" tab from the navbar.
+The user can sucessfully view playlists that the user currently has on spotify.
+
+Pin test
+
+The user is able to sucessfully create a pin that displays a alert with the users text when the user wants it to.
+
+Errors found while testing 
+
+If the user creates a pin when there is no song in the player it causes a connection leak and makes the pin function stop working.
+
+There are 2 instances where this is likely to happen.
+1. When you create a pin too quickly before the song is registered in the app.
+2. When the user uses a non-premium account which has no capabilities to connect to the player to detect a song.
