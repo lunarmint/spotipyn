@@ -516,10 +516,11 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                 // If the current UNIX time is equal or larger than the pin's end time, fire an alert.
                 if (Date.now() / 1000 >= parseInt(time)) {
                     if (Notification.permission === "granted") {
-                        new Notification("Spotipyn", {
+                        const notification = new Notification("Spotipyn", {
                             body: message,
                             icon: location + "static/img/notification.png"
                         });
+                        setTimeout(notification.close.bind(notification), 30000);
                     }
                 }
 
