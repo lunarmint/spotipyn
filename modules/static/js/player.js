@@ -531,27 +531,29 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                     const album = data.album.name;
 
                     td += `<tr>`
-                    td += `<td class="table-number">${i + 1}</td>`
+                    td += `<td class="table-number">`
+                    td += `<p id="table-number">${i + 1}</p>`
+                    td += `</td>`
 
                     td += `<td class="table-song">`
-                    td += `<img src="${art}" alt="">`
-                    td += `<p>${song_name}</p>`
+                    td += `<img src="${art}" id="table-image" alt="">`
+                    td += `<p id="table-song">${song_name}</p>`
                     td += `</td>`
 
                     td += `<td class="table-artist">`
-                    td += `<p>${artist}</p>`
+                    td += `<p id="table-artist">${artist}</p>`
                     td += `</td>`
 
                     td += `<td class="table-album">`
-                    td += `<p>${album}</p>`
+                    td += `<p id="table-album">${album}</p>`
                     td += `</td>`
 
                     td += `<td class="table-time">`
-                    td += `<p>${year}/${month}/${day} ${hour()}:${minute()}:${second()}</p>`
+                    td += `<p id="table-time">${year}/${month}/${day} ${hour()}:${minute()}:${second()}</p>`
                     td += `</td>`
 
                     td += `<td class="table-message">`
-                    td += `<p>${message}</p>`
+                    td += `<p id="table-message">${message}</p>`
                     td += `</td>`
 
                     td += `</tr>`

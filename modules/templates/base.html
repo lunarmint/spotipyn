@@ -64,15 +64,15 @@
     {% endblock %}
 </div>
 
-<a href="/logout" class="btn btn-primary btn-lg" style="font-size: 2rem; position: absolute; top: 5%; right: 5%">Sign Out</a>
+<a href="/logout" class="btn btn-primary btn-sm" style="font-size: 2rem; position: absolute; top: 3%; right: 2%">Sign Out</a>
 
 <div id="playlist">{% block playlist %}{% endblock %}</div>
 
 <div id="pins">
     <table id="pin-table">
-        <tr>
-            <th class="table-number">#</th>
-            <th class="table-song">Song Name</th>
+        <tr id="table-header">
+            <th class="table-number">Pin #</th>
+            <th class="table-song">Title</th>
             <th class="table-artist">Artist</th>
             <th class="table-album">Album</th>
             <th class="table-time">Time</th>
