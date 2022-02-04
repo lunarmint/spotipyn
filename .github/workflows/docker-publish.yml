@@ -67,7 +67,7 @@ jobs:
 
       - name: Push image to Github packages
         run: |
-          IMAGE_ID=docker.pkg.github.com/${{ steps.prep.outputs.github-tag }}
+          IMAGE_ID=ghcr.io/${{ steps.prep.outputs.github-tag }}
 
           docker image tag ${{ steps.prep.outputs.tag }} $IMAGE_ID
           docker push $IMAGE_ID
