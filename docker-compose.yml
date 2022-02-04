@@ -6,7 +6,7 @@ services:
     # Build from remote GitHub branch.
     image: ghcr.io/lunarmint/spotipyn/spotipyn:latest
     restart: unless-stopped
-    command: gunicorn --bind 0.0.0.0:5000 -w 3 spotipyn:app
+    command: gunicorn --bind 0.0.0.0:5000 -w 3 spotipyn:spotipyn
     ports:
         - "8080:5000"
     volumes:
