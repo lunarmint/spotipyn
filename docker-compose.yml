@@ -5,26 +5,28 @@ services:
     # build: .
     # Build from remote GitHub branch.
     image: ghcr.io/lunarmint/spotipyn/spotipyn:latest
+    container_name: spotipyn
     restart: unless-stopped
     command: gunicorn --bind 0.0.0.0:5000 -w 3 spotipyn:spotipyn
     ports:
         - "8080:5000"
     volumes:
-        - ${CONFIG}:/app/config.yml
-        - ${LOGS_FOLDER}:/app/logs/
+        - ./config.yml:/app/config.yml
+        - ./logs:/app/logs/
     environment:
         - CLIENT_ID=${CLIENT_ID}
         - CLIENT_SECRET=${CLIENT_SECRET}
         - SECRET_KEY=${SECRET_KEY}
-        - MYSQL_HOST=db
+        - MYSQL_HOST=${MYSQL_HOST}
         - MYSQL_DATABASE=${MYSQL_DATABASE}
-        - MYSQL_USER=spotipyn
+        - MYSQL_USER=${MYSQL_USER}
         - MYSQL_PASSWORD=${MYSQL_PASSWORD}
   db:
     image: mariadb
+    container_name: spotipyn-db
     restart: unless-stopped
     volumes:
-        - ${DATABASE_FOLDER}:/var/lib/mysql
+        - ./db:/var/lib/mysql
     environment:
         MYSQL_DATABASE: ${MYSQL_DATABASE}
         MYSQL_USER: spotipyn
