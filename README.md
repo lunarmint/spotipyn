@@ -1,6 +1,8 @@
 # Spotipyn
 A Spotify-based web application that allows users to place annotations, or 'pins', into songs at specified timestamps. These pins can be customized with a message and a duration.
 
+Requires Spotify Premium to be functional since it relies on the [Spotify Web Playback SDK](https://developer.spotify.com/documentation/web-playback-sdk/).
+
 ## Prerequisites
 1. [Install MariaDB](https://mariadb.org/) (v10.6.4) to create a local database source in your IDE. If you're using PyCharm, see the instructions [here](https://www.jetbrains.com/help/pycharm/mariadb.html).
 
