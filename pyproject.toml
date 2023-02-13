@@ -9,7 +9,6 @@ readme = "README.md"
 repository = "https://github.com/lunarmint/spotipyn"
 
 [tool.poetry.dependencies]
-coloredlogs = "15.0.1"
 django = "^4.1.6"
 pyaml_env = "1.2.1"
 pymongo = "4.3.3"
