@@ -1,8 +1,0 @@
-**/__pycache__
-db/
-.github/
-logs/
-.env.example
-.gitattributes
-.gitignore
-config.default.yml
