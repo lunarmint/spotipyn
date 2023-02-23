@@ -5,7 +5,7 @@ from typing import Any, Mapping
 from pymongo import MongoClient
 from pymongo.collection import Collection
 
-from spotipyn.utils.config import config
+from api.utils.config import config
 
 log = logging.getLogger(__name__)
 
