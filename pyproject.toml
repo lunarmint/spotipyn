@@ -9,7 +9,7 @@ readme = "README.md"
 repository = "https://github.com/lunarmint/spotipyn"
 
 [tool.poetry.dependencies]
-django = "^4.1.6"
+django = "^4.1.7"
 djangorestframework = "3.14.0"
 pyaml_env = "1.2.1"
 pymongo = "4.3.3"
