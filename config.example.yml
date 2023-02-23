@@ -1,0 +1,9 @@
+spotipyn:
+  debug: False
+  django_secret_key: python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
+database:
+  username: !ENV ${MONGO_USERNAME}
+  password: !ENV ${MONGO_PASSWORD}
+  hostname: !ENV ${MONGO_HOSTNAME}
+  port: !ENV ${MONGO_PORT}
+  database_name: !ENV ${MONGO_INITDB_DATABASE}
