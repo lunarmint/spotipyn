@@ -1,7 +1,7 @@
 import logging
 import pathlib
 
-from pyaml_env import parse_config
+import confuse
 
 log = logging.getLogger(__name__)
 
@@ -10,4 +10,5 @@ if not config_file.is_file():
     log.error("Unable to load config.yml, exiting...")
     raise SystemExit
 
-config = parse_config(config_file.as_posix())
+config = confuse.Configuration(appname="bot")
+config.set_file(config_file.as_posix())

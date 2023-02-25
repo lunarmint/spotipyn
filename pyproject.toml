@@ -9,10 +9,10 @@ readme = "README.md"
 repository = "https://github.com/lunarmint/spotipyn"
 
 [tool.poetry.dependencies]
+confuse = "2.0.0"
 django = "^4.1.7"
 djangorestframework = "3.14.0"
-pyaml_env = "1.2.1"
-pymongo = "4.3.3"
+psycopg2 = "2.9.5"
 python = "^3.11"
 
 [tool.poetry.dev-dependencies]
