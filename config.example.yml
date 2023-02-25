@@ -1,9 +1,0 @@
-spotipyn:
-  debug: False
-  django_secret_key: python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
-database:
-  name: ${POSTGRESQL_NAME}
-  user: ${POSTGRESQL_USER}
-  password: ${POSTGRESQL_PASSWORD}
-  host: ${POSTGRESQL_HOST}
-  port: ${POSTGRESQL_PORT}
