@@ -7,7 +7,7 @@ import sys
 
 def read_env():
     """Reads local default environment variables from
-     a .env file located in the project root directory.
+    a .env file located in the project root directory.
     """
     try:
         with open(".env") as f:

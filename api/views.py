@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework import generics
 
-# Create your views here.
+from api.models import Pins
+from api.serializer import PinSerializer
+
+
+class PinView(generics.ListCreateAPIView):
+    queryset = Pins.objects.all()
+    serializer_class = PinSerializer
