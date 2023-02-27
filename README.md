@@ -1,3 +1,5 @@
+## Currently under a complete rewrite from scratch to Django, React, and PostgreSQL. See [v2.0](https://github.com/lunarmint/spotipyn/tree/v2.0) branch.
+
 # Spotipyn
 A Spotify-based web application that allows users to place annotations, or 'pins', into songs at specified timestamps. These pins can be customized with a message and a duration.
 
