@@ -10,7 +10,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     /**
      * Log the player state and status.
      */
-    player.addListener("ready", ({device_id}) => {
+    player.addEventListener("ready", ({device_id}) => {
         console.log('Ready with Device ID', device_id);
 
         // Get the list of the current devices. If one of them is named "Spotipyn", transfer the playback to that device.
@@ -37,23 +37,23 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         Notification.requestPermission().then();
     });
 
-    player.addListener("not_ready", ({device_id}) => {
+    player.addEventListener("not_ready", ({device_id}) => {
         console.log("Device ID has gone offline", device_id);
     });
 
-    player.addListener("initialization_error", ({message}) => {
+    player.addEventListener("initialization_error", ({message}) => {
         console.error(message);
     });
 
-    player.addListener("authentication_error", ({message}) => {
+    player.addEventListener("authentication_error", ({message}) => {
         console.error(message);
     });
 
-    player.addListener("account_error", ({message}) => {
+    player.addEventListener("account_error", ({message}) => {
         console.error(message);
     });
 
-    player.addListener("autoplay_failed", () => {
+    player.addEventListener("autoplay_failed", () => {
         console.log("Autoplay is not allowed by the browser autoplay rules");
     });
 
@@ -89,7 +89,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
      */
     let duration_ms;
     let current_track_id;
-    player.addListener("player_state_changed", ({paused, repeat_mode, shuffle, track_window: {current_track}}) => {
+    player.addEventListener("player_state_changed", ({paused, repeat_mode, shuffle, track_window: {current_track}}) => {
         if (paused) {
             // Without this, when the button is clicked and if the mouse is still on it, it would display the white version of the button.
             if (play_button.src === location + "static/img/player/pause.png") {
